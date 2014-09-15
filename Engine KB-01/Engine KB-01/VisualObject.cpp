@@ -53,11 +53,11 @@ void VisualObject::draw(Renderer* myRenderer, D3DXMATRIX WorldMatrix)
 {
 	myRenderer->SetTexture(textname);
 							
-	D3DXMATRIX* world = &D3DTS_WORLD;
+//	D3DXMATRIX* world = &D3DTS_WORLD;
 
 
 
-	myRenderer->setTransform(&D3DTS_WORLD, &(getPosition() * WorldMatrix));
+	myRenderer->setTransform(D3DTS_WORLD, &(getPosition() * WorldMatrix));
 
 	myRenderer->DrawSubSet(meshname);
 

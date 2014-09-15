@@ -252,7 +252,7 @@ byte* Heightmap::LoadBMP(LPCWSTR argFileName)
 
 void Heightmap::RenderHeightmap(Renderer* render)
 {
-	if( FAILED(render->setTransform(&D3DTS_WORLD, &Position)))
+	if( FAILED(render->setTransform(D3DTS_WORLD, &Position)))
 	{
 		l->WriteToFile(Error, "SetTransformFailed", 0);
 	}

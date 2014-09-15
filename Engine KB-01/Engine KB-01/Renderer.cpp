@@ -124,9 +124,9 @@ HRESULT Renderer::CreateIndexBuffer(int length, DWORD usage, D3DFORMAT format, D
 	return g_pd3dDevice->CreateIndexBuffer(length, usage, format, pool, ((IDirect3DIndexBuffer9**)&Indexbuffer), NULL);
 }
 
-HRESULT Renderer::setTransform(void* transform, void* matrix)
+HRESULT Renderer::setTransform(D3DTRANSFORMSTATETYPE transform, D3DMATRIX* matrix)
 {
-	return g_pd3dDevice->SetTransform((*(D3DTRANSFORMSTATETYPE*)transform), ((D3DMATRIX*)matrix));
+	return g_pd3dDevice->SetTransform(transform, matrix);
 }
 
 HRESULT Renderer::SetStreamSource(int streamnumber, IDirect3DVertexBuffer9* vertexbuffer, int offset, int stride)

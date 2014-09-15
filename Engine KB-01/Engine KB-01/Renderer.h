@@ -44,7 +44,7 @@ public:
 	void setStreamSource(IDirect3DVertexBuffer9 *pStreamData, UINT OffsetInBytes);
 	void CreateVertexBuffer(int heightmapvertex, DWORD usage, DWORD fvf, D3DPOOL pool, void* vertexbuffer, HANDLE handle);
 	HRESULT CreateIndexBuffer(int length, DWORD usage, D3DFORMAT format, D3DPOOL pool, void* Indexbuffer, HANDLE* handle);
-	HRESULT setTransform(void* transform, void* matrix);
+	HRESULT setTransform(D3DTRANSFORMSTATETYPE transform, D3DMATRIX* matrix);
 	HRESULT SetStreamSource(int streamnumber, IDirect3DVertexBuffer9* vertexbuffer, int offset, int stride);
 	HRESULT SetFVF(DWORD FVF);
 	HRESULT SetIndices(IDirect3DIndexBuffer9* indexbuffer);
