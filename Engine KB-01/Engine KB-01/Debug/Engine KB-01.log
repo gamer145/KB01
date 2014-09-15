@@ -1,0 +1,18 @@
+﻿Build started 4-9-2014 15:42:49.
+     1>Project "C:\Users\gamer145\Desktop\school\ProjectKB01\trunk\Engine KB-01\Engine KB-01\Engine KB-01.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86" /I"C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Heightmap.cpp VisualObject.cpp
+         VisualObject.cpp
+     1>c:\users\gamer145\desktop\school\projectkb01\trunk\engine kb-01\engine kb-01\visualobject.cpp(57): error C2101: '&' on constant
+     1>c:\users\gamer145\desktop\school\projectkb01\trunk\engine kb-01\engine kb-01\visualobject.cpp(57): error C2664: 'HRESULT Renderer::setTransform(void *,void *)' : cannot convert argument 1 from 'D3DTRANSFORMSTATETYPE' to 'void *'
+                 Conversion from integral type to pointer type requires reinterpret_cast, C-style cast or function-style cast
+         Heightmap.cpp
+     1>c:\users\gamer145\desktop\school\projectkb01\trunk\engine kb-01\engine kb-01\heightmap.cpp(255): error C2101: '&' on constant
+     1>c:\users\gamer145\desktop\school\projectkb01\trunk\engine kb-01\engine kb-01\heightmap.cpp(255): error C2664: 'HRESULT Renderer::setTransform(void *,void *)' : cannot convert argument 1 from 'D3DTRANSFORMSTATETYPE' to 'void *'
+                 Conversion from integral type to pointer type requires reinterpret_cast, C-style cast or function-style cast
+         Generating Code...
+     1>Done Building Project "C:\Users\gamer145\Desktop\school\ProjectKB01\trunk\Engine KB-01\Engine KB-01\Engine KB-01.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:02.06
