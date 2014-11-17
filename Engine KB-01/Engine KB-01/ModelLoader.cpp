@@ -36,7 +36,10 @@ HRESULT ModelLoader::LoadModel(std::string modelname, Renderer* renderer, Visual
             MessageBox( NULL, L"Could not find model", L"Meshes.exe", MB_OK );
           
         }
-	renderer->addMesh(modelname, mesh);
+
+	MeshWrapper* TheNewMesh = new MeshWrapper(mesh);
+
+	renderer->addMesh(modelname, TheNewMesh);
 
 	object->setSubSet(D3DXMESH_SYSTEMMEM);
 

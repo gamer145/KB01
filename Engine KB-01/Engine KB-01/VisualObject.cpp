@@ -55,9 +55,9 @@ void VisualObject::draw(Renderer* myRenderer, D3DXMATRIX WorldMatrix)
 							
 //	D3DXMATRIX* world = &D3DTS_WORLD;
 
+	MatrixWrapper* TheNewMatrix = new MatrixWrapper((getPosition() * WorldMatrix));
 
-
-	myRenderer->setTransform(D3DTS_WORLD, &(getPosition() * WorldMatrix));
+	myRenderer->setTransform(E_WORLD, TheNewMatrix);
 
 	myRenderer->DrawSubSet(meshname);
 

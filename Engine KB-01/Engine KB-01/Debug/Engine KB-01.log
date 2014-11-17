@@ -1,37 +1,99 @@
-﻿Build started 15-9-2014 13:33:12.
-     1>Project "C:\Users\gamer145\Documents\GitHub\KB01\Engine KB-01\Engine KB-01\Engine KB-01.vcxproj" on node 2 (Build target(s)).
+﻿Build started 15-11-2014 10:06:47.
+     1>Project "C:\Users\gamer145\Documents\GitHub\KB01\Engine KB-01\Engine KB-01\Engine KB-01.vcxproj" on node 2 (Rebuild target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86" /I"C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Heightmap.cpp VisualObject.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86" /I"C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Camera.cpp CameraLoader.cpp Entity.cpp Heightmap.cpp IndexBufferWrapper.cpp InputHandler.cpp Kernel.cpp KeyboardListener.cpp Level.cpp LevelLoader.cpp Logger.cpp MaterialWrapper.cpp MatrixWrapper.cpp MeshWrapper.cpp TextureWrapper.cpp VertexBufferWrapper.cpp VisualObject.cpp ModelLoader.cpp MouseListener.cpp Renderer.cpp RendererInterface.cpp Resource_Manager.cpp Scene.cpp Scene_Manager.cpp SkyboxLoader.cpp TextureLoader.cpp Timer.cpp Window_Manager.cpp Window.cpp
+         Window.cpp
+         Window_Manager.cpp
+         Timer.cpp
+         TextureLoader.cpp
+         SkyboxLoader.cpp
+         Scene_Manager.cpp
+         Scene.cpp
+     1>c:\users\gamer145\documents\github\kb01\engine kb-01\engine kb-01\scene.cpp(72): error C2664: 'void Renderer::SetUpWorld(MatrixWrapper *,MatrixWrapper *,MatrixWrapper *)' : cannot convert argument 1 from 'D3DXMATRIX' to 'MatrixWrapper *'
+                 No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+         Resource_Manager.cpp
+     1>c:\users\gamer145\documents\github\kb01\engine kb-01\engine kb-01\resource_manager.cpp(40): error C2440: 'initializing' : cannot convert from 'std::map<std::string,TextureWrapper *,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>' to 'std::map<std::string,LPDIRECT3DTEXTURE9,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>'
+                 with
+                 [
+                     _Kty=std::string
+         ,            _Ty=TextureWrapper *
+                 ]
+                 and
+                 [
+                     _Kty=std::string
+         ,            _Ty=LPDIRECT3DTEXTURE9
+                 ]
+                 No constructor could take the source type, or constructor overload resolution was ambiguous
+     1>c:\users\gamer145\documents\github\kb01\engine kb-01\engine kb-01\resource_manager.cpp(56): error C2440: 'initializing' : cannot convert from 'std::map<std::string,MeshWrapper *,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>' to 'std::map<std::string,LPD3DXMESH,std::less<_Kty>,std::allocator<std::pair<const _Kty,_Ty>>>'
+                 with
+                 [
+                     _Kty=std::string
+         ,            _Ty=MeshWrapper *
+                 ]
+                 and
+                 [
+                     _Kty=std::string
+         ,            _Ty=LPD3DXMESH
+                 ]
+                 No constructor could take the source type, or constructor overload resolution was ambiguous
+         RendererInterface.cpp
+     1>c:\users\gamer145\documents\github\kb01\engine kb-01\engine kb-01\renderer.h(17): error C2504: 'RendererInterface' : base class undefined
+     1>c:\users\gamer145\documents\github\kb01\engine kb-01\engine kb-01\renderer.h(36): error C2061: syntax error : identifier 'MatrixWrapper'
+     1>c:\users\gamer145\documents\github\kb01\engine kb-01\engine kb-01\renderer.h(39): error C2061: syntax error : identifier 'TextureWrapper'
+     1>c:\users\gamer145\documents\github\kb01\engine kb-01\engine kb-01\renderer.h(40): error C2061: syntax error : identifier 'MeshWrapper'
+     1>c:\users\gamer145\documents\github\kb01\engine kb-01\engine kb-01\renderer.h(42): error C2061: syntax error : identifier 'VertexBufferWrapper'
+     1>c:\users\gamer145\documents\github\kb01\engine kb-01\engine kb-01\renderer.h(43): error C2061: syntax error : identifier 'VertexBufferWrapper'
+     1>c:\users\gamer145\documents\github\kb01\engine kb-01\engine kb-01\renderer.h(44): error C2061: syntax error : identifier 'IndexBufferWrapper'
+     1>c:\users\gamer145\documents\github\kb01\engine kb-01\engine kb-01\renderer.h(45): error C2061: syntax error : identifier 'MatrixWrapper'
+     1>c:\users\gamer145\documents\github\kb01\engine kb-01\engine kb-01\renderer.h(46): error C2061: syntax error : identifier 'VertexBufferWrapper'
+     1>c:\users\gamer145\documents\github\kb01\engine kb-01\engine kb-01\renderer.h(48): error C2061: syntax error : identifier 'IndexBufferWrapper'
+     1>c:\users\gamer145\documents\github\kb01\engine kb-01\engine kb-01\renderer.h(54): error C2065: 'MeshWrapper' : undeclared identifier
+     1>c:\users\gamer145\documents\github\kb01\engine kb-01\engine kb-01\renderer.h(54): error C2059: syntax error : '>'
+     1>c:\users\gamer145\documents\github\kb01\engine kb-01\engine kb-01\renderer.h(54): error C2976: 'std::map' : too few template arguments
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\map(69) : see declaration of 'std::map'
+     1>c:\users\gamer145\documents\github\kb01\engine kb-01\engine kb-01\renderer.h(55): error C2065: 'TextureWrapper' : undeclared identifier
+     1>c:\users\gamer145\documents\github\kb01\engine kb-01\engine kb-01\renderer.h(55): error C2059: syntax error : '>'
+     1>c:\users\gamer145\documents\github\kb01\engine kb-01\engine kb-01\renderer.h(55): error C2976: 'std::map' : too few template arguments
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\map(69) : see declaration of 'std::map'
+     1>c:\users\gamer145\documents\github\kb01\engine kb-01\engine kb-01\renderer.h(65): error C2065: 'MeshWrapper' : undeclared identifier
+     1>c:\users\gamer145\documents\github\kb01\engine kb-01\engine kb-01\renderer.h(65): error C2059: syntax error : '>'
+     1>c:\users\gamer145\documents\github\kb01\engine kb-01\engine kb-01\renderer.h(65): error C2976: 'std::map' : too few template arguments
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\map(69) : see declaration of 'std::map'
+     1>c:\users\gamer145\documents\github\kb01\engine kb-01\engine kb-01\renderer.h(66): error C2065: 'TextureWrapper' : undeclared identifier
+     1>c:\users\gamer145\documents\github\kb01\engine kb-01\engine kb-01\renderer.h(66): error C2059: syntax error : '>'
+     1>c:\users\gamer145\documents\github\kb01\engine kb-01\engine kb-01\renderer.h(66): error C2976: 'std::map' : too few template arguments
+                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\map(69) : see declaration of 'std::map'
+         Renderer.cpp
+         MouseListener.cpp
+         ModelLoader.cpp
          VisualObject.cpp
-         Heightmap.cpp
+         VertexBufferWrapper.cpp
+         TextureWrapper.cpp
+         MeshWrapper.cpp
+         MatrixWrapper.cpp
+         MaterialWrapper.cpp
+         Logger.cpp
+         LevelLoader.cpp
          Generating Code...
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\gamer145\Documents\GitHub\KB01\Engine KB-01\Debug\Engine KB-01.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86" winmm.lib d3d9.lib d3dx9.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib dxguid.lib dxerr.lib dinput8.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\gamer145\Documents\GitHub\KB01\Engine KB-01\Debug\Engine KB-01.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\gamer145\Documents\GitHub\KB01\Engine KB-01\Debug\Engine KB-01.lib" /MACHINE:X86 Debug\Camera.obj
-         Debug\CameraLoader.obj
-         Debug\Entity.obj
-         Debug\Heightmap.obj
-         Debug\InputHandler.obj
-         Debug\Kernel.obj
-         Debug\KeyboardListener.obj
-         Debug\Level.obj
-         Debug\LevelLoader.obj
-         Debug\Logger.obj
-         Debug\VisualObject.obj
-         Debug\ModelLoader.obj
-         Debug\MouseListener.obj
-         Debug\Renderer.obj
-         Debug\RendererInterface.obj
-         Debug\Resource_Manager.obj
-         Debug\Scene.obj
-         Debug\Scene_Manager.obj
-         Debug\SkyboxLoader.obj
-         Debug\TextureLoader.obj
-         Debug\Timer.obj
-         Debug\Window_Manager.obj
-         Debug\Window.obj
-         Engine KB-01.vcxproj -> C:\Users\gamer145\Documents\GitHub\KB01\Engine KB-01\Debug\Engine KB-01.exe
-     1>Done Building Project "C:\Users\gamer145\Documents\GitHub\KB01\Engine KB-01\Engine KB-01\Engine KB-01.vcxproj" (Build target(s)).
+         Compiling...
+         Level.cpp
+         KeyboardListener.cpp
+         Kernel.cpp
+         InputHandler.cpp
+         IndexBufferWrapper.cpp
+         Heightmap.cpp
+     1>c:\users\gamer145\documents\github\kb01\engine kb-01\engine kb-01\heightmap.cpp(259): error C2664: 'HRESULT Renderer::SetStreamSource(int,VertexBufferWrapper *,int,int)' : cannot convert argument 2 from 'LPDIRECT3DVERTEXBUFFER9' to 'VertexBufferWrapper *'
+                 Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
+     1>c:\users\gamer145\documents\github\kb01\engine kb-01\engine kb-01\heightmap.cpp(267): error C2664: 'HRESULT Renderer::SetIndices(IndexBufferWrapper *)' : cannot convert argument 1 from 'LPDIRECT3DINDEXBUFFER9' to 'IndexBufferWrapper *'
+                 Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
+     1>c:\users\gamer145\documents\github\kb01\engine kb-01\engine kb-01\heightmap.cpp(275): error C2664: 'HRESULT Renderer::DrawIndexedPrimitive(EPRIMITIVETYPE,int,int,int,int,int)' : cannot convert argument 1 from '_D3DPRIMITIVETYPE' to 'EPRIMITIVETYPE'
+                 Conversion to enumeration type requires an explicit cast (static_cast, C-style cast or function-style cast)
+         Entity.cpp
+         CameraLoader.cpp
+         Camera.cpp
+         Generating Code...
+     1>Done Building Project "C:\Users\gamer145\Documents\GitHub\KB01\Engine KB-01\Engine KB-01\Engine KB-01.vcxproj" (Rebuild target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:05.44
+Time Elapsed 00:00:41.37

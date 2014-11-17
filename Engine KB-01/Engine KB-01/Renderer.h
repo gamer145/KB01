@@ -10,9 +10,7 @@
 #include <vector>
 #include <string>
 #include <map>
-#include "Window.h"
-#include "Model.h"
-#include "Entity.h"
+
 
 class Entity;
 class Renderer : public RendererInterface
@@ -35,26 +33,26 @@ public:
 	void DrawSubSet(std::string meshname);
 	void DrawPrimitive();
 	void SetVertexFormat();
-	void SetUpWorld(D3DXMATRIX WorldMatrix, D3DXMATRIX CameraMatrix, D3DXMATRIX ProjectionMatrix);
+	void SetUpWorld(MatrixWrapper* WorldMatrix, MatrixWrapper* CameraMatrix, MatrixWrapper* ProjectionMatrix);
 	void* get3DDevice();
 	HRESULT InitD3D( HWND hWnd );
-	void addTexture(std::string textname, void* Text);
-	void addMesh(std::string meshname, void* Mesh);
+	void addTexture(std::string textname, TextureWrapper* Text);
+	void addMesh(std::string meshname, MeshWrapper* Mesh);
 	void setDrawWindow(Window* windowtodrawin);
-	void setStreamSource(IDirect3DVertexBuffer9 *pStreamData, UINT OffsetInBytes);
-	void CreateVertexBuffer(int heightmapvertex, DWORD usage, DWORD fvf, D3DPOOL pool, void* vertexbuffer, HANDLE handle);
-	HRESULT CreateIndexBuffer(int length, DWORD usage, D3DFORMAT format, D3DPOOL pool, void* Indexbuffer, HANDLE* handle);
-	HRESULT setTransform(D3DTRANSFORMSTATETYPE transform, D3DMATRIX* matrix);
-	HRESULT SetStreamSource(int streamnumber, IDirect3DVertexBuffer9* vertexbuffer, int offset, int stride);
-	HRESULT SetFVF(DWORD FVF);
-	HRESULT SetIndices(IDirect3DIndexBuffer9* indexbuffer);
-	HRESULT DrawIndexedPrimitive(D3DPRIMITIVETYPE type, int basevertexindex, int minvertexindex, int numvertices, int startindex, int primcount);
-	void Clear(DWORD count, DWORD flags, D3DCOLOR color, float z, DWORD stencil);
+	void setStreamSource(VertexBufferWrapper *pStreamData, UINT OffsetInBytes);
+	void CreateVertexBuffer(int heightmapvertex, EDWORD usage, EDWORD fvf, EPOOL pool, VertexBufferWrapper* vertexbuffer, HANDLE handle);
+	HRESULT CreateIndexBuffer(int length, EDWORD usage, EFORMAT format, EPOOL pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle);
+	HRESULT setTransform(ETRANSFORMSTATETYPE transform, MatrixWrapper* matrix);
+	HRESULT SetStreamSource(int streamnumber, VertexBufferWrapper* vertexbuffer, int offset, int stride);
+	HRESULT SetFVF(EDWORD FVF);
+	HRESULT SetIndices(IndexBufferWrapper* indexbuffer);
+	HRESULT DrawIndexedPrimitive(EPRIMITIVETYPE type, int basevertexindex, int minvertexindex, int numvertices, int startindex, int primcount);
+	void Clear(DWORD count, DWORD flags, ECOLOR color, float z, DWORD stencil);
 	void BeginS();
 	void EndS();
 	void Present();
-	std::map<std::string, LPD3DXMESH> getMeshes();
-	std::map<std::string, LPDIRECT3DTEXTURE9> getTextures();
+	std::map<std::string, MeshWrapper*> getMeshes();
+	std::map<std::string, TextureWrapper*> getTextures();
 
 
 private:
@@ -64,8 +62,8 @@ private:
 	Window* myWindow;
 	bool keepRendering;
 	
-	std::map<std::string, LPD3DXMESH> Meshes;
-    std::map<std::string, LPDIRECT3DTEXTURE9> Textures;
+	std::map<std::string, MeshWrapper*> Meshes;
+	std::map<std::string, TextureWrapper*> Textures;
 	
 };
 

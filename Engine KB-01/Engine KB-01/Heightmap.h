@@ -2,7 +2,7 @@
 #define HEIGHTMAP_H
 
 #include "Logger.h"
-#include "Renderer.h"
+#include "RendererInterface.h"
 
 struct HEIGHTMAPVERTEX
 {
@@ -15,8 +15,8 @@ public:
 	Heightmap();
 	~Heightmap();
 	void SetupHeightmapMatrix(float x, float y, float z, D3DXMATRIX OffSet);
-	void CreateHeightmap(Renderer* render, LPCWSTR argFileName);
-	void RenderHeightmap(Renderer* render);
+	void CreateHeightmap(RendererInterface* render, LPCWSTR argFileName);
+	void RenderHeightmap(RendererInterface* render);
 	byte* LoadBMP(LPCWSTR argFileName);
 	int GetHeight();
 	int GetWidth();

@@ -67,24 +67,24 @@ VOID Renderer::CleanUp()
 HRESULT Renderer::SetTexture(std::string textname)
 {
 	
-	LPDIRECT3DTEXTURE9 texture = Textures.find(textname)->second;
+	LPDIRECT3DTEXTURE9 texture = Textures.find(textname)->second->GetTexture();
 	
 	g_pd3dDevice->SetTexture(0, texture);
 	
 	return S_OK;
 }
 
-void Renderer::SetUpWorld(D3DXMATRIX WorldMatrix, D3DXMATRIX CameraMatrix, D3DXMATRIX ProjectionMatrix)
+void Renderer::SetUpWorld(MatrixWrapper* WorldMatrix, MatrixWrapper* CameraMatrix, MatrixWrapper* ProjectionMatrix)
 {
-	g_pd3dDevice->SetTransform(D3DTS_WORLD, &WorldMatrix);
-	g_pd3dDevice->SetTransform(D3DTS_VIEW, &CameraMatrix);	
-	g_pd3dDevice->SetTransform(D3DTS_PROJECTION, &ProjectionMatrix);
+	g_pd3dDevice->SetTransform(D3DTS_WORLD, &WorldMatrix->GetMatrix());
+	g_pd3dDevice->SetTransform(D3DTS_VIEW, &CameraMatrix->GetMatrix());
+	g_pd3dDevice->SetTransform(D3DTS_PROJECTION, &ProjectionMatrix->GetMatrix());
 }
 
 void Renderer::DrawSubSet(std::string meshname)
 {
 	
-	LPD3DXMESH mesh = Meshes.find(meshname)->second;
+	LPD3DXMESH mesh = Meshes.find(meshname)->second->GetMesh();
 			
 	mesh->DrawSubset(0);		
 		
@@ -97,14 +97,14 @@ void* Renderer::get3DDevice()
 	return g_pd3dDevice;
 }
 
-void Renderer::addTexture(std::string textname, void* Text)
+void Renderer::addTexture(std::string textname, TextureWrapper* Text)
 {
-	Textures.insert(std::pair<std::string, LPDIRECT3DTEXTURE9>(textname, (LPDIRECT3DTEXTURE9)Text));
+	Textures.insert(std::pair<std::string, TextureWrapper*>(textname, Text));
 }
 
-void Renderer::addMesh(std::string meshname, void* Mesh)
+void Renderer::addMesh(std::string meshname, MeshWrapper* Mesh)
 {
-	Meshes.insert(std::pair<std::string, LPD3DXMESH>(meshname, (LPD3DXMESH)Mesh));
+	Meshes.insert(std::pair<std::string, MeshWrapper*>(meshname, Mesh));
 }
 
 /*
@@ -114,24 +114,24 @@ void Renderer::setStreamSource(IDirect3DVertexBuffer9 *pStreamData, UINT OffsetI
 }
 */
 
-void Renderer::CreateVertexBuffer(int heightmapvertex,DWORD usage, DWORD fvf, D3DPOOL pool, void* vertexbuffer, HANDLE handle)
+void Renderer::CreateVertexBuffer(int heightmapvertex, EDWORD usage, EDWORD fvf, EPOOL pool, VertexBufferWrapper* vertexbuffer, HANDLE handle)
 {
-	g_pd3dDevice->CreateVertexBuffer(heightmapvertex, usage, fvf, pool, ((IDirect3DVertexBuffer9**)vertexbuffer), &handle);
+	g_pd3dDevice->CreateVertexBuffer(heightmapvertex, usage, fvf, static_cast<D3DPOOL>(pool), vertexbuffer->GetVertexBuffer(), &handle);
 }
 
-HRESULT Renderer::CreateIndexBuffer(int length, DWORD usage, D3DFORMAT format, D3DPOOL pool, void* Indexbuffer, HANDLE* handle)
+HRESULT Renderer::CreateIndexBuffer(int length, EDWORD usage, EFORMAT format, EPOOL pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle)
 {
-	return g_pd3dDevice->CreateIndexBuffer(length, usage, format, pool, ((IDirect3DIndexBuffer9**)&Indexbuffer), NULL);
+	return g_pd3dDevice->CreateIndexBuffer(length, usage, static_cast<D3DFORMAT>(format), static_cast<D3DPOOL>(pool), Indexbuffer->GetIndexBuffer(), NULL);
 }
 
-HRESULT Renderer::setTransform(D3DTRANSFORMSTATETYPE transform, D3DMATRIX* matrix)
+HRESULT Renderer::setTransform(ETRANSFORMSTATETYPE transform, MatrixWrapper* matrix)
 {
-	return g_pd3dDevice->SetTransform(transform, matrix);
+	return g_pd3dDevice->SetTransform(static_cast<D3DTRANSFORMSTATETYPE>(transform), &matrix->GetMatrix());
 }
 
-HRESULT Renderer::SetStreamSource(int streamnumber, IDirect3DVertexBuffer9* vertexbuffer, int offset, int stride)
+HRESULT Renderer::SetStreamSource(int streamnumber, VertexBufferWrapper* vertexbuffer, int offset, int stride)
 {
-	return g_pd3dDevice->SetStreamSource(streamnumber, vertexbuffer, offset, stride);
+	return g_pd3dDevice->SetStreamSource(streamnumber, *vertexbuffer->GetVertexBuffer(), offset, stride);
 }
 
 HRESULT Renderer::SetFVF(DWORD FVF)
@@ -139,14 +139,14 @@ HRESULT Renderer::SetFVF(DWORD FVF)
 	return g_pd3dDevice->SetFVF(FVF);
 }
 
-HRESULT Renderer::SetIndices(IDirect3DIndexBuffer9* indexbuffer)
+HRESULT Renderer::SetIndices(IndexBufferWrapper* indexbuffer)
 {
-	return g_pd3dDevice->SetIndices(indexbuffer);
+	return g_pd3dDevice->SetIndices(*indexbuffer->GetIndexBuffer());
 }
 
-HRESULT Renderer::DrawIndexedPrimitive(D3DPRIMITIVETYPE type, int basevertexindex, int minvertexindex, int numvertices, int startindex, int primcount)
+HRESULT Renderer::DrawIndexedPrimitive(EPRIMITIVETYPE type, int basevertexindex, int minvertexindex, int numvertices, int startindex, int primcount)
 {
-	return g_pd3dDevice->DrawIndexedPrimitive(type, basevertexindex, minvertexindex, numvertices, startindex, primcount);
+	return g_pd3dDevice->DrawIndexedPrimitive(static_cast<D3DPRIMITIVETYPE>(type), basevertexindex, minvertexindex, numvertices, startindex, primcount);
 }
 
 void Renderer::Clear(DWORD count, DWORD flags, D3DCOLOR color, float z, DWORD stencil)
@@ -169,12 +169,12 @@ void Renderer::Present()
 	g_pd3dDevice->Present( NULL, NULL, NULL, NULL );
 }
 
-std::map<std::string, LPDIRECT3DTEXTURE9> Renderer::getTextures()
+std::map<std::string, TextureWrapper*> Renderer::getTextures()
 {
 	return Textures;
 }
 
-std::map<std::string, LPD3DXMESH> Renderer::getMeshes()
+std::map<std::string, MeshWrapper*> Renderer::getMeshes()
 {
 	return Meshes;
 }
