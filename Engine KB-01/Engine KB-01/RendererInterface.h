@@ -22,7 +22,7 @@ class RendererInterface
 {
 public:
 	RendererInterface();
-	~RendererInterface();
+	virtual ~RendererInterface() = 0;
 	virtual void CleanUp()=0;	
 
 	/*
