@@ -120,11 +120,11 @@ void Heightmap::CreateHeightmap(RendererInterface* render, LPCWSTR argFileName)
 	}
 
     // create a vertex buffer interface called v_buffer
-    if( FAILED( ((LPDIRECT3DDEVICE9)render->get3DDevice())->CreateVertexBuffer(vertexcount*sizeof(HEIGHTMAPVERTEX),
-                               0, D3DFVF_CUSTOMVERTEX, D3DPOOL_MANAGED, &v_buffer, NULL)))
-	{
-		l->WriteToFile(Error, "CreateVBFailed", 0);
-	}
+
+	render->CreateVertexBuffer(vertexcount*sizeof(HEIGHTMAPVERTEX),
+		0, ECUSTOMVERTEX, EPOOL_MANAGED, v_buffer, NULL);
+
+    
 
 
 
@@ -132,13 +132,13 @@ void Heightmap::CreateHeightmap(RendererInterface* render, LPCWSTR argFileName)
 	VOID* pVoid2; // a void pointer
 
     // lock v_buffer and load the vertices into it
-    if( FAILED( v_buffer->Lock(0, sizeof(HEIGHTMAPVERTEX) * vertexcount, (void**)&pVoid, 0)))
+    if( FAILED( (*v_buffer->GetVertexBuffer())->Lock(0, sizeof(HEIGHTMAPVERTEX) * vertexcount, (void**)&pVoid, 0)))
 	{
 		l->WriteToFile(Error, "VBLockFailed", 0);
 	}
 	memcpy(pVoid, vertices, sizeof(HEIGHTMAPVERTEX) * vertexcount);
 
-	if ( FAILED( v_buffer->Unlock()))
+	if (FAILED((*v_buffer->GetVertexBuffer())->Unlock()))
 	{
 		l->WriteToFile(Error, "VBUnLockFailed", 0);
 	}
@@ -169,27 +169,22 @@ void Heightmap::CreateHeightmap(RendererInterface* render, LPCWSTR argFileName)
 	}
 
 
+	render->CreateIndexBuffer((amountIndices)*sizeof(int),
+		0, FMT_INDEX32, EPOOL_MANAGED, i_buffer, NULL);
+
     // create an index buffer interface called i_buffer
-	if( FAILED(((LPDIRECT3DDEVICE9)render->get3DDevice())->CreateIndexBuffer((amountIndices)*sizeof(int),
-                              0,
-                              D3DFMT_INDEX32,
-                              D3DPOOL_MANAGED,
-                              &i_buffer,
-                              NULL)))
-	{
-		l->WriteToFile(Error, "CreateIBFailed", 0);
-	}
+	
 
     // lock i_buffer and load the indices into it
 
-	if( FAILED( i_buffer->Lock(0, sizeof(int) * amountIndices, (void**)&pVoid2, 0)))
+	if( FAILED( (*i_buffer->GetIndexBuffer())->Lock(0, sizeof(int) * amountIndices, (void**)&pVoid2, 0)))
 	{
 		l->WriteToFile(Error, "IBLockFailed", 0);
 	}
 
 	memcpy(pVoid2, indices, sizeof(int) * amountIndices);
   	
-	if ( FAILED( i_buffer->Unlock()))
+	if (FAILED((*i_buffer->GetIndexBuffer())->Unlock()))
 	{
 		l->WriteToFile(Error, "IBUnLockFailed", 0);
 	}
@@ -250,9 +245,11 @@ byte* Heightmap::LoadBMP(LPCWSTR argFileName)
 	return heightData;
 }
 
-void Heightmap::RenderHeightmap(Renderer* render)
+void Heightmap::RenderHeightmap(RendererInterface* render)
 {
-	if( FAILED(render->setTransform(E_WORLD, new MatrixWrapper(Position))))
+	
+
+	if( FAILED(render->setTransform(E_WORLD, Position)))
 	{
 		l->WriteToFile(Error, "SetTransformFailed", 0);
 	}
@@ -272,7 +269,7 @@ void Heightmap::RenderHeightmap(Renderer* render)
 	{
 		l->WriteToFile(Error, "SetTextureHMFailed", 0);
 	}
-	if( FAILED(render->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, (heightBMP * widthBMP), 0, (heightBMP-1) * (widthBMP-1) * 2)))
+	if( FAILED(render->DrawIndexedPrimitive(EPT_TRIANGLELIST, 0, 0, (heightBMP * widthBMP), 0, (heightBMP-1) * (widthBMP-1) * 2)))
 	{
 		l->WriteToFile(Error, "IndexDrawFailed", 0);
 	}

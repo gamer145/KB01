@@ -25,8 +25,12 @@ typedef DWORD ECOLOR;
 #endif /* defined(MAKEFOURCC) */
 
 #define M_PI 3.14159265358979323846f
-#define RADIANS(degree) (M_PI * (degree) / 180.0f)
-#define DEGREES(radian) (radian) * (180 / M_PI)
+
+#define ECUSTOMVERTEX (EFVF_XYZ|EFVF_TEX1)
+#define EFVF_XYZ              0x002
+#define EFVF_TEX1             0x100
+
+
 
 struct CameraData
 {
@@ -148,10 +152,10 @@ enum ETRANSFORMSTATETYPE {
 
 enum EPOOL
 {
-	POOL_DEFAULT = 0,
-	POOL_MANAGED = 1,
-	POOL_SYSTEMMEM = 2,
-	POOL_SCRATCH = 3,
+	EPOOL_DEFAULT = 0,
+	EPOOL_MANAGED = 1,
+	EPOOL_SYSTEMMEM = 2,
+	EPOOL_SCRATCH = 3,
 
 	//POOL_FORCE_DWORD = 0x7fffffff
 }; // end pool definitions
