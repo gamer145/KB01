@@ -18,10 +18,10 @@ public:
 	~Scene_Manager();
 	void SetUpManager(Window_Manager* windowManager, Resource_Manager* resourceManager, Renderer* renderer);
 	void addScene();
-	void UpdateScene();
+	bool UpdateScene();
 	void setCurrentScene(std::string windowname);
 	Window* RequestWindow();
-	Heightmap* hoogteMap;
+	
 private:
 	std::map<Scene*, Window*> Scenes;
 	Window_Manager* myWindowManager;
@@ -30,6 +30,7 @@ private:
 	Scene* CurrentScene;
 	Window* CurrentWindow;
 	Renderer* myRenderer;
+	Heightmap* hoogteMap;
 };
 
 #endif

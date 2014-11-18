@@ -21,12 +21,12 @@ void Scene_Manager::SetUpManager(Window_Manager* windowManager, Resource_Manager
 	CurrentWindow = RequestWindow();
 	myRenderer->setDrawWindow(CurrentWindow);
 	
-	myResourceManager->setRenderer(renderer);
+	myResourceManager->setRenderer(myRenderer);
 	LevelLoader* levelLoader = new LevelLoader();
 
 	CurrentScene = new Scene();
 	CurrentScene->SetRenderer(myRenderer);
-	CurrentScene->setResourceManager(resourceManager);
+	CurrentScene->setResourceManager(myResourceManager);
 	CurrentScene = levelLoader->ReadFromFile(myResourceManager, CurrentScene);
 
 
@@ -38,9 +38,6 @@ void Scene_Manager::SetUpManager(Window_Manager* windowManager, Resource_Manager
 	CurrentScene->initCamera(myInputHandler);
 
 	Scenes.insert (std::pair<Scene*, Window*>(CurrentScene, CurrentWindow));
-
-	
-	UpdateScene();
 }
 
 Window* Scene_Manager::RequestWindow()
@@ -69,12 +66,9 @@ void Scene_Manager::setCurrentScene(std::string windowname)
 	}
 }
 
-void Scene_Manager::UpdateScene()
+bool Scene_Manager::UpdateScene()
 {
 
-	while(!myInputHandler->keyboardwhisperer->ProcessKBInput((byte)DIKEYBOARD_ESCAPE))
-	{
-		
 		CurrentScene->clear();
 		CurrentScene->beginS();
 
@@ -86,6 +80,6 @@ void Scene_Manager::UpdateScene()
 		CurrentScene->endS();
 		CurrentWindow->updateWindow();
 	
-		
-	}
+		return myInputHandler->keyboardwhisperer->ProcessKBInput((byte)DIKEYBOARD_ESCAPE);
+	
 }
