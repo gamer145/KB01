@@ -47,7 +47,7 @@ public:
 	HRESULT SetFVF(EDWORD FVF);
 	HRESULT SetIndices(IndexBufferWrapper* indexbuffer);
 	HRESULT DrawIndexedPrimitive(EPRIMITIVETYPE type, int basevertexindex, int minvertexindex, int numvertices, int startindex, int primcount);
-	void Clear(DWORD count, DWORD flags, ECOLOR color, float z, DWORD stencil);
+	void Clear(EDWORD count, EDWORD flags, ECOLOR color, float z, EDWORD stencil);
 	void BeginS();
 	void EndS();
 	void Present();

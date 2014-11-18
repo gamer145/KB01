@@ -1,7 +1,7 @@
 #ifndef RENDERERINTERFACE_H
 #define RENDERERINTERFACE_H
 
-#include <d3dx9.h>
+//#include <d3dx9.h>
 #include <string>
 #include "Model.h"
 //#include "VisualObject.h"
@@ -37,7 +37,7 @@ public:
 	virtual void DrawPrimitive() = 0;
 	virtual void SetVertexFormat() = 0;
 	virtual void SetUpWorld(MatrixWrapper* WorldMatrix, MatrixWrapper* CameraMatrix, MatrixWrapper* ProjectionMatrix) = 0;
-	virtual void* get3DDevice() = 0;
+//	virtual void* get3DDevice() = 0;
 	virtual HRESULT InitD3D(HWND hWnd) = 0;
 	virtual void addTexture(std::string textname, TextureWrapper* Text) = 0;
 	virtual void addMesh(std::string meshname, MeshWrapper* Mesh) = 0;
@@ -50,7 +50,7 @@ public:
 	virtual HRESULT SetFVF(EDWORD FVF) = 0;
 	virtual HRESULT SetIndices(IndexBufferWrapper* indexbuffer) = 0;
 	virtual HRESULT DrawIndexedPrimitive(EPRIMITIVETYPE type, int basevertexindex, int minvertexindex, int numvertices, int startindex, int primcount) = 0;
-	virtual void Clear(DWORD count, DWORD flags, ECOLOR color, float z, DWORD stencil) = 0;
+	virtual void Clear(EDWORD count, EDWORD flags, ECOLOR color, float z, EDWORD stencil) = 0;
 	virtual void BeginS() = 0;
 	virtual void EndS() = 0;
 	virtual void Present() = 0;
