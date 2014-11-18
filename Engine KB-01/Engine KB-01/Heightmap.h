@@ -14,7 +14,7 @@ class Heightmap
 public:
 	Heightmap();
 	~Heightmap();
-	void SetupHeightmapMatrix(float x, float y, float z, D3DXMATRIX OffSet);
+	void SetupHeightmapMatrix(float x, float y, float z, MatrixWrapper* OffSet);
 	void CreateHeightmap(RendererInterface* render, LPCWSTR argFileName);
 	void RenderHeightmap(RendererInterface* render);
 	byte* LoadBMP(LPCWSTR argFileName);
@@ -22,12 +22,12 @@ public:
 	int GetWidth();
 
 private:
-	LPDIRECT3DINDEXBUFFER9 i_buffer;
-	LPDIRECT3DVERTEXBUFFER9 v_buffer;
+	IndexBufferWrapper* i_buffer;
+	VertexBufferWrapper* v_buffer;
 	int heightBMP;
 	int widthBMP;
 	Logger* l;
-	D3DXMATRIX Position;
+	MatrixWrapper* Position;
 };
 
 #endif

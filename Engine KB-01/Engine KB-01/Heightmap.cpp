@@ -11,7 +11,7 @@ Heightmap::~Heightmap()
 {
 }
 
-void Heightmap::SetupHeightmapMatrix(float x, float y, float z, D3DXMATRIX OffSet)
+void Heightmap::SetupHeightmapMatrix(float x, float y, float z, MatrixWrapper* OffSet)
 {
 	D3DXMATRIX PositionalMatrix;
 	D3DXMATRIX ScalingMatrix;
@@ -19,7 +19,7 @@ void Heightmap::SetupHeightmapMatrix(float x, float y, float z, D3DXMATRIX OffSe
 	D3DXMatrixTranslation(&PositionalMatrix, x, y, z);	
 	D3DXMatrixScaling(&ScalingMatrix, 1000.0f, 1000.0f, 1000.0f);  
 
-	Position = PositionalMatrix * ScalingMatrix * OffSet;
+	Position->SetMatrix(PositionalMatrix * ScalingMatrix * OffSet->GetMatrix());
 }
 
 /*void Heightmap::CreateHeightmap(Renderer* render, LPCWSTR argFileName)
@@ -96,7 +96,7 @@ void Heightmap::SetupHeightmapMatrix(float x, float y, float z, D3DXMATRIX OffSe
 	}
 }*/
 
-void Heightmap::CreateHeightmap(Renderer* render, LPCWSTR argFileName)
+void Heightmap::CreateHeightmap(RendererInterface* render, LPCWSTR argFileName)
 {
 	byte* heightmap = LoadBMP(argFileName);
 	const int vertexcount = heightBMP * widthBMP;
