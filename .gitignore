@@ -1,8 +1,9 @@
+*.opensdf
 *.sdf
 *.suo
-*.obj
-*.idb
 *.pdb
 *.log
 *.tlog
-.debug/
+Engine KB-01/Debug
+Engine KB-01/Engine KB-01/Debug
+Engine KB-01/Demo/Debug

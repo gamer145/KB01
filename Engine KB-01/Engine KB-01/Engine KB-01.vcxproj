@@ -17,7 +17,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v120</PlatformToolset>
@@ -121,6 +121,7 @@
     <ClInclude Include="Heightmap.h" />
     <ClInclude Include="IndexBufferWrapper.h" />
     <ClInclude Include="InputHandler.h" />
+    <ClInclude Include="Kernel.h" />
     <ClInclude Include="KeyboardListener.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelLoader.h" />
