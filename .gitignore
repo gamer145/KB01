@@ -1,12 +1,3 @@
-Engine KB-01/Engine KB-01.v12.suo
-Engine KB-01/Engine KB-01.sdf
-Engine KB-01/Engine KB-01.opensdf
-*.sdf
-*.suo
-*.sdf
-Engine KB-01/Engine KB-01.v12.suo
-Engine KB-01/Engine KB-01.sdf
-Engine KB-01/Engine KB-01.v12.suo
 *.sdf
 *.suo
 *.obj
@@ -14,6 +5,4 @@ Engine KB-01/Engine KB-01.v12.suo
 *.pdb
 *.log
 *.tlog
-Engine KB-01/Engine KB-01.sdf
-*.sdf
-*.suo
+.debug/
