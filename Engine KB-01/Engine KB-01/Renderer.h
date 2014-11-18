@@ -8,8 +8,7 @@
 #include <mmsystem.h>
 #include <strsafe.h>
 #include <vector>
-#include <string>
-#include <map>
+
 
 
 class Entity;
@@ -34,7 +33,7 @@ public:
 	void DrawPrimitive();
 	void SetVertexFormat();
 	void SetUpWorld(MatrixWrapper* WorldMatrix, MatrixWrapper* CameraMatrix, MatrixWrapper* ProjectionMatrix);
-	void* get3DDevice();
+	//void* get3DDevice();
 	HRESULT InitD3D( HWND hWnd );
 	void addTexture(std::string textname, TextureWrapper* Text);
 	void addMesh(std::string meshname, MeshWrapper* Mesh);

@@ -8,10 +8,10 @@
 	class MatrixWrapper
 	{
 	public:
-		MatrixWrapper::MatrixWrapper(D3DXMATRIX newMatrix);
-		MatrixWrapper::~MatrixWrapper();
-		void MatrixWrapper::SetMatrix(D3DXMATRIX newMatrix);
-		D3DXMATRIX MatrixWrapper::GetMatrix();
+		MatrixWrapper(D3DXMATRIX newMatrix);
+		~MatrixWrapper();
+		void SetMatrix(D3DXMATRIX newMatrix);
+		D3DXMATRIX GetMatrix();
 	private:
 		D3DXMATRIX matrix;
 
