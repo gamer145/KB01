@@ -15,3 +15,5 @@ Engine KB-01/Engine KB-01.v12.suo
 *.log
 *.tlog
 Engine KB-01/Engine KB-01.sdf
+*.sdf
+*.suo
