@@ -1,3 +1,7 @@
 *.opensdf
 *.sdf
 *.sdf
+*.pdb
+*.log
+*.tlog
+.debug/
