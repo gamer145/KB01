@@ -2,7 +2,7 @@
 #define ENTITY_H
 
 #include <d3dx9.h>
-#include "Renderer.h"
+
 
 
 class Entity
