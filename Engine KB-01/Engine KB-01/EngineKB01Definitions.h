@@ -10,11 +10,9 @@ typedef unsigned char       EBYTE;
 typedef EDWORD ECOLOR;
 // end color definitions
 
-//windows definitions
-typedef unsigned long EDWORD;
-//end windows definitions
 
-typedef DWORD ECOLOR;
+
+
 
 // format definitions
 #ifndef MAKEFOURCC
@@ -26,9 +24,10 @@ typedef DWORD ECOLOR;
 
 #define M_PI 3.14159265358979323846f
 
-#define ECUSTOMVERTEX (EFVF_XYZ|EFVF_TEX1)
 #define EFVF_XYZ              0x002
 #define EFVF_TEX1             0x100
+#define ECUSTOMVERTEX (EFVF_XYZ|EFVF_TEX1)
+
 
 
 
