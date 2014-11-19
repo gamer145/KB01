@@ -33,6 +33,16 @@ InputHandler::~InputHandler()
 	dInput = NULL; //Just to be safe, we nullify the pointer
 }
 
+KeyboardListener* InputHandler::getKeyBoardListener()
+{
+	return keyboardwhisperer;
+}
+
+MouseListener* InputHandler::getMouseListener()
+{
+	return mousewhisperer;
+}
+
 /**
  * Function:	InputHandler::InitDInput()
  * Description:	Create a DirectInput instance

@@ -85,7 +85,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="CameraLoader.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Heightmap.cpp" />
     <ClCompile Include="IndexBufferWrapper.cpp" />
@@ -108,7 +107,6 @@
     <ClCompile Include="Resource_Manager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Scene_Manager.cpp" />
-    <ClCompile Include="SkyboxLoader.cpp" />
     <ClCompile Include="TextureLoader.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Window_Manager.cpp" />
@@ -116,7 +114,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="CameraLoader.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Heightmap.h" />
     <ClInclude Include="IndexBufferWrapper.h" />
@@ -140,7 +137,6 @@
     <ClInclude Include="Resource_Manager.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Scene_Manager.h" />
-    <ClInclude Include="SkyboxLoader.h" />
     <ClInclude Include="TextureLoader.h" />
     <ClInclude Include="Structs.h" />
     <ClInclude Include="Timer.h" />

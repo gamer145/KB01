@@ -4,12 +4,10 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <Windows.h>
-#include "CameraLoader.h"
 //#include "LevelLoader.h"
 #include "Model.h"
 #include "ModelLoader.h"
 #include "Renderer.h"
-#include "SkyboxLoader.h"
 #include "Texture.h"
 #include "TextureLoader.h"
 #include "VisualObject.h"
@@ -28,11 +26,9 @@ public:
 	bool checkMesh(std::string meshname);
 
 private:
-	CameraLoader cameraLoader;
 	//LevelLoader levelLoader;
 	ModelLoader modelLoader;
 	Renderer* renderer;
-	SkyboxLoader skyboxLoader;
 	TextureLoader textureLoader;
 };
 
