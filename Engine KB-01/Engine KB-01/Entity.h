@@ -2,18 +2,18 @@
 #define ENTITY_H
 
 #include <d3dx9.h>
-
+#include "MatrixWrapper.h"
 
 
 class Entity
 {
 public:
-	virtual D3DXMATRIX getPosition();
+	virtual MatrixWrapper* getPosition();
 	virtual void Initialize() =0;
 	Entity();
 	~Entity();
 protected:
-	D3DXMATRIX Position;
+	MatrixWrapper* Position;
 private:
 
 };

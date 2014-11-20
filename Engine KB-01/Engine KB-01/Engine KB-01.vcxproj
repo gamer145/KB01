@@ -99,6 +99,7 @@
     <ClCompile Include="MatrixWrapper.cpp" />
     <ClCompile Include="MeshWrapper.cpp" />
     <ClCompile Include="TextureWrapper.cpp" />
+    <ClCompile Include="VectorWrapper.cpp" />
     <ClCompile Include="VertexBufferWrapper.cpp" />
     <ClCompile Include="VisualObject.cpp" />
     <ClCompile Include="ModelLoader.cpp" />
@@ -131,6 +132,7 @@
     <ClInclude Include="MatrixWrapper.h" />
     <ClInclude Include="MeshWrapper.h" />
     <ClInclude Include="TextureWrapper.h" />
+    <ClInclude Include="VectorWrapper.h" />
     <ClInclude Include="VertexBufferWrapper.h" />
     <ClInclude Include="VisualObject.h" />
     <ClInclude Include="ModelLoader.h" />

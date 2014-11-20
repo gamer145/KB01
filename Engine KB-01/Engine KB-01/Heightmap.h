@@ -22,8 +22,8 @@ public:
 	int GetWidth();
 
 private:
-	IndexBufferWrapper* i_buffer;
-	VertexBufferWrapper* v_buffer;
+	std::string i_buffer;
+	std::string v_buffer;
 	int heightBMP;
 	int widthBMP;
 	Logger* l;

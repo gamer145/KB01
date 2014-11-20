@@ -74,6 +74,32 @@ HRESULT Renderer::SetTexture(std::string textname)
 	return S_OK;
 }
 
+HRESULT Renderer::LoadMeshFromFile(std::string filename, EDWORD options, MeshWrapper* destination)
+{
+
+	std::string modLocation = "..\\Models\\" + filename;
+	std::wstring stemp = std::wstring(modLocation.begin(), modLocation.end());
+	LPCWSTR modelLPCWSTR = stemp.c_str();
+	
+	LPD3DXMESH mesh = destination->GetMesh();
+
+	return D3DXLoadMeshFromX(modelLPCWSTR, options,
+		g_pd3dDevice, NULL,
+		NULL, NULL, NULL,
+		&mesh);
+}
+
+HRESULT Renderer::LoadTextureFromFile(std::string filename, EDWORD options, TextureWrapper* destination)
+{
+	std::string textLocation = "..\\Models\\" + filename;
+	LPSTR textureLPSTR = const_cast<CHAR*>(textLocation.c_str());
+	LPDIRECT3DTEXTURE9 TheTexture = destination->GetTexture();
+
+	return D3DXCreateTextureFromFileA(g_pd3dDevice,
+		textureLPSTR,
+		&TheTexture);
+}
+
 void Renderer::SetUpWorld(MatrixWrapper* WorldMatrix, MatrixWrapper* CameraMatrix, MatrixWrapper* ProjectionMatrix)
 {
 	g_pd3dDevice->SetTransform(D3DTS_WORLD, &WorldMatrix->GetMatrix());
@@ -92,10 +118,6 @@ void Renderer::DrawSubSet(std::string meshname)
 }
 
 
-void* Renderer::get3DDevice()
-{
-	return g_pd3dDevice;
-}
 
 void Renderer::addTexture(std::string textname, TextureWrapper* Text)
 {
@@ -114,14 +136,80 @@ void Renderer::setStreamSource(IDirect3DVertexBuffer9 *pStreamData, UINT OffsetI
 }
 */
 
-void Renderer::CreateVertexBuffer(int heightmapvertex, EDWORD usage, EDWORD fvf, EPOOL pool, VertexBufferWrapper* vertexbuffer, HANDLE handle)
+void Renderer::CreateVertexBuffer(int heightmapvertex, EDWORD usage, EDWORD fvf, EPOOL pool, std::string vertexbuffername, HANDLE handle)
 {
-	g_pd3dDevice->CreateVertexBuffer(heightmapvertex, usage, fvf, static_cast<D3DPOOL>(pool), vertexbuffer->GetVertexBuffer(), &handle);
+	VertexBufferExists(vertexbuffername);
+
+	IDirect3DVertexBuffer9** vertexbuffer = VertexBuffers.find(vertexbuffername)->second;
+
+	g_pd3dDevice->CreateVertexBuffer(heightmapvertex, usage, fvf, static_cast<D3DPOOL>(pool), vertexbuffer, &handle);
 }
 
-HRESULT Renderer::CreateIndexBuffer(int length, EDWORD usage, EFORMAT format, EPOOL pool, IndexBufferWrapper* Indexbuffer, HANDLE* handle)
+HRESULT Renderer::CreateIndexBuffer(int length, EDWORD usage, EFORMAT format, EPOOL pool, std::string indexbuffername, HANDLE* handle)
 {
-	return g_pd3dDevice->CreateIndexBuffer(length, usage, static_cast<D3DFORMAT>(format), static_cast<D3DPOOL>(pool), Indexbuffer->GetIndexBuffer(), NULL);
+	IndexBufferExists(indexbuffername);
+
+	IDirect3DIndexBuffer9** indexbuffer = IndexBuffers.find(indexbuffername)->second;
+
+	return g_pd3dDevice->CreateIndexBuffer(length, usage, static_cast<D3DFORMAT>(format), static_cast<D3DPOOL>(pool), indexbuffer, NULL);
+}
+
+HRESULT Renderer::LockVertexBuffer(std::string vertexbuffername, int offsettolock, int sizetolock, void* pbdata, EDWORD flags)
+{
+	IDirect3DVertexBuffer9** vertexbuffer = VertexBuffers.find(vertexbuffername)->second;
+
+	return (*vertexbuffer)->Lock(offsettolock, sizetolock, &pbdata, flags);
+}
+
+HRESULT Renderer::LockIndexBuffer(std::string indexbuffername, int offsettolock, int sizetolock, void* pbdata, EDWORD flags)
+{
+	IDirect3DIndexBuffer9** indexbuffer = IndexBuffers.find(indexbuffername)->second;
+
+	return (*indexbuffer)->Lock(offsettolock, sizetolock, &pbdata, flags);
+}
+
+HRESULT Renderer::UnlockVertexBuffer(std::string vertexbuffername)
+{
+	IDirect3DVertexBuffer9** vertexbuffer = VertexBuffers.find(vertexbuffername)->second;
+
+	return (*vertexbuffer)->Unlock();
+}
+
+HRESULT Renderer::UnlockIndexBuffer(std::string indexbuffername)
+{
+	IDirect3DIndexBuffer9** indexbuffer = IndexBuffers.find(indexbuffername)->second;
+
+	return (*indexbuffer)->Unlock();
+}
+
+bool Renderer::VertexBufferExists(std::string vertexbuffername)
+{
+	if (VertexBuffers.find(vertexbuffername) != VertexBuffers.end())
+	{
+		return true;
+	}
+	else{
+		IDirect3DVertexBuffer9**  vertexbuffer;
+
+		VertexBuffers.insert(std::pair<std::string, IDirect3DVertexBuffer9**>(vertexbuffername, vertexbuffer));
+
+		return false;
+	}
+}
+
+bool Renderer::IndexBufferExists(std::string indexbuffername)
+{
+	if (IndexBuffers.find(indexbuffername) != IndexBuffers.end())
+	{
+		return true;
+	}
+	else{
+		IDirect3DIndexBuffer9**  indexbuffer;
+
+		IndexBuffers.insert(std::pair<std::string, IDirect3DIndexBuffer9**>(indexbuffername, indexbuffer));
+
+		return false;
+	}
 }
 
 HRESULT Renderer::setTransform(ETRANSFORMSTATETYPE transform, MatrixWrapper* matrix)
@@ -129,9 +217,11 @@ HRESULT Renderer::setTransform(ETRANSFORMSTATETYPE transform, MatrixWrapper* mat
 	return g_pd3dDevice->SetTransform(static_cast<D3DTRANSFORMSTATETYPE>(transform), &matrix->GetMatrix());
 }
 
-HRESULT Renderer::SetStreamSource(int streamnumber, VertexBufferWrapper* vertexbuffer, int offset, int stride)
+HRESULT Renderer::SetStreamSource(int streamnumber, std::string vertexbuffername, int offset, int stride)
 {
-	return g_pd3dDevice->SetStreamSource(streamnumber, *vertexbuffer->GetVertexBuffer(), offset, stride);
+	IDirect3DVertexBuffer9** vertexbuffer = VertexBuffers.find(vertexbuffername)->second;
+
+	return g_pd3dDevice->SetStreamSource(streamnumber, *vertexbuffer, offset, stride);
 }
 
 HRESULT Renderer::SetFVF(DWORD FVF)
@@ -139,9 +229,11 @@ HRESULT Renderer::SetFVF(DWORD FVF)
 	return g_pd3dDevice->SetFVF(FVF);
 }
 
-HRESULT Renderer::SetIndices(IndexBufferWrapper* indexbuffer)
+HRESULT Renderer::SetIndices(std::string indexbuffername)
 {
-	return g_pd3dDevice->SetIndices(*indexbuffer->GetIndexBuffer());
+	IDirect3DIndexBuffer9** indexbuffer = IndexBuffers.find(indexbuffername)->second;
+
+	return g_pd3dDevice->SetIndices(*indexbuffer);
 }
 
 HRESULT Renderer::DrawIndexedPrimitive(EPRIMITIVETYPE type, int basevertexindex, int minvertexindex, int numvertices, int startindex, int primcount)

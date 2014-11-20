@@ -3,6 +3,8 @@
 
 #include "Entity.h"
 #include "InputHandler.h"
+#include "MatrixWrapper.h"
+#include "VectorWrapper.h"
 
 class Camera : public Entity
 {
@@ -10,9 +12,9 @@ public:
 	Camera();
 	~Camera();	
 	void Initialize();
-	void SetEyePoint(D3DXVECTOR3 newVector);
-	void SetLookAtPoint(D3DXVECTOR3 newVector);
-	void SetUpVector(D3DXVECTOR3 newVector);
+	void SetEyePoint(VectorWrapper* newVector);
+	void SetLookAtPoint(VectorWrapper* newVector);
+	void SetUpVector(VectorWrapper* newVector);
 	void SetInputHandler(InputHandler* IH);
 
 	void ModifyWorldX(float modifier);
@@ -24,19 +26,24 @@ public:
 
 	void Update();
 
-	D3DXMATRIX getProjectionMatrix();
-	D3DXMATRIX getOffSetMatrix();
+	MatrixWrapper* getProjectionMatrix();
+	MatrixWrapper* getOffSetMatrix();
 
 private:
-	D3DXVECTOR3 EyePoint;
-    D3DXVECTOR3 LookatPoint;
-    D3DXVECTOR3 UpVector;
-	D3DXMATRIX ProjectionMatrix;
+	VectorWrapper* EyePoint;
+	VectorWrapper* LookatPoint;
+	VectorWrapper* UpVector;
+	MatrixWrapper* ProjectionMatrix;
 	InputHandler* myInputHandler;
 	void UpdateOffSetMatrix();
 	float x,y,z, XAngle, YAngle, ZAngle;
 	int mousewheel, xpos, ypos;
-	D3DXMATRIX OffSetMatrix, WorldXRotation, WorldYRotation, WorldZRotation, WorldRotation, WorldPosition;
+	MatrixWrapper* OffSetMatrix;
+	MatrixWrapper* WorldXRotation;
+	MatrixWrapper* WorldYRotation;
+	MatrixWrapper* WorldZRotation;
+	MatrixWrapper* WorldRotation;
+	MatrixWrapper* WorldPosition;
 	
 };
 

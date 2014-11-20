@@ -8,7 +8,7 @@ Entity::~Entity()
 {
 }
 
-D3DXMATRIX Entity::getPosition()
+MatrixWrapper* Entity::getPosition()
 {
 	return Position;
 }

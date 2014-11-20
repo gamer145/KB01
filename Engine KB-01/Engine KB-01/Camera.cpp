@@ -2,9 +2,9 @@
 
 Camera::Camera()
 {
-	EyePoint = D3DXVECTOR3(0, 0, 0);
-	LookatPoint = D3DXVECTOR3(0, 0, 0);
-	UpVector = D3DXVECTOR3(0, 0, 0);
+	EyePoint = &VectorWrapper(0, 0, 0);
+	LookatPoint = &VectorWrapper(0, 0, 0);
+	UpVector = &VectorWrapper(0, 0, 0);
 	x = 0;
 	y = 0;
 	z = 0;
@@ -12,6 +12,14 @@ Camera::Camera()
 	YAngle = 0;
 	ZAngle = 0;
 
+	Position = new MatrixWrapper();
+	ProjectionMatrix = new MatrixWrapper();
+	OffSetMatrix = new MatrixWrapper();
+	WorldXRotation = new MatrixWrapper();
+	WorldYRotation = new MatrixWrapper();
+	WorldZRotation = new MatrixWrapper();
+	WorldRotation = new MatrixWrapper();
+	WorldPosition = new MatrixWrapper();
 }
 
 Camera::~Camera()
@@ -21,8 +29,8 @@ Camera::~Camera()
 
 void Camera::Initialize()
 {
-	D3DXMatrixLookAtLH( &Position, &EyePoint, &LookatPoint, &UpVector );
-	D3DXMatrixPerspectiveFovLH(&ProjectionMatrix, D3DX_PI / 4, 1.0f, 1.0f, 100000.0f );
+	Position->MatrixLookAtLH( EyePoint, LookatPoint, UpVector );
+	ProjectionMatrix->MatrixPerspectiveFovLH(D3DX_PI / 4, 1.0f, 1.0f, 100000.0f);
 	mousewheel = 0;
 	xpos = 0;
 	ypos = 0;
@@ -33,17 +41,17 @@ void Camera::SetInputHandler(InputHandler* IH)
 	myInputHandler = IH;
 }
 
-void Camera::SetEyePoint(D3DXVECTOR3 newVector)
+void Camera::SetEyePoint(VectorWrapper* newVector)
 {
 	EyePoint = newVector;
 }
 
-void Camera::SetLookAtPoint(D3DXVECTOR3 newVector)
+void Camera::SetLookAtPoint(VectorWrapper* newVector)
 {
 	LookatPoint = newVector;
 }
 
-void Camera::SetUpVector(D3DXVECTOR3 newVector)
+void Camera::SetUpVector(VectorWrapper* newVector)
 {
 	UpVector = newVector;
 }
@@ -78,12 +86,12 @@ void Camera::ModifyWorldZAngle(float modifier)
 	ZAngle += modifier;
 }
 
-D3DXMATRIX Camera::getProjectionMatrix()
+MatrixWrapper* Camera::getProjectionMatrix()
 {
 	return ProjectionMatrix;
 }
 
-D3DXMATRIX Camera::getOffSetMatrix()
+MatrixWrapper* Camera::getOffSetMatrix()
 {
 	return OffSetMatrix;
 }
@@ -172,11 +180,11 @@ void Camera::Update()
 
 void Camera::UpdateOffSetMatrix()
 {
-    D3DXMatrixRotationY( &WorldYRotation, XAngle);
-	D3DXMatrixRotationX( &WorldXRotation, YAngle);
-	D3DXMatrixRotationZ( &WorldZRotation, ZAngle);
-	D3DXMatrixTranslation(&WorldPosition, x, y, z);
+	WorldYRotation->MatrixRotationY(XAngle);
+	WorldXRotation->MatrixRotationX(YAngle);
+	WorldZRotation->MatrixRotationZ(ZAngle);
+	WorldPosition->MatrixTranslation(x, y, z);
 
-	WorldRotation = WorldXRotation * WorldYRotation * WorldZRotation;
-	OffSetMatrix = WorldRotation * WorldPosition;
+	WorldRotation->SetMatrix(WorldXRotation->GetMatrix() * WorldYRotation->GetMatrix() * WorldZRotation->GetMatrix());
+	OffSetMatrix->SetMatrix(WorldRotation->GetMatrix() * WorldPosition->GetMatrix());
 }

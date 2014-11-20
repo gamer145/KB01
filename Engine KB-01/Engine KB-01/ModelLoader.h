@@ -14,7 +14,7 @@ class ModelLoader
 public:
 	ModelLoader();
 	~ModelLoader();
-	HRESULT LoadModel(std::string modelname, Renderer* renderer, VisualObject* object);
+	HRESULT LoadModel(std::string modelname, RendererInterface* renderer, VisualObject* object);
 };
 
 #endif

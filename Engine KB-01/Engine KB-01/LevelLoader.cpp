@@ -63,7 +63,7 @@ LevelLoader::~LevelLoader()
 
 					VisualObject* tempobject1;
 					tempobject1 = resourceManager->LoadInModel(strMN, strTN);
-					D3DXMATRIX Position1;
+					MatrixWrapper* Position1 = new MatrixWrapper();
 					float x = 0;
 					float y = 0;
 					float z = 0;
@@ -71,7 +71,7 @@ LevelLoader::~LevelLoader()
 					sscanf_s(strY.c_str(), "%f", &y);
 					sscanf_s(strZ.c_str(), "%f", &z);
 
-					D3DXMatrixTranslation(&Position1, x, y, z);
+					Position1->MatrixTranslation(x, y, z);
 					tempobject1->setPosition(Position1);
 					currentScene->AddObject(tempobject1);
 				}
@@ -91,13 +91,13 @@ LevelLoader::~LevelLoader()
 					std::cout << strTN << '\n';
 					std::cout << strMultiplier1 << '\n';
 
-					D3DXMATRIX SkyboxPosition;
+					MatrixWrapper* SkyboxPosition = new MatrixWrapper();
 					VisualObject* skybox;
 					skybox = resourceManager->LoadInModel(strMN, strTN);
-					D3DXMatrixTranslation(&SkyboxPosition, 0, 0, 0);
+					SkyboxPosition->MatrixTranslation(0, 0, 0);
 					float multiplier = 0;
 					sscanf_s(strMultiplier1.c_str(), "%f", &multiplier);
-					D3DXMatrixScaling(&SkyboxPosition, multiplier, multiplier, multiplier);
+					SkyboxPosition->MatrixScaling( multiplier, multiplier, multiplier);
 					skybox->setPosition(SkyboxPosition);
 					currentScene->AddObject(skybox);
 				}
@@ -137,9 +137,9 @@ LevelLoader::~LevelLoader()
 					sscanf_s(strLZ.c_str(), "%f", &LZ);
 
 
-					camera->SetEyePoint(D3DXVECTOR3(X, Y,Z));
-					camera->SetLookAtPoint(D3DXVECTOR3(LX, LY, LZ));
-					camera->SetUpVector(D3DXVECTOR3(0.0f, 1.0f, 0.0f)); // Hard Coded
+					camera->SetEyePoint(&VectorWrapper(X, Y, Z));
+					camera->SetLookAtPoint(&VectorWrapper(LX, LY, LZ));
+					camera->SetUpVector(&VectorWrapper(0.0f, 1.0f, 0.0f)); // Hard Coded
 					currentScene->setCamera(camera);
 				}
 			}

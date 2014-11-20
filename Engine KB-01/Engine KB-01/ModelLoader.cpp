@@ -8,40 +8,20 @@ ModelLoader::~ModelLoader()
 {
 }
 
-HRESULT ModelLoader::LoadModel(std::string modelname, Renderer* renderer, VisualObject* object)
+HRESULT ModelLoader::LoadModel(std::string modelname, RendererInterface* renderer, VisualObject* object)
 {
-	LPD3DXMESH mesh = NULL;
-
-	//Model* mod = new Model;
-	//mod->setMesh(mesh);
-	//mod->setModelName(modelname);
-
-	std::string modLocation = "..\\Models\\" + modelname;
-	std::wstring stemp = std::wstring(modLocation.begin(), modLocation.end());
-	LPCWSTR modelLPCWSTR = stemp.c_str();
-
-	//LPDIRECT3DTEXTURE9* TheModel;
-
-	HRESULT result = D3DXLoadMeshFromX( modelLPCWSTR, D3DXMESH_SYSTEMMEM,
-										((LPDIRECT3DDEVICE9)renderer->get3DDevice()), NULL,
-                                       NULL, NULL, NULL,
-									   &mesh );
-
+	MeshWrapper* mesh = new MeshWrapper();
 	
-	if( FAILED( D3DXLoadMeshFromX( modelLPCWSTR, D3DXMESH_SYSTEMMEM,
-										((LPDIRECT3DDEVICE9)renderer->get3DDevice()), NULL,
-                                       NULL, NULL, NULL,
-									   &mesh ) ) )
+	
+	if( FAILED( renderer->LoadMeshFromFile(modelname, 272, mesh) ) )
         {
             MessageBox( NULL, L"Could not find model", L"Meshes.exe", MB_OK );
           
         }
 
-	MeshWrapper* TheNewMesh = new MeshWrapper(mesh);
+	renderer->addMesh(modelname, mesh);
 
-	renderer->addMesh(modelname, TheNewMesh);
-
-	object->setSubSet(D3DXMESH_SYSTEMMEM);
+	object->setSubSet(272);
 
 	return S_OK;
 }

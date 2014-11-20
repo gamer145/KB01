@@ -2,6 +2,7 @@
 
 VisualObject::VisualObject()
 {
+	Position = new MatrixWrapper();
 }
 
 VisualObject::~VisualObject()
@@ -28,7 +29,7 @@ void VisualObject::setTexture(std::string newTextname)
 	textname = newTextname;
 }
 
-void VisualObject::setPosition(D3DXMATRIX newPosition)
+void VisualObject::setPosition(MatrixWrapper* newPosition)
 {
 	Position = newPosition;
 }
@@ -49,13 +50,15 @@ void VisualObject::setSubSet(int newDWORD)
 	subsets = newDWORD;
 }
 
-void VisualObject::draw(Renderer* myRenderer, D3DXMATRIX WorldMatrix)
+void VisualObject::draw(RendererInterface* myRenderer, MatrixWrapper* WorldMatrix)
 {
 	myRenderer->SetTexture(textname);
 							
 //	D3DXMATRIX* world = &D3DTS_WORLD;
 
-	MatrixWrapper* TheNewMatrix = new MatrixWrapper((getPosition() * WorldMatrix));
+	MatrixWrapper* TheNewMatrix = new MatrixWrapper();
+
+	TheNewMatrix->SetMatrix((getPosition()->GetMatrix() * WorldMatrix->GetMatrix()));
 
 	myRenderer->setTransform(E_WORLD, TheNewMatrix);
 

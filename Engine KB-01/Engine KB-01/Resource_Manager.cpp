@@ -13,7 +13,7 @@ Resource_Manager::~Resource_Manager()
 }
 
 
-void Resource_Manager::setRenderer(Renderer* newRenderer)
+void Resource_Manager::setRenderer(RendererInterface* newRenderer)
 {
 	renderer = newRenderer;
 }
@@ -37,10 +37,10 @@ void Resource_Manager::loadManualTexture(std::string texturename)
 bool Resource_Manager::checkText(std::string textname)
 {
 
-	std::map<std::string, LPDIRECT3DTEXTURE9> textures = renderer->getTextures();
+	std::map<std::string, TextureWrapper*> textures = renderer->getTextures();
 	//std::map<std::string, LPDIRECT3DTEXTURE9>::iterator a = textures.end();
 
-	for(std::map<std::string, LPDIRECT3DTEXTURE9>::iterator i = textures.begin(); i != textures.end(); ++i)
+	for (std::map<std::string, TextureWrapper*>::iterator i = textures.begin(); i != textures.end(); ++i)
 	{
 		if(i->first == textname)
 		{
@@ -53,10 +53,10 @@ bool Resource_Manager::checkText(std::string textname)
 
 bool Resource_Manager::checkMesh(std::string meshname)
 {
-	std::map<std::string, LPD3DXMESH> meshes = renderer->getMeshes();
+	std::map<std::string, MeshWrapper*> meshes = renderer->getMeshes();
 	//std::map<std::string, LPD3DXMESH>::iterator a = meshes.end();
 
-	for(std::map<std::string, LPD3DXMESH>::iterator i = meshes.begin(); i != meshes.end(); ++i)
+	for (std::map<std::string, MeshWrapper*>::iterator i = meshes.begin(); i != meshes.end(); ++i)
 	{
 		if(i->first == meshname)
 		{

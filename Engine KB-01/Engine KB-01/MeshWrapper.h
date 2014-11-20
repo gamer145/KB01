@@ -7,7 +7,7 @@
 	class MeshWrapper
 	{
 	public:
-		MeshWrapper(LPD3DXMESH _mesh);
+		MeshWrapper();
 		~MeshWrapper();
 		void SetMesh(LPD3DXMESH _mesh);
 		LPD3DXMESH GetMesh();

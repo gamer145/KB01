@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <string>
-#include "Renderer.h"
+#include "RendererInterface.h"
 //#include "Resource_Manager.h"
 #include "Texture.h"
 
@@ -12,7 +12,7 @@ class TextureLoader
 public:
 	TextureLoader();
 	~TextureLoader();
-	HRESULT LoadTexture(std::string texturename, Renderer* renderer);
+	HRESULT LoadTexture(std::string texturename, RendererInterface* renderer);
 };
 
 #endif

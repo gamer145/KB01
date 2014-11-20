@@ -8,7 +8,7 @@
 //#include "LevelLoader.h"
 #include "Model.h"
 #include "ModelLoader.h"
-#include "Renderer.h"
+#include "RendererInterface.h"
 #include "SkyboxLoader.h"
 #include "Texture.h"
 #include "TextureLoader.h"
@@ -20,7 +20,7 @@ class Resource_Manager
 public:
 	Resource_Manager();
 	~Resource_Manager();
-	void setRenderer(Renderer* newRenderer);
+	void setRenderer(RendererInterface* newRenderer);
 	VisualObject* LoadInModel(std::string modelname, std::string texturename);
 	void loadManualTexture(std::string texturename);
 
@@ -31,7 +31,7 @@ private:
 	CameraLoader cameraLoader;
 	//LevelLoader levelLoader;
 	ModelLoader modelLoader;
-	Renderer* renderer;
+	RendererInterface* renderer;
 	SkyboxLoader skyboxLoader;
 	TextureLoader textureLoader;
 };

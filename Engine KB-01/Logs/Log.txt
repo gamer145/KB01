@@ -1,1 +1,25 @@
 
+[19-11-2014 15:11:19] [Ln 0] Success: The heightdata has been retrieved.
+[19-11-2014 15:14:52] [Ln 0] Success: The heightdata has been retrieved.
+[19-11-2014 15:17:25] [Ln 0] Success: The heightdata has been retrieved.
+[19-11-2014 15:18:26] [Ln 0] Success: The heightdata has been retrieved.
+[19-11-2014 15:22:21] [Ln 0] Success: The heightdata has been retrieved.
+[19-11-2014 15:24:36] [Ln 0] Success: The heightdata has been retrieved.
+[19-11-2014 15:26:59] [Ln 0] Success: The heightdata has been retrieved.
+[19-11-2014 15:27:09] [Ln 0] Success: The heightdata has been retrieved.
+[19-11-2014 15:31:49] [Ln 0] Success: The heightdata has been retrieved.
+[19-11-2014 15:34:27] [Ln 0] Success: The heightdata has been retrieved.
+[19-11-2014 15:35:33] [Ln 0] Success: The heightdata has been retrieved.
+[19-11-2014 15:40:12] [Ln 0] Success: The heightdata has been retrieved.
+[19-11-2014 15:40:24] [Ln 0] Success: The heightdata has been retrieved.
+[19-11-2014 15:40:44] [Ln 0] Success: The heightdata has been retrieved.
+[19-11-2014 15:44:39] [Ln 0] Success: The heightdata has been retrieved.
+[19-11-2014 16:33:14] [Ln 0] Success: The heightdata has been retrieved.
+[19-11-2014 16:35:16] [Ln 0] Success: The heightdata has been retrieved.
+[19-11-2014 16:50:22] [Ln 0] Success: The heightdata has been retrieved.
+[19-11-2014 16:52:06] [Ln 0] Success: The heightdata has been retrieved.
+[19-11-2014 16:52:34] [Ln 0] Success: The heightdata has been retrieved.
+[19-11-2014 16:52:50] [Ln 0] Success: The heightdata has been retrieved.
+[19-11-2014 16:53:18] [Ln 0] Success: The heightdata has been retrieved.
+[20-11-2014 11:05:46] [Ln 0] Success: The heightdata has been retrieved.
+[20-11-2014 11:08:35] [Ln 0] Success: The heightdata has been retrieved.

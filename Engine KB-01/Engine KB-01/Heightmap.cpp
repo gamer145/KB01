@@ -1,10 +1,11 @@
 #include "Heightmap.h"
 
-#define D3DFVF_CUSTOMVERTEX (D3DFVF_XYZ|D3DFVF_TEX1)
+//#define D3DFVF_CUSTOMVERTEX (D3DFVF_XYZ|D3DFVF_TEX1)
 
 Heightmap::Heightmap()
 {
-
+	v_buffer = "HeightMapVertexBuffer";
+	i_buffer = "HeightMapIndexBuffer";
 }
 
 Heightmap::~Heightmap()
@@ -98,6 +99,9 @@ void Heightmap::SetupHeightmapMatrix(float x, float y, float z, MatrixWrapper* O
 
 void Heightmap::CreateHeightmap(RendererInterface* render, LPCWSTR argFileName)
 {
+	render->VertexBufferExists(v_buffer);
+	render->IndexBufferExists(i_buffer);
+
 	byte* heightmap = LoadBMP(argFileName);
 	const int vertexcount = heightBMP * widthBMP;
 	HEIGHTMAPVERTEX* vertices;
@@ -121,6 +125,8 @@ void Heightmap::CreateHeightmap(RendererInterface* render, LPCWSTR argFileName)
 
     // create a vertex buffer interface called v_buffer
 
+	//v_buffer = new VertexBufferWrapper();
+
 	render->CreateVertexBuffer(vertexcount*sizeof(HEIGHTMAPVERTEX),
 		0, ECUSTOMVERTEX, EPOOL_MANAGED, v_buffer, NULL);
 
@@ -132,13 +138,13 @@ void Heightmap::CreateHeightmap(RendererInterface* render, LPCWSTR argFileName)
 	VOID* pVoid2; // a void pointer
 
     // lock v_buffer and load the vertices into it
-    if( FAILED( (*v_buffer->GetVertexBuffer())->Lock(0, sizeof(HEIGHTMAPVERTEX) * vertexcount, (void**)&pVoid, 0)))
+    if( FAILED( render->LockVertexBuffer(v_buffer, 0, sizeof(HEIGHTMAPVERTEX) * vertexcount, (void*)pVoid, 0)))
 	{
 		l->WriteToFile(Error, "VBLockFailed", 0);
 	}
 	memcpy(pVoid, vertices, sizeof(HEIGHTMAPVERTEX) * vertexcount);
 
-	if (FAILED((*v_buffer->GetVertexBuffer())->Unlock()))
+	if (FAILED(render->UnlockVertexBuffer(v_buffer)))
 	{
 		l->WriteToFile(Error, "VBUnLockFailed", 0);
 	}
@@ -168,6 +174,7 @@ void Heightmap::CreateHeightmap(RendererInterface* render, LPCWSTR argFileName)
 		ifindexcount++;
 	}
 
+	
 
 	render->CreateIndexBuffer((amountIndices)*sizeof(int),
 		0, FMT_INDEX32, EPOOL_MANAGED, i_buffer, NULL);
@@ -177,14 +184,14 @@ void Heightmap::CreateHeightmap(RendererInterface* render, LPCWSTR argFileName)
 
     // lock i_buffer and load the indices into it
 
-	if( FAILED( (*i_buffer->GetIndexBuffer())->Lock(0, sizeof(int) * amountIndices, (void**)&pVoid2, 0)))
+	if( FAILED( render->LockIndexBuffer(i_buffer, 0, sizeof(int) * amountIndices, (void*)pVoid2, 0)))
 	{
 		l->WriteToFile(Error, "IBLockFailed", 0);
 	}
 
 	memcpy(pVoid2, indices, sizeof(int) * amountIndices);
   	
-	if (FAILED((*i_buffer->GetIndexBuffer())->Unlock()))
+	if (FAILED(render->UnlockIndexBuffer(i_buffer)))
 	{
 		l->WriteToFile(Error, "IBUnLockFailed", 0);
 	}
@@ -257,7 +264,7 @@ void Heightmap::RenderHeightmap(RendererInterface* render)
 	{
 		l->WriteToFile(Error, "SetStreamSourceFailed", 0);
 	}
-	if( FAILED(render->SetFVF(D3DFVF_CUSTOMVERTEX)))
+	if( FAILED(render->SetFVF(ECUSTOMVERTEX)))
 	{
 		l->WriteToFile(Error, "SetFVFFailed", 0);
 	}

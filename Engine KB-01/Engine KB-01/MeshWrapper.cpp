@@ -1,7 +1,9 @@
 #include "MeshWrapper.h"
 
-    MeshWrapper::MeshWrapper(LPD3DXMESH _mesh)
+    MeshWrapper::MeshWrapper()
 	{
+		LPD3DXMESH _mesh;
+
 		mesh = _mesh;
 	};
 

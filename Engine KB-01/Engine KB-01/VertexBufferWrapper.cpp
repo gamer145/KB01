@@ -1,8 +1,9 @@
 #include "VertexBufferWrapper.h"
 
-	VertexBufferWrapper::VertexBufferWrapper(IDirect3DVertexBuffer9** _VertexBuffer)
+	VertexBufferWrapper::VertexBufferWrapper()
 	{
-		VertexBuffer = _VertexBuffer;
+		VertexBuffer = new IDirect3DVertexBuffer9*;
+				
 	};
 
 	VertexBufferWrapper::~VertexBufferWrapper()
@@ -19,8 +20,8 @@
 
 
 	IDirect3DVertexBuffer9** VertexBufferWrapper::GetVertexBuffer()
-
 	{
+		
 		return VertexBuffer;
 	};
 
