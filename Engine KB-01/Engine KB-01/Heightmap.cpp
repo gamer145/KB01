@@ -6,6 +6,8 @@ Heightmap::Heightmap()
 {
 	v_buffer = "HeightMapVertexBuffer";
 	i_buffer = "HeightMapIndexBuffer";
+
+	Position = new MatrixWrapper();
 }
 
 Heightmap::~Heightmap()
@@ -14,13 +16,15 @@ Heightmap::~Heightmap()
 
 void Heightmap::SetupHeightmapMatrix(float x, float y, float z, MatrixWrapper* OffSet)
 {
-	D3DXMATRIX PositionalMatrix;
-	D3DXMATRIX ScalingMatrix;
 
-	D3DXMatrixTranslation(&PositionalMatrix, x, y, z);	
-	D3DXMatrixScaling(&ScalingMatrix, 1000.0f, 1000.0f, 1000.0f);  
+	//OffSet = new MatrixWrapper();
+	MatrixWrapper* PositionalMatrix = new MatrixWrapper();
+	MatrixWrapper* ScalingMatrix = new MatrixWrapper();
 
-	Position->SetMatrix(PositionalMatrix * ScalingMatrix * OffSet->GetMatrix());
+	PositionalMatrix->MatrixTranslation(x, y, z);
+	ScalingMatrix->MatrixScaling(1000.0f, 1000.0f, 1000.0f);
+
+	Position->SetMatrix(PositionalMatrix->GetMatrix() * ScalingMatrix->GetMatrix() * OffSet->GetMatrix());
 }
 
 /*void Heightmap::CreateHeightmap(Renderer* render, LPCWSTR argFileName)
@@ -138,7 +142,7 @@ void Heightmap::CreateHeightmap(RendererInterface* render, LPCWSTR argFileName)
 	VOID* pVoid2; // a void pointer
 
     // lock v_buffer and load the vertices into it
-    if( FAILED( render->LockVertexBuffer(v_buffer, 0, sizeof(HEIGHTMAPVERTEX) * vertexcount, (void*)pVoid, 0)))
+    if( FAILED( render->LockVertexBuffer(v_buffer, 0, sizeof(HEIGHTMAPVERTEX) * vertexcount, (void**)&pVoid, 0)))
 	{
 		l->WriteToFile(Error, "VBLockFailed", 0);
 	}
@@ -184,7 +188,7 @@ void Heightmap::CreateHeightmap(RendererInterface* render, LPCWSTR argFileName)
 
     // lock i_buffer and load the indices into it
 
-	if( FAILED( render->LockIndexBuffer(i_buffer, 0, sizeof(int) * amountIndices, (void*)pVoid2, 0)))
+	if( FAILED( render->LockIndexBuffer(i_buffer, 0, sizeof(int) * amountIndices, (void**)&pVoid2, 0)))
 	{
 		l->WriteToFile(Error, "IBLockFailed", 0);
 	}

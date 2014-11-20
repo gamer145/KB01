@@ -136,10 +136,12 @@ LevelLoader::~LevelLoader()
 					sscanf_s(strLY.c_str(), "%f", &LY);
 					sscanf_s(strLZ.c_str(), "%f", &LZ);
 
-
-					camera->SetEyePoint(&VectorWrapper(X, Y, Z));
-					camera->SetLookAtPoint(&VectorWrapper(LX, LY, LZ));
-					camera->SetUpVector(&VectorWrapper(0.0f, 1.0f, 0.0f)); // Hard Coded
+					VectorWrapper* EyeVector = new VectorWrapper(X, Y, Z);
+					VectorWrapper* LookAtVector = new VectorWrapper(LX, LY, LZ);
+					VectorWrapper* UpVector = new VectorWrapper(0.0f, 1.0f, 0.0f);
+					camera->SetEyePoint(EyeVector);
+					camera->SetLookAtPoint(LookAtVector);
+					camera->SetUpVector(UpVector); // Hard Coded
 					currentScene->setCamera(camera);
 				}
 			}

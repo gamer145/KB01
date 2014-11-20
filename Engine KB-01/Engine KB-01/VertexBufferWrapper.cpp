@@ -2,7 +2,9 @@
 
 	VertexBufferWrapper::VertexBufferWrapper()
 	{
-		VertexBuffer = new IDirect3DVertexBuffer9*;
+		LPDIRECT3DVERTEXBUFFER9 v_buffer = NULL;
+
+		VertexBuffer = v_buffer;
 				
 	};
 
@@ -12,14 +14,14 @@
 	};
 
 
-	void VertexBufferWrapper::SetVertexBuffer(IDirect3DVertexBuffer9** _VertexBuffer)
+	void VertexBufferWrapper::SetVertexBuffer(LPDIRECT3DVERTEXBUFFER9 _VertexBuffer)
 
 	{
 		VertexBuffer = _VertexBuffer;
 	};
 
 
-	IDirect3DVertexBuffer9** VertexBufferWrapper::GetVertexBuffer()
+	LPDIRECT3DVERTEXBUFFER9 VertexBufferWrapper::GetVertexBuffer()
 	{
 		
 		return VertexBuffer;

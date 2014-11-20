@@ -48,9 +48,9 @@ public:
 	//virtual void setStreamSource(VertexBufferWrapper *pStreamData, UINT OffsetInBytes) = 0;
 	virtual void CreateVertexBuffer(int heightmapvertex, EDWORD usage, EDWORD fvf, EPOOL pool, std::string vertexbuffername, HANDLE handle) = 0;
 	virtual HRESULT CreateIndexBuffer(int length, EDWORD usage, EFORMAT format, EPOOL pool, std::string indexbuffername, HANDLE* handle) = 0;
-	virtual HRESULT LockVertexBuffer(std::string vertexbuffername, int offsettolock, int sizetolock, void* pbdata, EDWORD flags) = 0;
+	virtual HRESULT LockVertexBuffer(std::string vertexbuffername, int offsettolock, int sizetolock, void** pbdata, EDWORD flags) = 0;
 	virtual HRESULT UnlockVertexBuffer(std::string vertexbuffername) = 0;
-	virtual HRESULT LockIndexBuffer(std::string indexbuffername, int offsettolock, int sizetolock, void* pbdata, EDWORD flags) = 0;
+	virtual HRESULT LockIndexBuffer(std::string indexbuffername, int offsettolock, int sizetolock, void** pbdata, EDWORD flags) = 0;
 	virtual HRESULT UnlockIndexBuffer(std::string indexbuffername) = 0;
 	virtual bool VertexBufferExists(std::string vertexbuffername) = 0;
 	virtual bool IndexBufferExists(std::string indexbuffername) = 0;

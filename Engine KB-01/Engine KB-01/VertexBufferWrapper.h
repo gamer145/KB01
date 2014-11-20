@@ -9,10 +9,10 @@
 	public:
 		VertexBufferWrapper();
 		~VertexBufferWrapper();
-		void SetVertexBuffer(IDirect3DVertexBuffer9** _VertexBuffer);
-		IDirect3DVertexBuffer9** GetVertexBuffer();
+		void SetVertexBuffer(LPDIRECT3DVERTEXBUFFER9 _VertexBuffer);
+		LPDIRECT3DVERTEXBUFFER9 GetVertexBuffer();
 	private:
-		IDirect3DVertexBuffer9** VertexBuffer;
+		LPDIRECT3DVERTEXBUFFER9 VertexBuffer;
 	};
 
 

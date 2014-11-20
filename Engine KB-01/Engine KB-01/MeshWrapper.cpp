@@ -2,7 +2,7 @@
 
     MeshWrapper::MeshWrapper()
 	{
-		LPD3DXMESH _mesh;
+		LPD3DXMESH _mesh = NULL;
 
 		mesh = _mesh;
 	};

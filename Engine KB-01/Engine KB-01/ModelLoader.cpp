@@ -19,7 +19,7 @@ HRESULT ModelLoader::LoadModel(std::string modelname, RendererInterface* rendere
           
         }
 
-	renderer->addMesh(modelname, mesh);
+
 
 	object->setSubSet(272);
 

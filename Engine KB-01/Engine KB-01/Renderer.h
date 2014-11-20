@@ -43,9 +43,9 @@ public:
 	//void setStreamSource(VertexBufferWrapper *pStreamData, UINT OffsetInBytes);
 	void CreateVertexBuffer(int heightmapvertex, EDWORD usage, EDWORD fvf, EPOOL pool, std::string vertexbuffername, HANDLE handle);
 	HRESULT CreateIndexBuffer(int length, EDWORD usage, EFORMAT format, EPOOL pool, std::string indexbuffername, HANDLE* handle);
-	HRESULT LockVertexBuffer(std::string vertexbuffername, int offsettolock, int sizetolock, void* pbdata, EDWORD flags);
+	HRESULT LockVertexBuffer(std::string vertexbuffername, int offsettolock, int sizetolock, void** pbdata, EDWORD flags);
 	HRESULT UnlockVertexBuffer(std::string vertexbuffername);
-	HRESULT LockIndexBuffer(std::string indexbuffername, int offsettolock, int sizetolock, void* pbdata, EDWORD flags);
+	HRESULT LockIndexBuffer(std::string indexbuffername, int offsettolock, int sizetolock, void** pbdata, EDWORD flags);
 	HRESULT UnlockIndexBuffer(std::string indexbuffername);
 	bool VertexBufferExists(std::string vertexbuffername);
 	bool IndexBufferExists(std::string indexbuffername);
@@ -72,8 +72,8 @@ private:
 	std::map<std::string, MeshWrapper*> Meshes;
 	std::map<std::string, TextureWrapper*> Textures;
 
-	std::map<std::string, IDirect3DVertexBuffer9**> VertexBuffers;
-	std::map<std::string, IDirect3DIndexBuffer9**> IndexBuffers;
+	std::map<std::string, LPDIRECT3DVERTEXBUFFER9> VertexBuffers;
+	std::map<std::string, LPDIRECT3DINDEXBUFFER9> IndexBuffers;
 	
 };
 

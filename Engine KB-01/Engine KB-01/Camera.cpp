@@ -133,7 +133,7 @@ void Camera::Update()
 
 		if (myInputHandler->getKeyBoardListener()->ProcessKBInput((byte)DIKEYBOARD_SPACE))
 		{
-			ModifyWorldY(-0.1f);
+  			ModifyWorldY(-0.1f);
 		}
 
 		if (myInputHandler->getKeyBoardListener()->ProcessKBInput((byte)DIKEYBOARD_LCONTROL))

@@ -17,6 +17,6 @@ HRESULT TextureLoader::LoadTexture(std::string texturename, RendererInterface* r
                 {
                     MessageBox( NULL, L"Could not find texture map", L"Meshes.exe", MB_OK );
                 }
-	renderer->addTexture(texturename, texture);
+
 	return S_OK;
 }
