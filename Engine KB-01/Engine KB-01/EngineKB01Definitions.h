@@ -169,5 +169,16 @@ enum EPRIMITIVETYPE {
 	//EPT_FORCE_DWORD = 0x7fffffff, /* force 32-bit size enum */
 };
 
+enum EACTIONS {
+	ACTION_EXIT = 1,
+	ACTION_XAXISMOVE = 2,
+	ACTION_YAXISMOVE = 3,
+	ACTION_ZAXISMOVE = 4,
+	ACTION_PAUSE = 5,
+	ACTION_ROTATECAMERA_X = 6,
+	ACTION_ROTATECAMERA_Y = 7,
+	ACTION_ZOOMCAMERA = 8,
+};
+
 
 #endif // end Edefinitions

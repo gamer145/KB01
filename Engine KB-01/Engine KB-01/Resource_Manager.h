@@ -4,7 +4,6 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <Windows.h>
-#include "CameraLoader.h"
 //#include "LevelLoader.h"
 #include "Model.h"
 #include "ModelLoader.h"
@@ -28,7 +27,6 @@ public:
 	bool checkMesh(std::string meshname);
 
 private:
-	CameraLoader cameraLoader;
 	//LevelLoader levelLoader;
 	ModelLoader modelLoader;
 	RendererInterface* renderer;

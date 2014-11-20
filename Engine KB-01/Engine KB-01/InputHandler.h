@@ -17,10 +17,12 @@ public:
 	InputHandler(Window* argWindow); //Constructor
 	~InputHandler(); //Destructor
 	bool InitDInput(); //Attempt to initialize DirectInput, returns the result in a boolean
+	MouseListener* getMouseListener();
+	KeyboardListener* getKeyBoardListener();
+
+private:
 	MouseListener* mousewhisperer; //Pointer to MouseListener
 	KeyboardListener* keyboardwhisperer; //Pointer to KeyboardListener
-private:
-
 	LPDIRECTINPUT8 dInput; //Pointer to DirectInput
 	Logger* loggerIH; //Pointer to Logger
 };
