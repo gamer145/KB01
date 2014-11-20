@@ -99,81 +99,81 @@ MatrixWrapper* Camera::getOffSetMatrix()
 void Camera::Update()
 {
 
-		if (myInputHandler->getKeyBoardListener->ProcessKBInput((byte)DIKEYBOARD_W))
+		if (myInputHandler->getKeyBoardListener()->ProcessKBInput((byte)DIKEYBOARD_W))
 		{
 			ModifyWorldZ(-0.1f);
 		}
 
-		if (myInputHandler->getKeyBoardListener->ProcessKBInput((byte)DIKEYBOARD_Q))
+		if (myInputHandler->getKeyBoardListener()->ProcessKBInput((byte)DIKEYBOARD_Q))
 		{
 			ModifyWorldX(0.1f);
 		}
 
-		if (myInputHandler->getKeyBoardListener->ProcessKBInput((byte)DIKEYBOARD_A))
+		if (myInputHandler->getKeyBoardListener()->ProcessKBInput((byte)DIKEYBOARD_A))
 		{
 			ModifyWorldX(0.2f);
 			ModifyWorldXAngle(0.05f);
 		}
 
-		if (myInputHandler->getKeyBoardListener->ProcessKBInput((byte)DIKEYBOARD_D))
+		if (myInputHandler->getKeyBoardListener()->ProcessKBInput((byte)DIKEYBOARD_D))
 		{
 			ModifyWorldX(-0.2f);
 			ModifyWorldXAngle(-0.05f);
 		}
 
-		if (myInputHandler->getKeyBoardListener->ProcessKBInput((byte)DIKEYBOARD_S))
+		if (myInputHandler->getKeyBoardListener()->ProcessKBInput((byte)DIKEYBOARD_S))
 		{
 			ModifyWorldZ(0.1f);
 		}
 
-		if (myInputHandler->getKeyBoardListener->ProcessKBInput((byte)DIKEYBOARD_E))
+		if (myInputHandler->getKeyBoardListener()->ProcessKBInput((byte)DIKEYBOARD_E))
 		{
 			ModifyWorldX(-0.1f);
 		}
 
-		if (myInputHandler->getKeyBoardListener->ProcessKBInput((byte)DIKEYBOARD_SPACE))
+		if (myInputHandler->getKeyBoardListener()->ProcessKBInput((byte)DIKEYBOARD_SPACE))
 		{
 			ModifyWorldY(-0.1f);
 		}
 
-		if (myInputHandler->getKeyBoardListener->ProcessKBInput((byte)DIKEYBOARD_LCONTROL))
+		if (myInputHandler->getKeyBoardListener()->ProcessKBInput((byte)DIKEYBOARD_LCONTROL))
 		{
 			ModifyWorldY(0.1f);
 		}
 
 		//-----
 
-		if (myInputHandler->getMouseListener->getMousewheel() > mousewheel) {
+		if (myInputHandler->getMouseListener()->getMousewheel() > mousewheel) {
 			ModifyWorldZ(-0.1f);
-			mousewheel = myInputHandler->getMouseListener->getMousewheel();
+			mousewheel = myInputHandler->getMouseListener()->getMousewheel();
 		}
-		else if (myInputHandler->getMouseListener->getMousewheel() < mousewheel) {
+		else if (myInputHandler->getMouseListener()->getMousewheel() < mousewheel) {
 			ModifyWorldZ(0.1f);
-			mousewheel = myInputHandler->getMouseListener->getMousewheel();
+			mousewheel = myInputHandler->getMouseListener()->getMousewheel();
 		}
 		
-		if (myInputHandler->getMouseListener->getXPos() < xpos)
+		if (myInputHandler->getMouseListener()->getXPos() < xpos)
 		{
 			ModifyWorldXAngle(0.02f);
-			xpos = myInputHandler->getMouseListener->getXPos();
+			xpos = myInputHandler->getMouseListener()->getXPos();
 		}
 
-		if (myInputHandler->getMouseListener->getXPos() > xpos)
+		if (myInputHandler->getMouseListener()->getXPos() > xpos)
 		{
 			ModifyWorldXAngle(-0.02f);
-			xpos = myInputHandler->getMouseListener->getXPos();
+			xpos = myInputHandler->getMouseListener()->getXPos();
 		}
 
-		if (myInputHandler->getMouseListener->getYPos() < ypos)
+		if (myInputHandler->getMouseListener()->getYPos() < ypos)
 		{
 			ModifyWorldYAngle(0.01f);
-			ypos = myInputHandler->getMouseListener->getYPos();
+			ypos = myInputHandler->getMouseListener()->getYPos();
 		}
 
-		if (myInputHandler->getMouseListener->getYPos() > ypos)
+		if (myInputHandler->getMouseListener()->getYPos() > ypos)
 		{
 			ModifyWorldYAngle(-0.01f);
-			ypos = myInputHandler->getMouseListener->getYPos();
+			ypos = myInputHandler->getMouseListener()->getYPos();
 		}
 
 		UpdateOffSetMatrix();

@@ -80,6 +80,6 @@ bool Scene_Manager::UpdateScene()
 		CurrentScene->endS();
 		CurrentWindow->updateWindow();
 	
-		return myInputHandler->getKeyBoardListener->ProcessKBInput((byte)DIKEYBOARD_ESCAPE);
+		return myInputHandler->getKeyBoardListener()->ProcessKBInput((byte)DIKEYBOARD_ESCAPE);
 	
 }

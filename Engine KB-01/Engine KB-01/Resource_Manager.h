@@ -8,7 +8,6 @@
 #include "Model.h"
 #include "ModelLoader.h"
 #include "RendererInterface.h"
-#include "SkyboxLoader.h"
 #include "Texture.h"
 #include "TextureLoader.h"
 #include "VisualObject.h"
@@ -30,7 +29,6 @@ private:
 	//LevelLoader levelLoader;
 	ModelLoader modelLoader;
 	RendererInterface* renderer;
-	SkyboxLoader skyboxLoader;
 	TextureLoader textureLoader;
 };
 
