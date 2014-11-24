@@ -61,6 +61,9 @@ void Scene_Manager::setCurrentScene(std::string windowname)
 		}
 	}
 }
+/*
+synch test
+*/
 
 bool Scene_Manager::UpdateScene()
 {
