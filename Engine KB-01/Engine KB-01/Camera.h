@@ -2,7 +2,7 @@
 #define CAMERA_H
 
 #include "Entity.h"
-#include "InputHandler.h"
+#include "InputHandlerInterface.h"
 #include "MatrixWrapper.h"
 #include "VectorWrapper.h"
 
@@ -15,7 +15,7 @@ public:
 	void SetEyePoint(VectorWrapper* newVector);
 	void SetLookAtPoint(VectorWrapper* newVector);
 	void SetUpVector(VectorWrapper* newVector);
-	void SetInputHandler(InputHandler* IH);
+	void SetInputHandler(InputHandlerInterface* IH);
 
 	void ModifyWorldX(float modifier);
 	void ModifyWorldY(float modifier);
@@ -34,7 +34,7 @@ private:
 	VectorWrapper* LookatPoint;
 	VectorWrapper* UpVector;
 	MatrixWrapper* ProjectionMatrix;
-	InputHandler* myInputHandler;
+	InputHandlerInterface* myInputHandler;
 	void UpdateOffSetMatrix();
 	float x,y,z, XAngle, YAngle, ZAngle;
 	int mousewheel, xpos, ypos;

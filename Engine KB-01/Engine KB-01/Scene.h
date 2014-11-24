@@ -17,7 +17,7 @@ public:
 	Scene();
 	~Scene();
 	std::string writeToString();
-	void initCamera(InputHandler* IH);
+	void initCamera(InputHandlerInterface* IH);
 	void Update();
 	void SetRenderer(Renderer* render);
 	void setResourceManager(Resource_Manager* r);

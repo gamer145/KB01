@@ -36,7 +36,7 @@ void Camera::Initialize()
 	ypos = 0;
 }
 
-void Camera::SetInputHandler(InputHandler* IH)
+void Camera::SetInputHandler(InputHandlerInterface* IH)
 {
 	myInputHandler = IH;
 }
@@ -97,6 +97,18 @@ MatrixWrapper* Camera::getOffSetMatrix()
 }
 
 void Camera::Update()
+{
+
+	ModifyWorldX(myInputHandler->getAction(ACTION_XAXISMOVE));
+	ModifyWorldY(myInputHandler->getAction(ACTION_YAXISMOVE));
+	ModifyWorldZ(myInputHandler->getAction(ACTION_ZAXISMOVE));
+	ModifyWorldXAngle(myInputHandler->getAction(ACTION_ROTATECAMERA_X));
+	ModifyWorldYAngle(myInputHandler->getAction(ACTION_ROTATECAMERA_Y));
+
+	UpdateOffSetMatrix();
+}
+
+/*void Camera::Update()
 {
 
 		if (myInputHandler->getKeyBoardListener()->ProcessKBInput((byte)DIKEYBOARD_W))
@@ -177,7 +189,7 @@ void Camera::Update()
 		}
 
 		UpdateOffSetMatrix();
-}
+}*/
 
 void Camera::UpdateOffSetMatrix()
 {

@@ -99,10 +99,10 @@
     <ClCompile Include="VectorWrapper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
     <ClCompile Include="InputHandlerInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ListenerInterface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -198,6 +198,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="InputHandlerInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ListenerInterface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

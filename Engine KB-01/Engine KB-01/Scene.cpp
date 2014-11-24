@@ -11,7 +11,7 @@ Scene::~Scene()
 
 }
 
-void Scene::initCamera(InputHandler* IH)
+void Scene::initCamera(InputHandlerInterface* IH)
 {
 	currentCamera->Initialize();
 	currentCamera->SetInputHandler(IH);

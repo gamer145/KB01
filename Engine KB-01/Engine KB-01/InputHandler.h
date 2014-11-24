@@ -17,9 +17,7 @@ public:
 	InputHandler(); //Constructor
 	~InputHandler(); //Destructor
 	HRESULT InitInputHandler(Window* argWindow); //Attempt to initialize the InputHandler object
-	MouseListener* getMouseListener(); //Returns mouseListener object
-	KeyboardListener* getKeyBoardListener(); //Returns keyboardListener object
-
+	float getAction(EACTION action);
 private:
 	MouseListener* mousewhisperer; //Pointer to MouseListener
 	KeyboardListener* keyboardwhisperer; //Pointer to KeyboardListener

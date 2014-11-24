@@ -39,14 +39,17 @@ InputHandler::~InputHandler()
 	dInput = NULL; //Just to be safe, we nullify the pointer
 }
 
-KeyboardListener* InputHandler::getKeyBoardListener()
-{
-	return keyboardwhisperer;
-}
 
-MouseListener* InputHandler::getMouseListener()
+
+float InputHandler::getAction(EACTION action)
 {
-	return mousewhisperer;
+	float response = 0;
+
+	keyboardwhisperer->getAction(action, response);
+
+	mousewhisperer->getAction(action, response);
+
+	return response;
 }
 
 /**

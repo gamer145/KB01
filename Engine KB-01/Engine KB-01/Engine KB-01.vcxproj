@@ -94,11 +94,11 @@
     <ClCompile Include="KeyboardListener.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelLoader.cpp" />
+    <ClCompile Include="ListenerInterface.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="MaterialWrapper.cpp" />
     <ClCompile Include="MatrixWrapper.cpp" />
     <ClCompile Include="MeshWrapper.cpp" />
-    <ClCompile Include="Source.cpp" />
     <ClCompile Include="TextureWrapper.cpp" />
     <ClCompile Include="VectorWrapper.cpp" />
     <ClCompile Include="VertexBufferWrapper.cpp" />
@@ -126,6 +126,7 @@
     <ClInclude Include="KeyboardListener.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelLoader.h" />
+    <ClInclude Include="ListenerInterface.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="EngineKB01Definitions.h" />
     <ClInclude Include="MaterialWrapper.h" />

@@ -12,6 +12,7 @@ public:
 	InputHandlerInterface();
 	~InputHandlerInterface();
 	virtual HRESULT InitInputHandler(Window* argWindow) = 0;
+	virtual float getAction(EACTION action) = 0;
 };
 
 #endif

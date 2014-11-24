@@ -169,7 +169,7 @@ enum EPRIMITIVETYPE {
 	//EPT_FORCE_DWORD = 0x7fffffff, /* force 32-bit size enum */
 };
 
-enum EACTIONS {
+enum EACTION {
 	ACTION_EXIT = 1,
 	ACTION_XAXISMOVE = 2,
 	ACTION_YAXISMOVE = 3,

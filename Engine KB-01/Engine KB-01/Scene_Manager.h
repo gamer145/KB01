@@ -26,7 +26,7 @@ private:
 	std::map<Scene*, Window*> Scenes;
 	Window_Manager* myWindowManager;
 	Resource_Manager* myResourceManager;
-	InputHandler* myInputHandler;
+	InputHandlerInterface* myInputHandler;
 	Scene* CurrentScene;
 	Window* CurrentWindow;
 	Renderer* myRenderer;
