@@ -1,11 +1,10 @@
 #ifndef RENDERERINTERFACE_H
 #define RENDERERINTERFACE_H
 
-//#include <d3dx9.h>
+
 #include <string>
 #include <map>
 #include "Model.h"
-//#include "VisualObject.h"
 #include "Window_Manager.h"
 #include "EngineKB01Definitions.h"
 #include "Window.h"
@@ -37,15 +36,11 @@ public:
 	virtual HRESULT LoadMeshFromFile(std::string filename, EDWORD options, MeshWrapper* destination) = 0;
 	virtual HRESULT LoadTextureFromFile(std::string filename, EDWORD options, TextureWrapper* destination) = 0;
 	virtual void DrawSubSet(std::string meshname) = 0;
-	//virtual void DrawPrimitive() = 0;
-	//virtual void SetVertexFormat() = 0;
 	virtual void SetUpWorld(MatrixWrapper* WorldMatrix, MatrixWrapper* CameraMatrix, MatrixWrapper* ProjectionMatrix) = 0;
-//	virtual void* get3DDevice() = 0;
 	virtual HRESULT InitD3D(HWND hWnd) = 0;
 	virtual void addTexture(std::string textname, TextureWrapper* Text) = 0;
 	virtual void addMesh(std::string meshname, MeshWrapper* Mesh) = 0;
 	virtual void setDrawWindow(Window* windowtodrawin) = 0;
-	//virtual void setStreamSource(VertexBufferWrapper *pStreamData, UINT OffsetInBytes) = 0;
 	virtual void CreateVertexBuffer(int heightmapvertex, EDWORD usage, EDWORD fvf, EPOOL pool, std::string vertexbuffername, HANDLE handle) = 0;
 	virtual HRESULT CreateIndexBuffer(int length, EDWORD usage, EFORMAT format, EPOOL pool, std::string indexbuffername, HANDLE* handle) = 0;
 	virtual HRESULT LockVertexBuffer(std::string vertexbuffername, int offsettolock, int sizetolock, void** pbdata, EDWORD flags) = 0;

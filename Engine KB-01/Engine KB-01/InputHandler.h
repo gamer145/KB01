@@ -1,5 +1,5 @@
-#ifndef INPUTHANDLER_H //Headerguard
-#define INPUTHANDLER_H //Headerguard
+#ifndef INPUTHANDLER_H 
+#define INPUTHANDLER_H 
 
 //Tell DirectInput which version we want
 #define DIRECTINPUT_VERSION 0x0800
@@ -26,4 +26,4 @@ private:
 	LPDIRECTINPUT8 dInput; //Pointer to DirectInput
 	Logger* loggerIH; //Pointer to Logger
 };
-#endif //Headerguard
+#endif
