@@ -6,24 +6,25 @@
 
 //Include the necessary files
 #include "KeyboardListener.h"
-#include "Logger.h"
-#include "MouseListener.h"
-#include "Window.h"
-#include "Window_Manager.h"
 
-class InputHandler
+#include "MouseListener.h"
+
+#include "InputHandlerInterface.h"
+
+class InputHandler : public InputHandlerInterface
 {
 public:
-	InputHandler(Window* argWindow); //Constructor
+	InputHandler(); //Constructor
 	~InputHandler(); //Destructor
-	bool InitDInput(); //Attempt to initialize DirectInput, returns the result in a boolean
-	MouseListener* getMouseListener();
-	KeyboardListener* getKeyBoardListener();
+	HRESULT InitInputHandler(Window* argWindow); //Attempt to initialize the InputHandler object
+	MouseListener* getMouseListener(); //Returns mouseListener object
+	KeyboardListener* getKeyBoardListener(); //Returns keyboardListener object
 
 private:
 	MouseListener* mousewhisperer; //Pointer to MouseListener
 	KeyboardListener* keyboardwhisperer; //Pointer to KeyboardListener
 	LPDIRECTINPUT8 dInput; //Pointer to DirectInput
 	Logger* loggerIH; //Pointer to Logger
+	HRESULT InitDInput(); //The method used in InitInputHandler
 };
 #endif

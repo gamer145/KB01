@@ -34,7 +34,8 @@ void Scene_Manager::SetUpManager(Window_Manager* windowManager, Resource_Manager
 	hoogteMap = new Heightmap();
 	hoogteMap->CreateHeightmap(myRenderer, L"..//Models//hoogtemap2.bmp");
 
-	myInputHandler = new InputHandler(CurrentWindow);
+	myInputHandler = new InputHandler();
+	myInputHandler->InitInputHandler(CurrentWindow);
 	CurrentScene->initCamera(myInputHandler);
 
 	Scenes.insert (std::pair<Scene*, Window*>(CurrentScene, CurrentWindow));

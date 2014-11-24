@@ -89,6 +89,7 @@
     <ClCompile Include="Heightmap.cpp" />
     <ClCompile Include="IndexBufferWrapper.cpp" />
     <ClCompile Include="InputHandler.cpp" />
+    <ClCompile Include="InputHandlerInterface.cpp" />
     <ClCompile Include="Kernel.cpp" />
     <ClCompile Include="KeyboardListener.cpp" />
     <ClCompile Include="Level.cpp" />
@@ -97,6 +98,7 @@
     <ClCompile Include="MaterialWrapper.cpp" />
     <ClCompile Include="MatrixWrapper.cpp" />
     <ClCompile Include="MeshWrapper.cpp" />
+    <ClCompile Include="Source.cpp" />
     <ClCompile Include="TextureWrapper.cpp" />
     <ClCompile Include="VectorWrapper.cpp" />
     <ClCompile Include="VertexBufferWrapper.cpp" />
@@ -119,6 +121,7 @@
     <ClInclude Include="Heightmap.h" />
     <ClInclude Include="IndexBufferWrapper.h" />
     <ClInclude Include="InputHandler.h" />
+    <ClInclude Include="InputHandlerInterface.h" />
     <ClInclude Include="Kernel.h" />
     <ClInclude Include="KeyboardListener.h" />
     <ClInclude Include="Level.h" />
