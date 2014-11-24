@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 #include "Camera.h"
-#include "Renderer.h"
+#include "RendererInterface.h"
 #include "Resource_Manager.h"
 #include "InputHandler.h"
 #include <d3dx9.h>
@@ -19,7 +19,7 @@ public:
 	std::string writeToString();
 	void initCamera(InputHandler* IH);
 	void Update();
-	void SetRenderer(Renderer* render);
+	void SetRenderer(RendererInterface* render);
 	void setResourceManager(Resource_Manager* r);
 	void AddObject(VisualObject* newObject);
 	void setCamera(Camera* c);
@@ -33,7 +33,7 @@ private:
 	std::vector<VisualObject*> activeObjects;
 	Camera* currentCamera;
 	Resource_Manager* RManager;
-	Renderer* myRenderer;
+	RendererInterface* myRenderer;
 	void Draw();
 
 	

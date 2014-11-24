@@ -32,7 +32,7 @@ void Scene::AddObject(VisualObject* newObject)
 	activeObjects.push_back(newObject);
 }
 
-void Scene::SetRenderer(Renderer* render)
+void Scene::SetRenderer(RendererInterface* render)
 {
 	myRenderer = render;
 }
