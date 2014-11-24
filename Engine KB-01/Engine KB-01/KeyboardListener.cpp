@@ -67,6 +67,66 @@ void KeyboardListener::SaveReleaseDevice()
 	}
 } 
 
+bool KeyboardListener::getAction(EACTION action, float& value)
+{
+	if (action == ACTION_ZAXISMOVE)
+	{
+		if (ProcessKBInput((byte)DIKEYBOARD_W))
+		{
+			value = -0.1f;
+			return true;
+		}
+		else if (ProcessKBInput((byte)DIKEYBOARD_S))
+		{
+			value = 0.1f;
+			return true;
+		}
+		return false;
+	}
+
+	if (action == ACTION_YAXISMOVE)
+	{
+		if (ProcessKBInput((byte)DIKEYBOARD_SPACE))
+		{
+			value = -0.1f;
+			return true;
+		}
+		else if (ProcessKBInput((byte)DIKEYBOARD_LCONTROL))
+		{
+			value = 0.1f;
+			return true;
+		}
+		return false;
+	}
+
+	if (action == ACTION_XAXISMOVE)
+	{
+		if (ProcessKBInput((byte)DIKEYBOARD_Q))
+		{
+			value = -0.1f;
+			return true;
+		}
+		else if (ProcessKBInput((byte)DIKEYBOARD_E))
+		{
+			value = 0.1f;
+			return true;
+		}
+		return false;
+	}
+
+	if (action == ACTION_EXIT)
+	{
+		if (ProcessKBInput((byte)DIKEYBOARD_ESCAPE))
+		{
+			value = -0.1f;
+			return true;
+		}
+		return false;
+	}
+
+	return false;
+}
+
 
 /**
  * Function:	Keyboard::ProcessKBInput(...)
