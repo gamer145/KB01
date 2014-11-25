@@ -1,7 +1,6 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#include <d3dx9.h>
 #include "MatrixWrapper.h"
 
 

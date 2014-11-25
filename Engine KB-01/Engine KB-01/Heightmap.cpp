@@ -1,6 +1,5 @@
 #include "Heightmap.h"
 
-//#define D3DFVF_CUSTOMVERTEX (D3DFVF_XYZ|D3DFVF_TEX1)
 
 Heightmap::Heightmap()
 {
@@ -16,8 +15,6 @@ Heightmap::~Heightmap()
 
 void Heightmap::SetupHeightmapMatrix(float x, float y, float z, MatrixWrapper* OffSet)
 {
-
-	//OffSet = new MatrixWrapper();
 	MatrixWrapper* PositionalMatrix = new MatrixWrapper();
 	MatrixWrapper* ScalingMatrix = new MatrixWrapper();
 
@@ -26,80 +23,6 @@ void Heightmap::SetupHeightmapMatrix(float x, float y, float z, MatrixWrapper* O
 
 	Position->SetMatrix(PositionalMatrix->GetMatrix() * ScalingMatrix->GetMatrix() * OffSet->GetMatrix());
 }
-
-/*void Heightmap::CreateHeightmap(Renderer* render, LPCWSTR argFileName)
-{
-
-	HEIGHTMAPVERTEX vertices[] = 
-	{ 		
-		{ -0.06f, -0.003f, 0.03f, 0xffffffff }, //0
-        { -0.02f, -0.007f, 0.03f, 0xff00ffff }, //1
-        { 0.02f, 0.006f, 0.03f, 0xff00ffff }, //2
-		{ 0.06f, 0.004f, 0.03f, 0xffffffff }, //3
-
-		{ -0.06f, -0.007f, 0.0f, 0xff00ffff }, //4
-        { -0.02f, 0.007f, 0.0f, 0xffffff00 }, //5
-        { 0.02f, 0.002f, 0.0f, 0xffffff00 }, //6
-		{ 0.06f, -0.0001f, 0.0f, 0xff00ffff }, //7
-
-		{ -0.06f, 0.003f, -0.03f, 0xffffffff }, //8
-        { -0.02f, 0.005f, -0.03f, 0xff00ffff }, //9
-        { 0.02f, 0.002f, -0.03f, 0xff00ffff }, //10
-		{ 0.06f, 0.002f, -0.03f, 0xffffffff }, //11
-	};
-
-    HRESULT failure = render->CreateVertexBuffer(12 * sizeof(HEIGHTMAPVERTEX),
-                               0, D3DFVF_CUSTOMVERTEX, D3DPOOL_MANAGED, &v_buffer, NULL);
-	if (FAILED(failure))
-	{
-		std::string test = DXGetErrorStringA(failure);
-		test = DXGetErrorDescriptionA(failure);
-		l->WriteToFile(Error, "CreateVBFailed", 0);
-	}
-	
-
-	VOID* pVoid;
-	VOID* pVoid2; // a void pointer
-
-    // lock v_buffer and load the vertices into it
-    if( FAILED( v_buffer->Lock(0, sizeof(HEIGHTMAPVERTEX) * 12, (void**)&pVoid, 0)))
-	{
-		l->WriteToFile(Error, "VBLockFailed", 0);
-	}
-	memcpy(pVoid, vertices, sizeof(vertices));
-
-	if ( FAILED( v_buffer->Unlock()))
-	{
-		l->WriteToFile(Error, "VBUnLockFailed", 0);
-	}
-
-	int indices[] = {0, 1, 4, 1, 4, 5, 1, 2, 5, 2, 5, 6, 2, 3, 6, 3, 6, 7, 4, 5, 8, 5, 8, 9, 5, 6, 9, 6, 9, 10, 6, 7, 10, 7, 10, 11};
-
-    // create an index buffer interface called i_buffer
-    if( FAILED(render->get3DDevice()->CreateIndexBuffer(36*sizeof(int),
-                              0,
-                              D3DFMT_INDEX32,
-                              D3DPOOL_MANAGED,
-                              &i_buffer,
-                              NULL)))
-	{
-		l->WriteToFile(Error, "CreateIBFailed", 0);
-	}
-
-    // lock i_buffer and load the indices into it
-
-	if( FAILED( i_buffer->Lock(0, sizeof(int) * 36, (void**)&pVoid2, 0)))
-	{
-		l->WriteToFile(Error, "IBLockFailed", 0);
-	}
-
-	memcpy(pVoid2, indices, sizeof(indices));
-  	
-	if ( FAILED( i_buffer->Unlock()))
-	{
-		l->WriteToFile(Error, "IBUnLockFailed", 0);
-	}
-}*/
 
 void Heightmap::CreateHeightmap(RendererInterface* render, LPCWSTR argFileName)
 {
@@ -126,10 +49,6 @@ void Heightmap::CreateHeightmap(RendererInterface* render, LPCWSTR argFileName)
 			loopcount++;
 		}	
 	}
-
-    // create a vertex buffer interface called v_buffer
-
-	//v_buffer = new VertexBufferWrapper();
 
 	render->CreateVertexBuffer(vertexcount*sizeof(HEIGHTMAPVERTEX),
 		0, ECUSTOMVERTEX, EPOOL_MANAGED, v_buffer, NULL);
@@ -284,11 +203,6 @@ void Heightmap::RenderHeightmap(RendererInterface* render)
 	{
 		l->WriteToFile(Error, "IndexDrawFailed", 0);
 	}
-	/*if( FAILED(render->get3DDevice()->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 12, 0, 12)))
-	{
-		l->WriteToFile(Error, "IndexDrawFailed", 0);
-	}*/
-	//render->get3DDevice()->DrawPrimitive(D3DPT_TRIANGLELIST, 0, (((height-1) * (width-1)) * 2));
 }
 
 int Heightmap::GetHeight()

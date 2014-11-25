@@ -1,8 +1,4 @@
 #include "Scene_Manager.h"
-#include "LevelLoader.h"
-#include <vector>
-
-
 
 
 Scene_Manager::Scene_Manager()
@@ -13,7 +9,7 @@ Scene_Manager::~Scene_Manager()
 {
 }
 
-void Scene_Manager::SetUpManager(Window_Manager* windowManager, Resource_Manager* resourceManager, Renderer* renderer)
+void Scene_Manager::SetUpManager(Window_Manager* windowManager, Resource_Manager* resourceManager, RendererInterface* renderer)
 {
 	myWindowManager = windowManager;
 	myResourceManager = resourceManager;
@@ -65,6 +61,9 @@ void Scene_Manager::setCurrentScene(std::string windowname)
 		}
 	}
 }
+/*
+synch test 2
+*/
 
 bool Scene_Manager::UpdateScene()
 {
