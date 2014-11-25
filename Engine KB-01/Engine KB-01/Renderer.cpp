@@ -261,6 +261,42 @@ HRESULT Renderer::DrawIndexedPrimitive(EPRIMITIVETYPE type, int basevertexindex,
 	return g_pd3dDevice->DrawIndexedPrimitive(static_cast<D3DPRIMITIVETYPE>(type), basevertexindex, minvertexindex, numvertices, startindex, primcount);
 }
 
+HRESULT Renderer::LoadShaderFromFile(std::string shadername, std::string shaderfilepath, std::string shaderfunctionname)
+{
+	HRESULT result;
+
+
+	LPD3DXBUFFER pCode;
+	LPDIRECT3DVERTEXDECLARATION9    g_pVertexDeclaration = NULL;
+
+
+	D3DVERTEXELEMENT9 decl[] =
+	{
+		{ 0, 0, D3DDECLTYPE_FLOAT2, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0 },
+		D3DDECL_END()
+	};
+
+	g_pd3dDevice->CreateVertexDeclaration(decl, &g_pVertexDeclaration);
+
+
+    pCode = NULL;
+
+	LPD3DXCONSTANTTABLE constanttable = NULL;
+
+	std::wstring stemp = std::wstring(shaderfilepath.begin(), shaderfilepath.end());
+
+	LPCWSTR strpath = stemp.c_str();
+
+	if(FAILED(D3DXCompileShaderFromFile(strpath, NULL, NULL, shaderfunctionname.c_str(), "vs_2_0", 0, &pCode, NULL, &constanttable)))
+	{
+		// insert logger here, log that the compiling failed
+	}
+
+
+
+	return result;
+}
+
 void Renderer::Clear(DWORD count, DWORD flags, D3DCOLOR color, float z, DWORD stencil)
 {
 	g_pd3dDevice->Clear(count, NULL, flags, color, z, stencil);

@@ -54,6 +54,7 @@ public:
 	HRESULT SetFVF(EDWORD FVF);
 	HRESULT SetIndices(std::string indexbuffername);
 	HRESULT DrawIndexedPrimitive(EPRIMITIVETYPE type, int basevertexindex, int minvertexindex, int numvertices, int startindex, int primcount);
+	HRESULT LoadShaderFromFile(std::string shadername, std::string shaderfilepath, std::string shaderfunctionname);
 	void Clear(EDWORD count, EDWORD flags, ECOLOR color, float z, EDWORD stencil);
 	void BeginS();
 	void EndS();
