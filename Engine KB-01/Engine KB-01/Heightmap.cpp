@@ -24,7 +24,7 @@ void Heightmap::SetupHeightmapMatrix(float x, float y, float z, MatrixWrapper* O
 	Position->SetMatrix(PositionalMatrix->GetMatrix() * ScalingMatrix->GetMatrix() * OffSet->GetMatrix());
 }
 
-void Heightmap::CreateHeightmap(RendererInterface* render, LPCWSTR argFileName)
+void Heightmap::CreateHeightmap(Renderer* render, LPCWSTR argFileName)
 {
 	render->VertexBufferExists(v_buffer);
 	render->IndexBufferExists(i_buffer);
@@ -175,7 +175,7 @@ byte* Heightmap::LoadBMP(LPCWSTR argFileName)
 	return heightData;
 }
 
-void Heightmap::RenderHeightmap(RendererInterface* render)
+void Heightmap::RenderHeightmap(Renderer* render)
 {
 	
 

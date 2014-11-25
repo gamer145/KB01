@@ -1,81 +1,66 @@
-#ifndef RENDERER_H
-#define RENDERER_H
-
-#include <d3d9.h>
-#include <d3dx9.h>
-#include <dxerr.h>
-#include "RendererInterface.h"
-#include <mmsystem.h>
-#include <strsafe.h>
-#include <vector>
+#ifndef Renderer_H
+#define Renderer_H
 
 
+#include <string>
+#include <map>
+#include "Model.h"
+#include "Window_Manager.h"
+#include "EngineKB01Definitions.h"
+#include "Window.h"
+#include "Model.h"
+#include "Entity.h"
+#include "IndexBufferWrapper.h"
+#include "MaterialWrapper.h"
+#include "MeshWrapper.h"
+#include "MatrixWrapper.h"
+#include "TextureWrapper.h"
+#include "VertexBufferWrapper.h"
 
 class Entity;
-class Renderer : public RendererInterface
+class Renderer
 {
 public:
 	Renderer();
 	~Renderer();
-	void CleanUp();
-	
+	virtual void CleanUp()=0;	
+
 	/*
 
 	*****************************************************
-	-------------- initiate new renderer ----------------
+	-------------- initiate new DirectXRenderer ----------------
 	*****************************************************
 
 	*/
-
-	
-	HRESULT SetTexture(std::string);
-	HRESULT LoadMeshFromFile(std::string filename, EDWORD options, MeshWrapper* destination);
-	HRESULT LoadTextureFromFile(std::string filename, EDWORD options, TextureWrapper* destination);
-	void DrawSubSet(std::string meshname);
-	//void DrawPrimitive();
-	//void SetVertexFormat();
-	void SetUpWorld(MatrixWrapper* WorldMatrix, MatrixWrapper* CameraMatrix, MatrixWrapper* ProjectionMatrix);
-	//void* get3DDevice();
-	HRESULT InitD3D( HWND hWnd );
-	void addTexture(std::string textname, TextureWrapper* Text);
-	void addMesh(std::string meshname, MeshWrapper* Mesh);
-	void setDrawWindow(Window* windowtodrawin);
-	//void setStreamSource(VertexBufferWrapper *pStreamData, UINT OffsetInBytes);
-	void CreateVertexBuffer(int heightmapvertex, EDWORD usage, EDWORD fvf, EPOOL pool, std::string vertexbuffername, HANDLE handle);
-	HRESULT CreateIndexBuffer(int length, EDWORD usage, EFORMAT format, EPOOL pool, std::string indexbuffername, HANDLE* handle);
-	HRESULT LockVertexBuffer(std::string vertexbuffername, int offsettolock, int sizetolock, void** pbdata, EDWORD flags);
-	HRESULT UnlockVertexBuffer(std::string vertexbuffername);
-	HRESULT LockIndexBuffer(std::string indexbuffername, int offsettolock, int sizetolock, void** pbdata, EDWORD flags);
-	HRESULT UnlockIndexBuffer(std::string indexbuffername);
-	bool VertexBufferExists(std::string vertexbuffername);
-	bool IndexBufferExists(std::string indexbuffername);
-	HRESULT setTransform(ETRANSFORMSTATETYPE transform, MatrixWrapper* matrix);
-	HRESULT SetStreamSource(int streamnumber, std::string vertexbuffername, int offset, int stride);
-	HRESULT SetFVF(EDWORD FVF);
-	HRESULT SetIndices(std::string indexbuffername);
-	HRESULT DrawIndexedPrimitive(EPRIMITIVETYPE type, int basevertexindex, int minvertexindex, int numvertices, int startindex, int primcount);
-	HRESULT LoadShaderFromFile(std::string shadername, std::string shaderfilepath, std::string shaderfunctionname);
-	void Clear(EDWORD count, EDWORD flags, ECOLOR color, float z, EDWORD stencil);
-	void BeginS();
-	void EndS();
-	void Present();
-	std::map<std::string, MeshWrapper*> getMeshes();
-	std::map<std::string, TextureWrapper*> getTextures();
-
-
-private:
-
-	LPDIRECT3D9         g_pD3D; 
-    LPDIRECT3DDEVICE9   g_pd3dDevice; 
-	Window* myWindow;
-	bool keepRendering;
-	
-	std::map<std::string, MeshWrapper*> Meshes;
-	std::map<std::string, TextureWrapper*> Textures;
-
-	std::map<std::string, LPDIRECT3DVERTEXBUFFER9> VertexBuffers;
-	std::map<std::string, LPDIRECT3DINDEXBUFFER9> IndexBuffers;
-	
+	virtual HRESULT SetTexture(std::string)=0;
+	virtual HRESULT LoadMeshFromFile(std::string filename, EDWORD options, MeshWrapper* destination) = 0;
+	virtual HRESULT LoadTextureFromFile(std::string filename, EDWORD options, TextureWrapper* destination) = 0;
+	virtual void DrawSubSet(std::string meshname) = 0;
+	virtual void SetUpWorld(MatrixWrapper* WorldMatrix, MatrixWrapper* CameraMatrix, MatrixWrapper* ProjectionMatrix) = 0;
+	virtual HRESULT InitD3D(HWND hWnd) = 0;
+	virtual void addTexture(std::string textname, TextureWrapper* Text) = 0;
+	virtual void addMesh(std::string meshname, MeshWrapper* Mesh) = 0;
+	virtual void setDrawWindow(Window* windowtodrawin) = 0;
+	virtual void CreateVertexBuffer(int heightmapvertex, EDWORD usage, EDWORD fvf, EPOOL pool, std::string vertexbuffername, HANDLE handle) = 0;
+	virtual HRESULT CreateIndexBuffer(int length, EDWORD usage, EFORMAT format, EPOOL pool, std::string indexbuffername, HANDLE* handle) = 0;
+	virtual HRESULT LockVertexBuffer(std::string vertexbuffername, int offsettolock, int sizetolock, void** pbdata, EDWORD flags) = 0;
+	virtual HRESULT UnlockVertexBuffer(std::string vertexbuffername) = 0;
+	virtual HRESULT LockIndexBuffer(std::string indexbuffername, int offsettolock, int sizetolock, void** pbdata, EDWORD flags) = 0;
+	virtual HRESULT UnlockIndexBuffer(std::string indexbuffername) = 0;
+	virtual bool VertexBufferExists(std::string vertexbuffername) = 0;
+	virtual bool IndexBufferExists(std::string indexbuffername) = 0;
+	virtual HRESULT setTransform(ETRANSFORMSTATETYPE transform, MatrixWrapper* matrix) = 0;
+	virtual HRESULT SetStreamSource(int streamnumber, std::string vertexbuffername, int offset, int stride) = 0;
+	virtual HRESULT SetFVF(EDWORD FVF) = 0;
+	virtual HRESULT SetIndices(std::string indexbuffername) = 0;
+	virtual HRESULT DrawIndexedPrimitive(EPRIMITIVETYPE type, int basevertexindex, int minvertexindex, int numvertices, int startindex, int primcount) = 0;
+	virtual HRESULT LoadShaderFromFile(std::string shadername, std::string shaderfilepath, std::string shaderfunctionname) = 0;
+	virtual void Clear(EDWORD count, EDWORD flags, ECOLOR color, float z, EDWORD stencil) = 0;
+	virtual void BeginS() = 0;
+	virtual void EndS() = 0;
+	virtual void Present() = 0;
+	virtual std::map<std::string, MeshWrapper*> getMeshes() = 0;
+	virtual std::map<std::string, TextureWrapper*> getTextures() = 0;
 };
 
 #endif

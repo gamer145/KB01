@@ -6,7 +6,7 @@ Kernel::Kernel()
 {
 	myWindowManager = new Window_Manager();
 	myResourceManager = new Resource_Manager();
-	myRenderer = new Renderer();
+	myRenderer = new DirectXRenderer();
 	mySceneManager = new Scene_Manager();
 
 }

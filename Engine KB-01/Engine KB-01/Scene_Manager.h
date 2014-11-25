@@ -16,7 +16,7 @@ class Scene_Manager
 public:
 	Scene_Manager();
 	~Scene_Manager();
-	void SetUpManager(Window_Manager* windowManager, Resource_Manager* resourceManager, RendererInterface* renderer);
+	void SetUpManager(Window_Manager* windowManager, Resource_Manager* resourceManager, Renderer* DirectXRenderer);
 	void addScene();
 	bool UpdateScene();
 	void setCurrentScene(std::string windowname);
@@ -29,7 +29,7 @@ private:
 	InputHandler* myInputHandler;
 	Scene* CurrentScene;
 	Window* CurrentWindow;
-	RendererInterface* myRenderer;
+	Renderer* myDirectXRenderer;
 	Heightmap* hoogteMap;
 };
 

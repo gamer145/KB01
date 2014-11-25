@@ -8,12 +8,12 @@ TextureLoader::~TextureLoader()
 {
 }
 
-HRESULT TextureLoader::LoadTexture(std::string texturename, RendererInterface* renderer)
+HRESULT TextureLoader::LoadTexture(std::string texturename, Renderer* DirectXRenderer)
 {
 
 	TextureWrapper* texture = new TextureWrapper(NULL);
 
-	if (FAILED(renderer->LoadTextureFromFile(texturename, 272, texture))) 
+	if (FAILED(DirectXRenderer->LoadTextureFromFile(texturename, 272, texture))) 
                 {
                     MessageBox( NULL, L"Could not find texture map", L"Meshes.exe", MB_OK );
                 }

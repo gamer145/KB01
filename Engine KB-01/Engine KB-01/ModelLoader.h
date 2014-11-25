@@ -6,7 +6,7 @@
 #include <iostream>
 #include <string>
 #include "Model.h"
-#include "Renderer.h"
+#include "DirectXRenderer.h"
 #include "VisualObject.h"
 
 class ModelLoader
@@ -14,7 +14,7 @@ class ModelLoader
 public:
 	ModelLoader();
 	~ModelLoader();
-	HRESULT LoadModel(std::string modelname, RendererInterface* renderer, VisualObject* object);
+	HRESULT LoadModel(std::string modelname, Renderer* DirectXRenderer, VisualObject* object);
 };
 
 #endif

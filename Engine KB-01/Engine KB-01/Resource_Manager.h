@@ -7,7 +7,7 @@
 //#include "LevelLoader.h"
 #include "Model.h"
 #include "ModelLoader.h"
-#include "RendererInterface.h"
+#include "Renderer.h"
 #include "Texture.h"
 #include "TextureLoader.h"
 #include "VisualObject.h"
@@ -18,7 +18,7 @@ class Resource_Manager
 public:
 	Resource_Manager();
 	~Resource_Manager();
-	void setRenderer(RendererInterface* newRenderer);
+	void setDirectXRenderer(Renderer* newDirectXRenderer);
 	VisualObject* LoadInModel(std::string modelname, std::string texturename);
 	void loadManualTexture(std::string texturename);
 
@@ -28,7 +28,7 @@ public:
 private:
 	//LevelLoader levelLoader;
 	ModelLoader modelLoader;
-	RendererInterface* renderer;
+	Renderer* DirectXRenderer;
 	TextureLoader textureLoader;
 };
 

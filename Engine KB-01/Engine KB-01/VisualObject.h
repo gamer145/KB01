@@ -4,9 +4,9 @@
 #include "Entity.h"
 #include "Model.h"
 #include "Texture.h"
-#include "RendererInterface.h"
+#include "Renderer.h"
 
-class Renderer;
+class DirectXRenderer;
 class VisualObject : public Entity
 {
 public:
@@ -20,7 +20,7 @@ public:
 	void setTexture(std::string newTextname);
 	void setSubSet(int newDWORD);
 	void setPosition(MatrixWrapper* newPosition);
-	void draw(RendererInterface* myRenderer, MatrixWrapper* WorldMatrix);
+	void draw(Renderer* myDirectXRenderer, MatrixWrapper* WorldMatrix);
 
 private:
 	std::string meshname;

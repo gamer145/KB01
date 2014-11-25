@@ -104,8 +104,8 @@
     <ClCompile Include="VisualObject.cpp" />
     <ClCompile Include="ModelLoader.cpp" />
     <ClCompile Include="MouseListener.cpp" />
+    <ClCompile Include="DirectXRenderer.cpp" />
     <ClCompile Include="Renderer.cpp" />
-    <ClCompile Include="RendererInterface.cpp" />
     <ClCompile Include="Resource_Manager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Scene_Manager.cpp" />
@@ -129,6 +129,7 @@
     <ClInclude Include="MaterialWrapper.h" />
     <ClInclude Include="MatrixWrapper.h" />
     <ClInclude Include="MeshWrapper.h" />
+    <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderLoader.h" />
     <ClInclude Include="TextureWrapper.h" />
     <ClInclude Include="VectorWrapper.h" />
@@ -136,8 +137,8 @@
     <ClInclude Include="VisualObject.h" />
     <ClInclude Include="ModelLoader.h" />
     <ClInclude Include="MouseListener.h" />
+    <ClInclude Include="DirectXRenderer.h" />
     <ClInclude Include="Renderer.h" />
-    <ClInclude Include="RendererInterface.h" />
     <ClInclude Include="Resource_Manager.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Scene_Manager.h" />

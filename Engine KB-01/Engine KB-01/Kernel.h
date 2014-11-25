@@ -4,7 +4,7 @@
 #include <iostream>
 #include "InputHandler.h"
 #include "Logger.h"
-#include "RendererInterface.h"
+#include "Renderer.h"
 #include "Resource_Manager.h"
 #include "Scene_Manager.h"
 #include "Window_Manager.h"
@@ -21,7 +21,7 @@ public:
 private:
 	Window_Manager* myWindowManager;
 	Resource_Manager* myResourceManager;
-	RendererInterface* myRenderer;
+	Renderer* myRenderer;
 	Scene_Manager* mySceneManager;
 	bool TemporaryStopChecker;
 

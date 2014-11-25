@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "RendererInterface.h"
+#include "Renderer.h"
 
 
 class ShaderLoader
@@ -12,7 +12,7 @@ class ShaderLoader
 public:
 	ShaderLoader();
 	~ShaderLoader();
-	HRESULT LoadShaderIn(std::string shadername, RendererInterface* renderer);
+	HRESULT LoadShaderIn(std::string shadername, Renderer* DirectXRenderer);
 private:
 	std::vector<std::string> shaders;
 };

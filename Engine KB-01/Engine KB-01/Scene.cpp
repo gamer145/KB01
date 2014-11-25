@@ -32,9 +32,9 @@ void Scene::AddObject(VisualObject* newObject)
 	activeObjects.push_back(newObject);
 }
 
-void Scene::SetRenderer(RendererInterface* render)
+void Scene::SetDirectXRenderer(Renderer* render)
 {
-	myRenderer = render;
+	myDirectXRenderer = render;
 }
 
 void Scene::setResourceManager(Resource_Manager* r)
@@ -50,32 +50,32 @@ void Scene::Update()
 
 void Scene::clear()
 {
-	myRenderer->Clear( 0, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
+	myDirectXRenderer->Clear( 0, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
                          D3DCOLOR_XRGB(0, 0, 0 ), 1.0f, 0 );
 }
 
 void Scene::beginS()
 {
-	myRenderer->BeginS();
+	myDirectXRenderer->BeginS();
 }
 
 void Scene::endS()
 {
-	myRenderer->EndS();
+	myDirectXRenderer->EndS();
 
-	myRenderer->Present();
+	myDirectXRenderer->Present();
 }
 
 void Scene::Draw()
 {
 
-			myRenderer->SetUpWorld(currentCamera->getOffSetMatrix(), currentCamera->getPosition(), currentCamera->getProjectionMatrix());
+			myDirectXRenderer->SetUpWorld(currentCamera->getOffSetMatrix(), currentCamera->getPosition(), currentCamera->getProjectionMatrix());
 
 			for(std::vector<VisualObject*>::iterator i = activeObjects.begin(); i != activeObjects.end(); ++i)
 			{
 				VisualObject* currentobj = *i;
 
-				currentobj->draw(myRenderer, currentCamera->getOffSetMatrix());
+				currentobj->draw(myDirectXRenderer, currentCamera->getOffSetMatrix());
 				
 
     

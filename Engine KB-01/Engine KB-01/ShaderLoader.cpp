@@ -10,14 +10,14 @@ ShaderLoader::~ShaderLoader()
 
 }
 
-HRESULT ShaderLoader::LoadShaderIn(std::string shadername, RendererInterface* renderer)
+HRESULT ShaderLoader::LoadShaderIn(std::string shadername, Renderer* DirectXRenderer)
 {
 	HRESULT result;
 
 	if (std::find(shaders.begin(), shaders.end(), shadername) != shaders.end())
 	{
 		
-		 // make this result = LoadShaderFromFile in renderer
+		 // make this result = LoadShaderFromFile in DirectXRenderer
 		
 		if (FAILED(result))
 		{
