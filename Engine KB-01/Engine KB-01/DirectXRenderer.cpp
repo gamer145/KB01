@@ -265,6 +265,7 @@ HRESULT DirectXRenderer::LoadShaderFromFile(std::string shadername, std::string 
 {
 	HRESULT result;
 
+	Shader* newshader = new Shader();
 
 	LPD3DXBUFFER pCode;
 	LPDIRECT3DVERTEXDECLARATION9    g_pVertexDeclaration = NULL;
@@ -292,11 +293,15 @@ HRESULT DirectXRenderer::LoadShaderFromFile(std::string shadername, std::string 
 	if(FAILED(D3DXCompileShaderFromFile(strpath, NULL, NULL, shaderfunctionname.c_str(), "vs_2_0", 0, &pCode, NULL, &constanttable)))
 	{
 		// insert logger here, log that the compiling failed
+
+		
 	}
 
 	result = g_pd3dDevice->CreateVertexShader((DWORD*)pCode->GetBufferPointer(),
 		&g_pVertexShader);
 	pCode->Release();
+
+
 
 	return result;
 }

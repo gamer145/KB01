@@ -50,3 +50,4 @@
 [24-11-2014 11:49:24] [Ln 0] Success: The heightdata has been retrieved.
 [25-11-2014 11:39:12] [Ln 0] Success: The heightdata has been retrieved.
 [25-11-2014 14:09:37] [Ln 0] Success: The heightdata has been retrieved.
+[26-11-2014 11:24:35] [Ln 0] Success: The heightdata has been retrieved.

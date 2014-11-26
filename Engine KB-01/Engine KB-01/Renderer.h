@@ -25,13 +25,6 @@ public:
 	~Renderer();
 	virtual void CleanUp()=0;	
 
-	/*
-
-	*****************************************************
-	-------------- initiate new DirectXRenderer ----------------
-	*****************************************************
-
-	*/
 	virtual HRESULT SetTexture(std::string)=0;
 	virtual HRESULT LoadMeshFromFile(std::string filename, EDWORD options, MeshWrapper* destination) = 0;
 	virtual HRESULT LoadTextureFromFile(std::string filename, EDWORD options, TextureWrapper* destination) = 0;

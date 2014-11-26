@@ -8,7 +8,7 @@
 #include <mmsystem.h>
 #include <strsafe.h>
 #include <vector>
-
+#include "Shader.h"
 
 
 class Entity;
@@ -72,6 +72,7 @@ private:
 	
 	std::map<std::string, MeshWrapper*> Meshes;
 	std::map<std::string, TextureWrapper*> Textures;
+	std::map<std::string, Shader*> Shaders;
 
 	std::map<std::string, LPDIRECT3DVERTEXBUFFER9> VertexBuffers;
 	std::map<std::string, LPDIRECT3DINDEXBUFFER9> IndexBuffers;
