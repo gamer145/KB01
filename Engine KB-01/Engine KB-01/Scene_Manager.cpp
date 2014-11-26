@@ -67,23 +67,19 @@ void Scene_Manager::setCurrentScene(std::string windowname)
 	}
 }
 
-bool Scene_Manager::UpdateScene()
+ERUNSTATE Scene_Manager::UpdateScene()
 {
-
+		ERUNSTATE state;
 		CurrentScene->clear();
 		CurrentScene->beginS();
 
-		CurrentScene->Update();	
+		state = CurrentScene->Update();	
 
-		hoogteMap->SetupHeightmapMatrix(0, 0, 0, CurrentScene->getCamera()->getOffSetMatrix());
+		hoogteMap->SetupHeightmapMatrix(0, 0, 0);
 		hoogteMap->RenderHeightmap(myRenderer);
 
 		CurrentScene->endS();
 		CurrentWindow->updateWindow();
 	
-		if (myInputHandler->getAction(ACTION_EXIT) < 0)
-		{
-			return true;
-		}
-		return false;
+		return state;
 }

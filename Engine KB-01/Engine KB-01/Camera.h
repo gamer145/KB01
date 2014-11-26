@@ -16,18 +16,10 @@ public:
 	void SetLookAtPoint(VectorWrapper* newVector);
 	void SetUpVector(VectorWrapper* newVector);
 	void SetInputHandler(InputHandlerInterface* IH);
-
-	void ModifyWorldX(float modifier);
-	void ModifyWorldY(float modifier);
-	void ModifyWorldZ(float modifier);
-	void ModifyWorldXAngle(float modifier);
-	void ModifyWorldYAngle(float modifier);
-	void ModifyWorldZAngle(float modifier);
-
-	void Update();
+	
+	ERUNSTATE Update();
 
 	MatrixWrapper* getProjectionMatrix();
-	MatrixWrapper* getOffSetMatrix();
 
 private:
 	VectorWrapper* EyePoint;
@@ -35,16 +27,16 @@ private:
 	VectorWrapper* UpVector;
 	MatrixWrapper* ProjectionMatrix;
 	InputHandlerInterface* myInputHandler;
-	void UpdateOffSetMatrix();
+	void UpdateCameraMatrix();
 	float x,y,z, XAngle, YAngle, ZAngle;
 	int mousewheel, xpos, ypos;
-	MatrixWrapper* OffSetMatrix;
-	MatrixWrapper* WorldXRotation;
-	MatrixWrapper* WorldYRotation;
-	MatrixWrapper* WorldZRotation;
-	MatrixWrapper* WorldRotation;
-	MatrixWrapper* WorldPosition;
-	
+
+	void ModifyWorldX(float modifier);
+	void ModifyWorldY(float modifier);
+	void ModifyWorldZ(float modifier);
+	void ModifyWorldXAngle(float modifier);
+	void ModifyWorldYAngle(float modifier);
+	void ModifyWorldZAngle(float modifier);
 };
 
 #endif

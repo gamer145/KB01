@@ -14,7 +14,7 @@ class Heightmap
 public:
 	Heightmap();
 	~Heightmap();
-	void SetupHeightmapMatrix(float x, float y, float z, MatrixWrapper* OffSet);
+	void SetupHeightmapMatrix(float x, float y, float z);
 	void CreateHeightmap(RendererInterface* render, LPCWSTR argFileName);
 	void RenderHeightmap(RendererInterface* render);
 	byte* LoadBMP(LPCWSTR argFileName);

@@ -22,4 +22,20 @@ D3DXVECTOR3 VectorWrapper::GetVector()
 	return vector;
 }
 
+void VectorWrapper::SetX(float newX)
+{
+	vector.x -= newX;
+}
+
+void VectorWrapper::SetY(float newY)
+{
+	vector.y -= newY;
+}
+
+void VectorWrapper::SetZ(float newZ)
+{
+	vector.z -= newZ;
+}
+
+
 

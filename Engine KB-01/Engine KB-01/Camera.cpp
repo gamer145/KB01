@@ -14,16 +14,11 @@ Camera::Camera()
 
 	Position = new MatrixWrapper();
 	ProjectionMatrix = new MatrixWrapper();
-	OffSetMatrix = new MatrixWrapper();
-	WorldXRotation = new MatrixWrapper();
-	WorldYRotation = new MatrixWrapper();
-	WorldZRotation = new MatrixWrapper();
-	WorldRotation = new MatrixWrapper();
-	WorldPosition = new MatrixWrapper();
 }
 
 Camera::~Camera()
 {
+
 }
 
 
@@ -56,7 +51,7 @@ void Camera::SetUpVector(VectorWrapper* newVector)
 	UpVector = newVector;
 }
 
-void Camera::ModifyWorldX(float modifier)
+/*void Camera::ModifyWorldX(float modifier)
 {
 	x += modifier;
 }
@@ -69,6 +64,24 @@ void Camera::ModifyWorldY(float modifier)
 void Camera::ModifyWorldZ(float modifier)
 {
 	z += modifier;
+}*/
+
+void Camera::ModifyWorldX(float modifier)
+{
+	EyePoint->SetX(modifier);
+	LookatPoint->SetX(modifier);
+}
+
+void Camera::ModifyWorldY(float modifier)
+{
+	EyePoint->SetY(modifier);
+	LookatPoint->SetY(modifier);
+}
+
+void Camera::ModifyWorldZ(float modifier)
+{
+	EyePoint->SetZ(modifier);
+	LookatPoint->SetZ(modifier);
 }
 
 void Camera::ModifyWorldXAngle(float modifier)
@@ -91,21 +104,21 @@ MatrixWrapper* Camera::getProjectionMatrix()
 	return ProjectionMatrix;
 }
 
-MatrixWrapper* Camera::getOffSetMatrix()
+ERUNSTATE Camera::Update()
 {
-	return OffSetMatrix;
-}
-
-void Camera::Update()
-{
+	ERUNSTATE state = RUNNING;
 
 	ModifyWorldX(myInputHandler->getAction(ACTION_XAXISMOVE));
 	ModifyWorldY(myInputHandler->getAction(ACTION_YAXISMOVE));
 	ModifyWorldZ(myInputHandler->getAction(ACTION_ZAXISMOVE));
 	ModifyWorldXAngle(myInputHandler->getAction(ACTION_ROTATECAMERA_X));
 	ModifyWorldYAngle(myInputHandler->getAction(ACTION_ROTATECAMERA_Y));
-
-	UpdateOffSetMatrix();
+	if (myInputHandler->getAction(ACTION_EXIT) < 0)
+	{
+		state = EXIT;
+	}
+	UpdateCameraMatrix();
+	return state;
 }
 
 /*void Camera::Update()
@@ -191,7 +204,7 @@ void Camera::Update()
 		UpdateOffSetMatrix();
 }*/
 
-void Camera::UpdateOffSetMatrix()
+/*void Camera::UpdateOffSetMatrix()
 {
 	WorldYRotation->MatrixRotationY(XAngle);
 	WorldXRotation->MatrixRotationX(YAngle);
@@ -200,4 +213,9 @@ void Camera::UpdateOffSetMatrix()
 
 	WorldRotation->SetMatrix(WorldXRotation->GetMatrix() * WorldYRotation->GetMatrix() * WorldZRotation->GetMatrix());
 	OffSetMatrix->SetMatrix(WorldRotation->GetMatrix() * WorldPosition->GetMatrix());
+}*/
+
+void Camera::UpdateCameraMatrix()
+{
+	Position->MatrixLookAtLH(EyePoint, LookatPoint, UpVector);
 }

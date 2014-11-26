@@ -50,17 +50,11 @@ void VisualObject::setSubSet(int newDWORD)
 	subsets = newDWORD;
 }
 
-void VisualObject::draw(RendererInterface* myRenderer, MatrixWrapper* WorldMatrix)
+void VisualObject::draw(RendererInterface* myRenderer)
 {
 	myRenderer->SetTexture(textname);
-							
-//	D3DXMATRIX* world = &D3DTS_WORLD;
 
-	MatrixWrapper* TheNewMatrix = new MatrixWrapper();
-
-	TheNewMatrix->SetMatrix((getPosition()->GetMatrix() * WorldMatrix->GetMatrix()));
-
-	myRenderer->setTransform(E_WORLD, TheNewMatrix);
+	myRenderer->setTransform(E_WORLD, getPosition());
 
 	myRenderer->DrawSubSet(meshname);
 

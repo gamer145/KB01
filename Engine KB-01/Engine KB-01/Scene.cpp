@@ -42,10 +42,11 @@ void Scene::setResourceManager(Resource_Manager* r)
 	RManager = r;
 }
 
-void Scene::Update()
+ERUNSTATE Scene::Update()
 {
-	currentCamera->Update();
+	ERUNSTATE state = currentCamera->Update();
 	Draw();
+	return state;
 }
 
 void Scene::clear()
@@ -69,13 +70,13 @@ void Scene::endS()
 void Scene::Draw()
 {
 
-			myRenderer->SetUpWorld(currentCamera->getOffSetMatrix(), currentCamera->getPosition(), currentCamera->getProjectionMatrix());
+			myRenderer->SetUpWorld(currentCamera->getPosition(), currentCamera->getProjectionMatrix());
 
 			for(std::vector<VisualObject*>::iterator i = activeObjects.begin(); i != activeObjects.end(); ++i)
 			{
 				VisualObject* currentobj = *i;
 
-				currentobj->draw(myRenderer, currentCamera->getOffSetMatrix());
+				currentobj->draw(myRenderer);
 				
 
     

@@ -4,6 +4,7 @@ Renderer::Renderer()
 {
 	g_pD3D = NULL; 
     g_pd3dDevice = NULL;
+	worldMatrix = new D3DXMATRIX;
 	
 };
 
@@ -14,7 +15,6 @@ Renderer::~Renderer()
 
 LPD3DXMESH          g_pMesh = NULL; // Our mesh object in sysmem
 D3DMATERIAL9*       g_pMeshMaterials = NULL; // Materials for our mesh
-//D3DMATERIAL9        Material; // Materials for our mesh
 LPDIRECT3DTEXTURE9* g_pMeshTextures = NULL; // Textures for our mesh
 DWORD               g_dwNumMaterials = 0L;   // Number of mesh materials
 
@@ -114,9 +114,9 @@ HRESULT Renderer::LoadTextureFromFile(std::string filename, EDWORD options, Text
 
 }
 
-void Renderer::SetUpWorld(MatrixWrapper* WorldMatrix, MatrixWrapper* CameraMatrix, MatrixWrapper* ProjectionMatrix)
+void Renderer::SetUpWorld(MatrixWrapper* CameraMatrix, MatrixWrapper* ProjectionMatrix)
 {
-	g_pd3dDevice->SetTransform(D3DTS_WORLD, &WorldMatrix->GetMatrix());
+	g_pd3dDevice->SetTransform(D3DTS_WORLD, worldMatrix);
 	g_pd3dDevice->SetTransform(D3DTS_VIEW, &CameraMatrix->GetMatrix());
 	g_pd3dDevice->SetTransform(D3DTS_PROJECTION, &ProjectionMatrix->GetMatrix());
 }

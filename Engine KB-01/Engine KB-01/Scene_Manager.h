@@ -18,7 +18,7 @@ public:
 	~Scene_Manager();
 	void SetUpManager(Window_Manager* windowManager, Resource_Manager* resourceManager, Renderer* renderer);
 	void addScene();
-	bool UpdateScene();
+	ERUNSTATE UpdateScene();
 	void setCurrentScene(std::string windowname);
 	Window* RequestWindow();
 	
