@@ -26,8 +26,8 @@ void Kernel::Run()
 {
 	Runstate = mySceneManager->UpdateScene();
 
-	if (Runstate == RUNNING)
+	while (Runstate == RUNNING)
 	{
-		Run();
+		Runstate = mySceneManager->UpdateScene();
 	}
 }

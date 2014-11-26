@@ -81,3 +81,9 @@
 [26-11-2014 13:13:20] [Ln 0] Success: The heightdata has been retrieved.
 [26-11-2014 13:14:52] [Ln 0] Success: The heightdata has been retrieved.
 [26-11-2014 13:24:04] [Ln 0] Success: The heightdata has been retrieved.
+[26-11-2014 13:28:12] [Ln 0] Success: The heightdata has been retrieved.
+[26-11-2014 13:31:57] [Ln 0] Success: The heightdata has been retrieved.
+[26-11-2014 13:44:33] [Ln 0] Success: The heightdata has been retrieved.
+[26-11-2014 14:05:33] [Ln 0] Success: The heightdata has been retrieved.
+[26-11-2014 14:06:08] [Ln 0] Success: The heightdata has been retrieved.
+[26-11-2014 14:27:15] [Ln 0] Success: The heightdata has been retrieved.

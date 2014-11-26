@@ -77,9 +77,7 @@ void Scene::Draw()
 				VisualObject* currentobj = *i;
 
 				currentobj->draw(myRenderer);
-				
 
-    
 			}
 }
 

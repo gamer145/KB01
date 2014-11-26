@@ -49,7 +49,6 @@ HRESULT Renderer::InitD3D( HWND hWnd )
 	g_pd3dDevice->SetRenderState( D3DRS_ZENABLE, TRUE );
 	g_pd3dDevice->SetRenderState( D3DRS_LIGHTING, false);
 	g_pd3dDevice->SetRenderState( D3DRS_CULLMODE, D3DCULL_NONE);
-	//g_pd3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_POINT);
 
     return S_OK;
 };
