@@ -33,6 +33,7 @@ void Scene_Manager::SetUpManager(Window_Manager* windowManager, Resource_Manager
 	myResourceManager->loadManualTexture("dome.jpg");
 	hoogteMap = new Heightmap();
 	hoogteMap->CreateHeightmap(myRenderer, L"..//Models//hoogtemap2.bmp");
+	hoogteMap->SetupHeightmapMatrix(0, 0, 0);
 
 	myInputHandler = new InputHandler();
 	myInputHandler->InitInputHandler(CurrentWindow);
@@ -74,8 +75,7 @@ ERUNSTATE Scene_Manager::UpdateScene()
 		CurrentScene->beginS();
 
 		state = CurrentScene->Update();	
-
-		hoogteMap->SetupHeightmapMatrix(0, 0, 0);
+		
 		hoogteMap->RenderHeightmap(myRenderer);
 
 		CurrentScene->endS();
