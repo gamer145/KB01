@@ -51,21 +51,6 @@ void Camera::SetUpVector(VectorWrapper* newVector)
 	UpVector = newVector;
 }
 
-/*void Camera::ModifyWorldX(float modifier)
-{
-	x += modifier;
-}
-
-void Camera::ModifyWorldY(float modifier)
-{
-	y += modifier;
-}
-
-void Camera::ModifyWorldZ(float modifier)
-{
-	z += modifier;
-}*/
-
 void Camera::ModifyWorldX(float modifier)
 {
 	EyePoint->SetX(modifier);
@@ -86,12 +71,41 @@ void Camera::ModifyWorldZ(float modifier)
 
 void Camera::ModifyWorldXAngle(float modifier)
 {
-	XAngle += modifier;
+	
+	float LPX = LookatPoint->GetX();
+	float EPX = EyePoint->GetX();
+	float LPZ = LookatPoint->GetZ();
+	float EPZ = EyePoint->GetZ();
+
+	if (LPX >= EPX)
+	{		
+		LookatPoint->SetZ(-modifier);
+	}
+	else if (LPX < EPX)
+	{
+		LookatPoint->SetZ(modifier);
+	}
+
+	if (LPZ >= EPZ)
+	{
+		LookatPoint->SetX(modifier);
+	}
+	else if (LPZ < EPZ)
+	{
+		LookatPoint->SetX(-modifier);
+	}
 }
 
 void Camera::ModifyWorldYAngle(float modifier)
 {
-	YAngle += modifier;
+	float LPZ = LookatPoint->GetZ();
+	float EPZ = EyePoint->GetZ();
+
+	if (LPZ > EPZ)
+	{
+		LookatPoint->SetY(modifier);
+		LookatPoint->SetZ(modifier);
+	}
 }
 
 void Camera::ModifyWorldZAngle(float modifier)

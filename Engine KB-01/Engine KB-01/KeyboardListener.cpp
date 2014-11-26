@@ -73,12 +73,12 @@ bool KeyboardListener::getAction(EACTION action, float& value)
 	{
 		if (ProcessKBInput((byte)DIKEYBOARD_W))
 		{
-			value = -0.1f;
+			value = 0.1f;
 			return true;
 		}
 		else if (ProcessKBInput((byte)DIKEYBOARD_S))
 		{
-			value = 0.1f;
+			value = -0.1f;
 			return true;
 		}
 		return false;
@@ -88,12 +88,12 @@ bool KeyboardListener::getAction(EACTION action, float& value)
 	{
 		if (ProcessKBInput((byte)DIKEYBOARD_SPACE))
 		{
-			value = -0.1f;
+			value = 0.1f;
 			return true;
 		}
 		else if (ProcessKBInput((byte)DIKEYBOARD_LCONTROL))
 		{
-			value = 0.1f;
+			value = -0.1f;
 			return true;
 		}
 		return false;
@@ -107,6 +107,36 @@ bool KeyboardListener::getAction(EACTION action, float& value)
 			return true;
 		}
 		else if (ProcessKBInput((byte)DIKEYBOARD_E))
+		{
+			value = 0.1f;
+			return true;
+		}
+		return false;
+	}
+
+	if (action == ACTION_ROTATECAMERA_X)
+	{
+		if (ProcessKBInput((byte)DIKEYBOARD_A))
+		{
+			value = -0.1f;
+			return true;
+		}
+		else if (ProcessKBInput((byte)DIKEYBOARD_D))
+		{
+			value = 0.1f;
+			return true;
+		}
+		return false;
+	}
+
+	if (action == ACTION_ROTATECAMERA_Y)
+	{
+		if (ProcessKBInput((byte)DIKEYBOARD_F))
+		{
+			value = -0.1f;
+			return true;
+		}
+		else if (ProcessKBInput((byte)DIKEYBOARD_R))
 		{
 			value = 0.1f;
 			return true;

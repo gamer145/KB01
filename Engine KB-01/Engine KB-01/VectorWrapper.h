@@ -12,9 +12,14 @@ public:
 	~VectorWrapper();
 	void SetVector(D3DXVECTOR3 newVector);
 	D3DXVECTOR3 GetVector();
+
 	void SetX(float newX);
 	void SetY(float newY);
 	void SetZ(float newZ);
+
+	float GetX();
+	float GetY();
+	float GetZ();
 
 private:
 	D3DXVECTOR3 vector;

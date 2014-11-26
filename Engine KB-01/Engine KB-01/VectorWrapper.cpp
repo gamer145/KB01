@@ -24,17 +24,32 @@ D3DXVECTOR3 VectorWrapper::GetVector()
 
 void VectorWrapper::SetX(float newX)
 {
-	vector.x -= newX;
+	vector.x += newX;
 }
 
 void VectorWrapper::SetY(float newY)
 {
-	vector.y -= newY;
+	vector.y += newY;
 }
 
 void VectorWrapper::SetZ(float newZ)
 {
-	vector.z -= newZ;
+	vector.z += newZ;
+}
+
+float VectorWrapper::GetX()
+{
+	return vector.x;
+}
+
+float VectorWrapper::GetY()
+{
+	return vector.y;
+}
+
+float VectorWrapper::GetZ()
+{
+	return vector.z;
 }
 
 
