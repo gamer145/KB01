@@ -34,9 +34,9 @@ private:
 	void ModifyCameraForward(float modifier);
 	void ModifyCameraHeight(float modifier);
 	void ModifyCameraSide(float modifier);
-	void ModifyWorldXAngle(float modifier);
-	void ModifyWorldYAngle(float modifier);
-	void ModifyWorldZAngle(float modifier);
+	void ModifyCameraXRotation(float modifier);
+	void ModifyCameraYRotation(float modifier);
+	void ModifyCameraZRotation(float modifier);
 };
 
 #endif
