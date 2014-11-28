@@ -51,22 +51,58 @@ void Camera::SetUpVector(VectorWrapper* newVector)
 	UpVector = newVector;
 }
 
-void Camera::ModifyWorldX(float modifier)
+void Camera::ModifyCameraForward(float modifier)
 {
-	EyePoint->SetX(modifier);
-	LookatPoint->SetX(modifier);
+	float LPX = LookatPoint->GetX();
+	float EPX = EyePoint->GetX();
+	float LPZ = LookatPoint->GetZ();
+	float EPZ = EyePoint->GetZ();
+
+	float XMov = (LPX - EPX);
+	float ZMov = (LPZ - EPZ);
+
+	float TotalMov = (XMov + ZMov);
+	float XRatio = (XMov / TotalMov);
+	float ZRatio = (ZMov / TotalMov);
+
+	float XModifier = XRatio * modifier;
+	float ZModifier = ZRatio * modifier;
+
+	EyePoint->SetX(XModifier);
+	LookatPoint->SetX(XModifier);
+
+	EyePoint->SetZ(ZModifier);
+	LookatPoint->SetZ(ZModifier);
 }
 
-void Camera::ModifyWorldY(float modifier)
+void Camera::ModifyCameraHeight(float modifier)
 {
 	EyePoint->SetY(modifier);
 	LookatPoint->SetY(modifier);
 }
 
-void Camera::ModifyWorldZ(float modifier)
+void Camera::ModifyCameraSide(float modifier)
 {
-	EyePoint->SetZ(modifier);
-	LookatPoint->SetZ(modifier);
+	float LPX = LookatPoint->GetX();
+	float EPX = EyePoint->GetX();
+	float LPZ = LookatPoint->GetZ();
+	float EPZ = EyePoint->GetZ();
+
+	float XMov = (LPX - EPX);
+	float ZMov = (LPZ - EPZ);
+
+	float TotalMov = (XMov + ZMov);
+	float XRatio = (XMov / TotalMov);
+	float ZRatio = (ZMov / TotalMov);
+
+	float XModifier = XRatio * modifier;
+	float ZModifier = ZRatio * modifier;
+
+	EyePoint->SetX(XModifier);
+	LookatPoint->SetX(XModifier);
+
+	EyePoint->SetZ(ZModifier);
+	LookatPoint->SetZ(ZModifier);
 }
 
 void Camera::ModifyWorldXAngle(float modifier)
@@ -122,15 +158,24 @@ ERUNSTATE Camera::Update()
 {
 	ERUNSTATE state = RUNNING;
 
-	ModifyWorldX(myInputHandler->getAction(ACTION_XAXISMOVE));
-	ModifyWorldY(myInputHandler->getAction(ACTION_YAXISMOVE));
-	ModifyWorldZ(myInputHandler->getAction(ACTION_ZAXISMOVE));
+	ModifyCameraForward(myInputHandler->getAction(ACTION_XAXISMOVE));
+	ModifyCameraHeight(myInputHandler->getAction(ACTION_YAXISMOVE));
+	ModifyCameraSide(myInputHandler->getAction(ACTION_ZAXISMOVE));
 	ModifyWorldXAngle(myInputHandler->getAction(ACTION_ROTATECAMERA_X));
 	ModifyWorldYAngle(myInputHandler->getAction(ACTION_ROTATECAMERA_Y));
 	if (myInputHandler->getAction(ACTION_EXIT) < 0)
 	{
 		state = EXIT;
 	}
+	std::ostringstream a;
+	std::ostringstream c;
+	a << "Eye:" << EyePoint->GetX() << " " << EyePoint->GetY() << " " << EyePoint->GetZ();
+	c << "Lookat:" << LookatPoint->GetX() << " " << LookatPoint->GetY() << " " << LookatPoint->GetZ();
+	std::string b = a.str();
+	std::string d = c.str();
+	Logger* myLogger = Logger::GetLogger();
+	myLogger->WriteToFile(Error, b, 0);
+	myLogger->WriteToFile(Error, d, 0);
 	UpdateCameraMatrix();
 	return state;
 }

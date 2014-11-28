@@ -31,9 +31,9 @@ private:
 	float x,y,z, XAngle, YAngle, ZAngle;
 	int mousewheel, xpos, ypos;
 
-	void ModifyWorldX(float modifier);
-	void ModifyWorldY(float modifier);
-	void ModifyWorldZ(float modifier);
+	void ModifyCameraForward(float modifier);
+	void ModifyCameraHeight(float modifier);
+	void ModifyCameraSide(float modifier);
 	void ModifyWorldXAngle(float modifier);
 	void ModifyWorldYAngle(float modifier);
 	void ModifyWorldZAngle(float modifier);
