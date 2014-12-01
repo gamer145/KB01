@@ -24,12 +24,12 @@ public:
 	Renderer();
 	~Renderer();
 	virtual void CleanUp()=0;	
-
+	
 	virtual HRESULT SetTexture(std::string)=0;
 	virtual HRESULT LoadMeshFromFile(std::string filename, EDWORD options, MeshWrapper* destination) = 0;
 	virtual HRESULT LoadTextureFromFile(std::string filename, EDWORD options, TextureWrapper* destination) = 0;
 	virtual void DrawSubSet(std::string meshname) = 0;
-	virtual void SetUpWorld(MatrixWrapper* WorldMatrix, MatrixWrapper* CameraMatrix, MatrixWrapper* ProjectionMatrix) = 0;
+	virtual void SetUpWorld(MatrixWrapper* CameraMatrix, MatrixWrapper* ProjectionMatrix) = 0;
 	virtual HRESULT InitD3D(HWND hWnd) = 0;
 	virtual void addTexture(std::string textname, TextureWrapper* Text) = 0;
 	virtual void addMesh(std::string meshname, MeshWrapper* Mesh) = 0;

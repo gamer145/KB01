@@ -2,7 +2,7 @@
 #define CAMERA_H
 
 #include "Entity.h"
-#include "InputHandler.h"
+#include "InputHandlerInterface.h"
 #include "MatrixWrapper.h"
 #include "VectorWrapper.h"
 
@@ -15,36 +15,26 @@ public:
 	void SetEyePoint(VectorWrapper* newVector);
 	void SetLookAtPoint(VectorWrapper* newVector);
 	void SetUpVector(VectorWrapper* newVector);
-	void SetInputHandler(InputHandler* IH);
-
-	void ModifyWorldX(float modifier);
-	void ModifyWorldY(float modifier);
-	void ModifyWorldZ(float modifier);
-	void ModifyWorldXAngle(float modifier);
-	void ModifyWorldYAngle(float modifier);
-	void ModifyWorldZAngle(float modifier);
-
-	void Update();
+	void SetInputHandler(InputHandlerInterface* IH);
+	
+	ERUNSTATE Update();
 
 	MatrixWrapper* getProjectionMatrix();
-	MatrixWrapper* getOffSetMatrix();
 
 private:
 	VectorWrapper* EyePoint;
 	VectorWrapper* LookatPoint;
 	VectorWrapper* UpVector;
 	MatrixWrapper* ProjectionMatrix;
-	InputHandler* myInputHandler;
-	void UpdateOffSetMatrix();
-	float x,y,z, XAngle, YAngle, ZAngle;
-	int mousewheel, xpos, ypos;
-	MatrixWrapper* OffSetMatrix;
-	MatrixWrapper* WorldXRotation;
-	MatrixWrapper* WorldYRotation;
-	MatrixWrapper* WorldZRotation;
-	MatrixWrapper* WorldRotation;
-	MatrixWrapper* WorldPosition;
-	
+	InputHandlerInterface* myInputHandler;
+	void UpdateCameraMatrix();
+
+	void ModifyCameraForward(float modifier);
+	void ModifyCameraHeight(float modifier);
+	void ModifyCameraSide(float modifier);
+	void ModifyCameraXRotation(float modifier);
+	void ModifyCameraYRotation(float modifier);
+	void ModifyCameraZRotation(float modifier);
 };
 
 #endif

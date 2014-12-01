@@ -1,20 +1,20 @@
-#ifndef MOUSELISTENER_H //Headerguard
-#define MOUSELISTENER_H //Headerguard
+#ifndef MOUSELISTENER_H 
+#define MOUSELISTENER_H 
 
 //Tell DirectInput which version we want
 #define DIRECTINPUT_VERSION 0x0800
 
 //Include the necessary files
 #include <dinput.h>
-#include "Logger.h"
 #include "Structs.h"
-#include "Window.h"
+#include "ListenerInterface.h"
 
 class MouseListener
 {
 public:
 	MouseListener(Window* argWindow, LPDIRECTINPUT8 argDInput); //Constructor
 	~MouseListener(); //Destructor
+	bool getAction(EACTION action, float& value); //Asks the listener whether it knows the action or not and if the conditions have been met for it
 	void SaveReleaseDevice(); //Release mouse
 	long getXPos();
 	long getYPos();
@@ -34,4 +34,4 @@ private:
 	void ResetMouseStruct();
 };
 
-#endif //Headerguard
+#endif

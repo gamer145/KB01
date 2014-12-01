@@ -32,8 +32,10 @@ void Scene_Manager::SetUpManager(Window_Manager* windowManager, Resource_Manager
 
 	skybox = new Skybox();
 	skybox->InitializeSkybox(myDirectXRenderer, myResourceManager);
+	hoogteMap->SetupHeightmapMatrix(0, 0, 0);
 
-	myInputHandler = new InputHandler(CurrentWindow);
+	myInputHandler = new InputHandler();
+	myInputHandler->InitInputHandler(CurrentWindow);
 	CurrentScene->initCamera(myInputHandler);
 
 	Scenes.insert (std::pair<Scene*, Window*>(CurrentScene, CurrentWindow));
@@ -68,15 +70,14 @@ void Scene_Manager::setCurrentScene(std::string windowname)
 synch test 2
 */
 
-bool Scene_Manager::UpdateScene()
+ERUNSTATE Scene_Manager::UpdateScene()
 {
-
+		ERUNSTATE state;
 		CurrentScene->clear();
 		CurrentScene->beginS();
 
-		CurrentScene->Update();	
+		state = CurrentScene->Update();	
 
-		hoogteMap->SetupHeightmapMatrix(0, 0, 0, CurrentScene->getCamera()->getOffSetMatrix());
 		hoogteMap->RenderHeightmap(myDirectXRenderer);
 
 
@@ -86,6 +87,5 @@ bool Scene_Manager::UpdateScene()
 		CurrentScene->endS();
 		CurrentWindow->updateWindow();
 	
-		return myInputHandler->getKeyBoardListener()->ProcessKBInput((byte)DIKEYBOARD_ESCAPE);
-	
+		return state;
 }

@@ -5,25 +5,14 @@ Camera::Camera()
 	EyePoint = &VectorWrapper(0, 0, 0);
 	LookatPoint = &VectorWrapper(0, 0, 0);
 	UpVector = &VectorWrapper(0, 0, 0);
-	x = 0;
-	y = 0;
-	z = 0;
-	XAngle = 0;
-	YAngle = 0;
-	ZAngle = 0;
 
 	Position = new MatrixWrapper();
 	ProjectionMatrix = new MatrixWrapper();
-	OffSetMatrix = new MatrixWrapper();
-	WorldXRotation = new MatrixWrapper();
-	WorldYRotation = new MatrixWrapper();
-	WorldZRotation = new MatrixWrapper();
-	WorldRotation = new MatrixWrapper();
-	WorldPosition = new MatrixWrapper();
 }
 
 Camera::~Camera()
 {
+
 }
 
 
@@ -31,12 +20,9 @@ void Camera::Initialize()
 {
 	Position->MatrixLookAtLH( EyePoint, LookatPoint, UpVector );
 	ProjectionMatrix->MatrixPerspectiveFovLH(D3DX_PI / 4, 1.0f, 1.0f, 100000.0f);
-	mousewheel = 0;
-	xpos = 0;
-	ypos = 0;
 }
 
-void Camera::SetInputHandler(InputHandler* IH)
+void Camera::SetInputHandler(InputHandlerInterface* IH)
 {
 	myInputHandler = IH;
 }
@@ -56,34 +42,104 @@ void Camera::SetUpVector(VectorWrapper* newVector)
 	UpVector = newVector;
 }
 
-void Camera::ModifyWorldX(float modifier)
+//Logic for Forward and Backward Movement. The movement is done in a 2DPlane.
+void Camera::ModifyCameraForward(float modifier)
 {
-	x += modifier;
+	float LPX = LookatPoint->GetX();
+	float EPX = EyePoint->GetX();
+	float LPZ = LookatPoint->GetZ();
+	float EPZ = EyePoint->GetZ();
+
+	float XMov = (LPX - EPX);
+	float ZMov = (LPZ - EPZ);
+
+	float TotalMov = (abs(XMov) + abs(ZMov));
+	float XRatio = (XMov / TotalMov);
+	float ZRatio = (ZMov / TotalMov);
+
+	float XModifier = XRatio * modifier;
+	float ZModifier = ZRatio * modifier;
+
+	EyePoint->SetX(XModifier);
+	LookatPoint->SetX(XModifier);
+
+	EyePoint->SetZ(ZModifier);
+	LookatPoint->SetZ(ZModifier);
 }
 
-void Camera::ModifyWorldY(float modifier)
+void Camera::ModifyCameraHeight(float modifier)
 {
-	y += modifier;
+	EyePoint->SetY(modifier);
+	LookatPoint->SetY(modifier);
 }
 
-void Camera::ModifyWorldZ(float modifier)
+void Camera::ModifyCameraSide(float modifier)
 {
-	z += modifier;
+	float LPX = LookatPoint->GetX();
+	float EPX = EyePoint->GetX();
+	float LPZ = LookatPoint->GetZ();
+	float EPZ = EyePoint->GetZ();
+
+	float XMov = (LPX - EPX);
+	float ZMov = (LPZ - EPZ);
+
+	float TotalMov = (abs(XMov) + abs(ZMov));
+	float XRatio = (XMov / TotalMov);
+	float ZRatio = (ZMov / TotalMov);
+
+	float XModifier = XRatio * modifier;
+	float ZModifier = ZRatio * modifier;
+
+	EyePoint->SetX(ZModifier);
+	LookatPoint->SetX(ZModifier);
+
+	EyePoint->SetZ(XModifier);
+	LookatPoint->SetZ(XModifier);
 }
 
-void Camera::ModifyWorldXAngle(float modifier)
+void Camera::ModifyCameraXRotation(float modifier)
 {
-	XAngle += modifier;
+	
+	float LPX = LookatPoint->GetX();
+	float EPX = EyePoint->GetX();
+	float LPZ = LookatPoint->GetZ();
+	float EPZ = EyePoint->GetZ();
+
+
+	if (LPX >= EPX)
+	{		
+		LookatPoint->SetZ(-modifier);
+	}
+	else if (LPX < EPX)
+	{
+		LookatPoint->SetZ(modifier);
+	}
+
+	if (LPZ >= EPZ)
+	{
+		LookatPoint->SetX(modifier);
+	}
+	else if (LPZ < EPZ)
+	{
+		LookatPoint->SetX(-modifier);
+	}
 }
 
-void Camera::ModifyWorldYAngle(float modifier)
+void Camera::ModifyCameraYRotation(float modifier)
 {
-	YAngle += modifier;
+	float LPZ = LookatPoint->GetZ();
+	float EPZ = EyePoint->GetZ();
+
+	if (LPZ > EPZ)
+	{
+		LookatPoint->SetY(modifier);
+		LookatPoint->SetZ(modifier);
+	}
 }
 
-void Camera::ModifyWorldZAngle(float modifier)
+void Camera::ModifyCameraZRotation(float modifier)
 {
-	ZAngle += modifier;
+	//ZAngle += modifier;
 }
 
 MatrixWrapper* Camera::getProjectionMatrix()
@@ -91,12 +147,27 @@ MatrixWrapper* Camera::getProjectionMatrix()
 	return ProjectionMatrix;
 }
 
-MatrixWrapper* Camera::getOffSetMatrix()
+ERUNSTATE Camera::Update()
 {
-	return OffSetMatrix;
+	ERUNSTATE state = RUNNING;
+
+	ModifyCameraXRotation(myInputHandler->getAction(ACTION_ROTATECAMERA_X));
+	ModifyCameraYRotation(myInputHandler->getAction(ACTION_ROTATECAMERA_Y));
+	
+	ModifyCameraForward(myInputHandler->getAction(ACTION_ZAXISMOVE));
+	ModifyCameraHeight(myInputHandler->getAction(ACTION_YAXISMOVE));
+	ModifyCameraSide(myInputHandler->getAction(ACTION_XAXISMOVE));
+
+	if (myInputHandler->getAction(ACTION_EXIT) < 0)
+	{
+		state = EXIT;
+	}
+
+	UpdateCameraMatrix();
+	return state;
 }
 
-void Camera::Update()
+/*void Camera::Update()
 {
 
 		if (myInputHandler->getKeyBoardListener()->ProcessKBInput((byte)DIKEYBOARD_W))
@@ -177,15 +248,9 @@ void Camera::Update()
 		}
 
 		UpdateOffSetMatrix();
-}
+}*/
 
-void Camera::UpdateOffSetMatrix()
+void Camera::UpdateCameraMatrix()
 {
-	WorldYRotation->MatrixRotationY(XAngle);
-	WorldXRotation->MatrixRotationX(YAngle);
-	WorldZRotation->MatrixRotationZ(ZAngle);
-	WorldPosition->MatrixTranslation(x, y, z);
-
-	WorldRotation->SetMatrix(WorldXRotation->GetMatrix() * WorldYRotation->GetMatrix() * WorldZRotation->GetMatrix());
-	OffSetMatrix->SetMatrix(WorldRotation->GetMatrix() * WorldPosition->GetMatrix());
+	Position->MatrixLookAtLH(EyePoint, LookatPoint, UpVector);
 }

@@ -114,9 +114,9 @@ HRESULT DirectXRenderer::LoadTextureFromFile(std::string filename, EDWORD option
 
 }
 
-void DirectXRenderer::SetUpWorld(MatrixWrapper* WorldMatrix, MatrixWrapper* CameraMatrix, MatrixWrapper* ProjectionMatrix)
+void DirectXRenderer::SetUpWorld(MatrixWrapper* CameraMatrix, MatrixWrapper* ProjectionMatrix)
 {
-	g_pd3dDevice->SetTransform(D3DTS_WORLD, &WorldMatrix->GetMatrix());
+	g_pd3dDevice->SetTransform(D3DTS_WORLD, &WorldMatrix);
 	g_pd3dDevice->SetTransform(D3DTS_VIEW, &CameraMatrix->GetMatrix());
 	g_pd3dDevice->SetTransform(D3DTS_PROJECTION, &ProjectionMatrix->GetMatrix());
 }

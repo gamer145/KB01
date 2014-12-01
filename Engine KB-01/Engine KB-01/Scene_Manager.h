@@ -19,7 +19,7 @@ public:
 	~Scene_Manager();
 	void SetUpManager(Window_Manager* windowManager, Resource_Manager* resourceManager, Renderer* DirectXRenderer);
 	void addScene();
-	bool UpdateScene();
+	ERUNSTATE UpdateScene();
 	void setCurrentScene(std::string windowname);
 	Window* RequestWindow();
 	
@@ -27,7 +27,7 @@ private:
 	std::map<Scene*, Window*> Scenes;
 	Window_Manager* myWindowManager;
 	Resource_Manager* myResourceManager;
-	InputHandler* myInputHandler;
+	InputHandlerInterface* myInputHandler;
 	Scene* CurrentScene;
 	Window* CurrentWindow;
 	Renderer* myDirectXRenderer;

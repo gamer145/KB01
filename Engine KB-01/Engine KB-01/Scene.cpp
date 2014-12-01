@@ -11,7 +11,7 @@ Scene::~Scene()
 
 }
 
-void Scene::initCamera(InputHandler* IH)
+void Scene::initCamera(InputHandlerInterface* IH)
 {
 	currentCamera->Initialize();
 	currentCamera->SetInputHandler(IH);
@@ -42,10 +42,11 @@ void Scene::setResourceManager(Resource_Manager* r)
 	RManager = r;
 }
 
-void Scene::Update()
+ERUNSTATE Scene::Update()
 {
-	currentCamera->Update();
+	ERUNSTATE state = currentCamera->Update();
 	Draw();
+	return state;
 }
 
 void Scene::clear()
@@ -71,7 +72,7 @@ void Scene::Draw()
 
 	//myDirectXRenderer->LoadShaderFromFile("firstshader", "../Shaders/TextShader.fx", "TextShader", "ColorShader");
 
-			myDirectXRenderer->SetUpWorld(currentCamera->getOffSetMatrix(), currentCamera->getPosition(), currentCamera->getProjectionMatrix());
+			myDirectXRenderer->SetUpWorld(currentCamera->getPosition(), currentCamera->getProjectionMatrix());
 
 			//myDirectXRenderer->SetShader("firstshader");
 
@@ -81,9 +82,9 @@ void Scene::Draw()
 
 
 
-				currentobj->draw(myDirectXRenderer, currentCamera->getOffSetMatrix());
+				currentobj->draw(myDirectXRenderer);
 				
-
+    
     
 			}
 

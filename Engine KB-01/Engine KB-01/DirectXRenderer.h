@@ -34,7 +34,7 @@ public:
 	void DrawSubSet(std::string meshname);
 	//void DrawPrimitive();
 	//void SetVertexFormat();
-	void SetUpWorld(MatrixWrapper* WorldMatrix, MatrixWrapper* CameraMatrix, MatrixWrapper* ProjectionMatrix);
+	void SetUpWorld(MatrixWrapper* CameraMatrix, MatrixWrapper* ProjectionMatrix);
 	//void* get3DDevice();
 	HRESULT InitD3D( HWND hWnd );
 	void addTexture(std::string textname, TextureWrapper* Text);
@@ -72,6 +72,7 @@ private:
     LPDIRECT3DDEVICE9   g_pd3dDevice; 
 	Window* myWindow;
 	bool keepRendering;
+	D3DXMATRIX WorldMatrix;
 	
 	std::map<std::string, MeshWrapper*> Meshes;
 	std::map<std::string, TextureWrapper*> Textures;

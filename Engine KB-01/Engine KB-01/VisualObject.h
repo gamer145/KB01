@@ -20,7 +20,7 @@ public:
 	void setTexture(std::string newTextname);
 	void setSubSet(int newDWORD);
 	void setPosition(MatrixWrapper* newPosition);
-	void draw(Renderer* myDirectXRenderer, MatrixWrapper* WorldMatrix);
+	void draw(Renderer* myDirectXRenderer);
 
 private:
 	std::string meshname;

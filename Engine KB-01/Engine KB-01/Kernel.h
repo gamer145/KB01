@@ -23,7 +23,7 @@ private:
 	Resource_Manager* myResourceManager;
 	Renderer* myRenderer;
 	Scene_Manager* mySceneManager;
-	bool TemporaryStopChecker;
+	ERUNSTATE Runstate;
 
 };
 

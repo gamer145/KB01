@@ -65,6 +65,11 @@ bool MouseListener::InitMouse()
 	return true; //We made it here so everything must've gone right
 }
 
+bool MouseListener::getAction(EACTION action, float& value)
+{
+	return false;
+}
+
 long MouseListener::getXPos()
 {
 	MouseStruct temp = GetMouseInput();

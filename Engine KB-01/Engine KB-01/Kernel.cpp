@@ -24,10 +24,10 @@ void Kernel::Initialize()
 
 void Kernel::Run()
 {
-	TemporaryStopChecker = mySceneManager->UpdateScene();
+	Runstate = mySceneManager->UpdateScene();
 
-	if (!TemporaryStopChecker)
+	while (Runstate == RUNNING)
 	{
-		Run();
+		Runstate = mySceneManager->UpdateScene();
 	}
 }

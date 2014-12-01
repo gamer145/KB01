@@ -189,7 +189,13 @@ enum EPRIMITIVETYPE {
 	//EPT_FORCE_DWORD = 0x7fffffff, /* force 32-bit size enum */
 };
 
-enum EACTIONS {
+enum ERUNSTATE {
+	RUNNING = 1,
+	PAUSED = 2,
+	EXIT = 3,
+};
+
+enum EACTION {
 	ACTION_EXIT = 1,
 	ACTION_XAXISMOVE = 2,
 	ACTION_YAXISMOVE = 3,

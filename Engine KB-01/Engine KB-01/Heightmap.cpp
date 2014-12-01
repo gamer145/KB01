@@ -13,7 +13,7 @@ Heightmap::~Heightmap()
 {
 }
 
-void Heightmap::SetupHeightmapMatrix(float x, float y, float z, MatrixWrapper* OffSet)
+void Heightmap::SetupHeightmapMatrix(float x, float y, float z)
 {
 	MatrixWrapper* PositionalMatrix = new MatrixWrapper();
 	MatrixWrapper* ScalingMatrix = new MatrixWrapper();
@@ -21,7 +21,7 @@ void Heightmap::SetupHeightmapMatrix(float x, float y, float z, MatrixWrapper* O
 	PositionalMatrix->MatrixTranslation(x, y, z);
 	ScalingMatrix->MatrixScaling(1000.0f, 1000.0f, 1000.0f);
 
-	Position->SetMatrix(PositionalMatrix->GetMatrix() * ScalingMatrix->GetMatrix() * OffSet->GetMatrix());
+	Position->SetMatrix(PositionalMatrix->GetMatrix() * ScalingMatrix->GetMatrix());
 }
 
 void Heightmap::CreateHeightmap(Renderer* render, LPCWSTR argFileName)
