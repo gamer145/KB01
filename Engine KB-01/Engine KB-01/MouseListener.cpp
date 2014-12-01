@@ -14,6 +14,7 @@ MouseListener::MouseListener( Window* argWindow, LPDIRECTINPUT8 argDInput )
 	window						= argWindow;
 	dInput						= argDInput;
 	dDeviceMouse				= NULL; //Nullify the mouse pointer
+	mouseAcceleration			= 10;
 	ResetMouseStruct(); //Set default values of the data that the mouse can provide such as X- and Y-position etc.
 
 	if (!InitMouse()) //Try to create a mouse object
@@ -65,22 +66,40 @@ bool MouseListener::InitMouse()
 	return true; //We made it here so everything must've gone right
 }
 
+void MouseListener::setMouseAcceleration(float newAcceleration)
+{
+	mouseAcceleration = newAcceleration;
+}
+
 bool MouseListener::getAction(EACTION action, float& value)
 {
-	return false;
+	MouseStruct newMouseState = GetMouseInput();
+	bool answer = false;
+
+	if (action == ACTION_ROTATECAMERA_X && !answer)
+	{
+		long diff = newMouseState.positionX - oldMouseState.positionX;
+
+		if (diff < 0)
+		{
+			float factor = abs((float)(diff / mouseAcceleration));
+			value = (-0.1f * factor);
+			answer = true;
+		}
+		else if (diff > 0)
+		{
+			float factor = abs((float)(diff / mouseAcceleration));
+			value = (0.1f * factor);
+			answer =  true;
+		}
+		answer = false;
+	}
+
+	oldMouseState = newMouseState;
+
+	return answer;
 }
 
-long MouseListener::getXPos()
-{
-	MouseStruct temp = GetMouseInput();
-	return temp.positionX;
-}
-
-long MouseListener::getYPos()
-{
-	MouseStruct temp = GetMouseInput();
-	return temp.positionY;
-}
 
 long MouseListener::getMousewheel()
 {
@@ -282,5 +301,6 @@ void MouseListener::ResetMouseStruct() //Reset every mouse value
 	bufferedMouse.button4 = false;
 	bufferedMouse.button5 = false;
 	bufferedMouse.button6 = false;
-	bufferedMouse.button7 = false;	
+	bufferedMouse.button7 = false;
+	oldMouseState = bufferedMouse;
 }

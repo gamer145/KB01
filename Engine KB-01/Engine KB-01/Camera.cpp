@@ -102,9 +102,10 @@ void Camera::ModifyCameraSide(float modifier)
 	LookatPoint->SetZ(ZModifier);
 }
 
+
+
 void Camera::ModifyCameraXRotation(float modifier)
 {
-	
 	float LPX = LookatPoint->GetX();
 	float EPX = EyePoint->GetX();
 	float LPZ = LookatPoint->GetZ();
@@ -113,7 +114,8 @@ void Camera::ModifyCameraXRotation(float modifier)
 
 
 	if (LPX >= EPX)
-	{		
+	{
+
 		LookatPoint->SetZ(-modifier);
 	}
 	else if (LPX < EPX)
@@ -129,7 +131,7 @@ void Camera::ModifyCameraXRotation(float modifier)
 	{
 		LookatPoint->SetX(-modifier);
 	}
-}
+} 
 
 void Camera::ModifyCameraYRotation(float modifier)
 {

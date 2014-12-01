@@ -23,6 +23,7 @@ HRESULT InputHandler::InitInputHandler(Window* argWindow)
 	}
 	//Create the Listeners now that we have DirectInput
 	mousewhisperer = new MouseListener(argWindow, dInput);
+	mousewhisperer->setMouseAcceleration(5);
 	keyboardwhisperer = new KeyboardListener(argWindow, dInput);
 	return 0;
 }

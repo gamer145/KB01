@@ -16,16 +16,18 @@ public:
 	~MouseListener(); //Destructor
 	bool getAction(EACTION action, float& value); //Asks the listener whether it knows the action or not and if the conditions have been met for it
 	void SaveReleaseDevice(); //Release mouse
-	long getXPos();
-	long getYPos();
 	long getMousewheel();
 	bool isButtonDown(int button);
+	void setMouseAcceleration(float newAcceleration);
+	
 private:
 	LPDIRECTINPUT8          dInput;
 	LPDIRECTINPUTDEVICE8	dDeviceMouse;
 	Window* window;
 	DIPROPDWORD dipdw;
 	MouseStruct bufferedMouse;
+	MouseStruct oldMouseState;
+	float mouseAcceleration;
 	Logger* loggerM;
 
 	bool InitMouse(); //Initialize the mouse
