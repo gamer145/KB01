@@ -28,8 +28,6 @@ private:
 	MatrixWrapper* ProjectionMatrix;
 	InputHandlerInterface* myInputHandler;
 	void UpdateCameraMatrix();
-	float x,y,z, XAngle, YAngle, ZAngle;
-	int mousewheel, xpos, ypos;
 
 	void ModifyCameraForward(float modifier);
 	void ModifyCameraHeight(float modifier);

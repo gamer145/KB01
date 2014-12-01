@@ -39473,3 +39473,7 @@
 [28-11-2014 14:21:50] [Ln 0] Error: AfterEye:4.60225 10.3 5.12274
 [28-11-2014 14:21:50] [Ln 0] Error: AfterLookat:0.202529 9.1 -0.277013
 
+[28-11-2014 14:30:36] [Ln 0] Success: The heightdata has been retrieved.
+[28-11-2014 15:10:20] [Ln 0] Success: The heightdata has been retrieved.
+[28-11-2014 15:26:30] [Ln 0] Success: The heightdata has been retrieved.
+[01-12-2014 13:02:18] [Ln 0] Success: The heightdata has been retrieved.

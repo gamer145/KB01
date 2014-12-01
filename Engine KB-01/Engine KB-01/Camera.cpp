@@ -5,12 +5,6 @@ Camera::Camera()
 	EyePoint = &VectorWrapper(0, 0, 0);
 	LookatPoint = &VectorWrapper(0, 0, 0);
 	UpVector = &VectorWrapper(0, 0, 0);
-	x = 0;
-	y = 0;
-	z = 0;
-	XAngle = 0;
-	YAngle = 0;
-	ZAngle = 0;
 
 	Position = new MatrixWrapper();
 	ProjectionMatrix = new MatrixWrapper();
@@ -26,9 +20,6 @@ void Camera::Initialize()
 {
 	Position->MatrixLookAtLH( EyePoint, LookatPoint, UpVector );
 	ProjectionMatrix->MatrixPerspectiveFovLH(D3DX_PI / 4, 1.0f, 1.0f, 100000.0f);
-	mousewheel = 0;
-	xpos = 0;
-	ypos = 0;
 }
 
 void Camera::SetInputHandler(InputHandlerInterface* IH)
@@ -51,6 +42,7 @@ void Camera::SetUpVector(VectorWrapper* newVector)
 	UpVector = newVector;
 }
 
+//Logic for Forward and Backward Movement. The movement is done in a 2DPlane.
 void Camera::ModifyCameraForward(float modifier)
 {
 	float LPX = LookatPoint->GetX();
@@ -91,7 +83,7 @@ void Camera::ModifyCameraSide(float modifier)
 	float XMov = (LPX - EPX);
 	float ZMov = (LPZ - EPZ);
 
-	float TotalMov = (XMov + ZMov);
+	float TotalMov = (abs(XMov) + abs(ZMov));
 	float XRatio = (XMov / TotalMov);
 	float ZRatio = (ZMov / TotalMov);
 
@@ -112,6 +104,7 @@ void Camera::ModifyCameraXRotation(float modifier)
 	float EPX = EyePoint->GetX();
 	float LPZ = LookatPoint->GetZ();
 	float EPZ = EyePoint->GetZ();
+
 
 	if (LPX >= EPX)
 	{		
@@ -146,7 +139,7 @@ void Camera::ModifyCameraYRotation(float modifier)
 
 void Camera::ModifyCameraZRotation(float modifier)
 {
-	ZAngle += modifier;
+	//ZAngle += modifier;
 }
 
 MatrixWrapper* Camera::getProjectionMatrix()
@@ -158,10 +151,8 @@ ERUNSTATE Camera::Update()
 {
 	ERUNSTATE state = RUNNING;
 
-
 	ModifyCameraXRotation(myInputHandler->getAction(ACTION_ROTATECAMERA_X));
 	ModifyCameraYRotation(myInputHandler->getAction(ACTION_ROTATECAMERA_Y));
-
 	
 	ModifyCameraForward(myInputHandler->getAction(ACTION_ZAXISMOVE));
 	ModifyCameraHeight(myInputHandler->getAction(ACTION_YAXISMOVE));
@@ -257,17 +248,6 @@ ERUNSTATE Camera::Update()
 		}
 
 		UpdateOffSetMatrix();
-}*/
-
-/*void Camera::UpdateOffSetMatrix()
-{
-	WorldYRotation->MatrixRotationY(XAngle);
-	WorldXRotation->MatrixRotationX(YAngle);
-	WorldZRotation->MatrixRotationZ(ZAngle);
-	WorldPosition->MatrixTranslation(x, y, z);
-
-	WorldRotation->SetMatrix(WorldXRotation->GetMatrix() * WorldYRotation->GetMatrix() * WorldZRotation->GetMatrix());
-	OffSetMatrix->SetMatrix(WorldRotation->GetMatrix() * WorldPosition->GetMatrix());
 }*/
 
 void Camera::UpdateCameraMatrix()
