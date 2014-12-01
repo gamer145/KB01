@@ -43,6 +43,7 @@ void Camera::SetUpVector(VectorWrapper* newVector)
 }
 
 //Logic for Forward and Backward Movement. The movement is done in a 2DPlane.
+//Logic is based on the position of the camera, and where it's looking at.
 void Camera::ModifyCameraForward(float modifier)
 {
 	float LPX = LookatPoint->GetX();
@@ -73,6 +74,8 @@ void Camera::ModifyCameraHeight(float modifier)
 	LookatPoint->SetY(modifier);
 }
 
+//Logic for sideways Movement. The movement is done in a 2DPlane. 
+//Logic is based on the position of the camera, and where it's looking at.
 void Camera::ModifyCameraSide(float modifier)
 {
 	float LPX = LookatPoint->GetX();
@@ -106,6 +109,7 @@ void Camera::ModifyCameraXRotation(float modifier)
 	float EPX = EyePoint->GetX();
 	float LPZ = LookatPoint->GetZ();
 	float EPZ = EyePoint->GetZ();
+
 
 
 	if (LPX >= EPX)

@@ -195,6 +195,7 @@ enum ERUNSTATE {
 	EXIT = 3,
 };
 
+//Defines the type of Action. The action is used to relay to the listeners, if they have any input matching the requested action.
 enum EACTION {
 	ACTION_EXIT = 1,
 	ACTION_XAXISMOVE = 2,
@@ -204,6 +205,7 @@ enum EACTION {
 	ACTION_ROTATECAMERA_X = 6,
 	ACTION_ROTATECAMERA_Y = 7,
 	ACTION_ZOOMCAMERA = 8,
+	ACTION_SWITCHRENDERSTATE = 9,
 };
 
 
