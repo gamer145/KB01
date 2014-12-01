@@ -84,17 +84,19 @@ void Camera::ModifyCameraSide(float modifier)
 	float ZMov = (LPZ - EPZ);
 
 	float TotalMov = (abs(XMov) + abs(ZMov));
-	float XRatio = (XMov / TotalMov);
-	float ZRatio = (ZMov / TotalMov);
+	float ZRatio = (XMov / TotalMov);
+	float XRatio = (ZMov / TotalMov);
+
 
 	float XModifier = XRatio * modifier;
-	float ZModifier = ZRatio * modifier;
+	float ZModifier = ZRatio * -modifier;
 
-	EyePoint->SetX(ZModifier);
-	LookatPoint->SetX(ZModifier);
 
-	EyePoint->SetZ(XModifier);
-	LookatPoint->SetZ(XModifier);
+	EyePoint->SetX(XModifier);
+	LookatPoint->SetX(XModifier);
+
+	EyePoint->SetZ(ZModifier);
+	LookatPoint->SetZ(ZModifier);
 }
 
 void Camera::ModifyCameraXRotation(float modifier)
