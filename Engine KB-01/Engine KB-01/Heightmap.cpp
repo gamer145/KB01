@@ -31,8 +31,8 @@ void Heightmap::CreateHeightmap(Renderer* render, LPCWSTR argFileName)
 
 	byte* heightmap = LoadBMP(argFileName);
 	const int vertexcount = heightBMP * widthBMP;
-	HEIGHTMAPVERTEX* vertices;
-	vertices = new HEIGHTMAPVERTEX[vertexcount];
+	VERTEX* vertices;
+	vertices = new VERTEX[vertexcount];
 	int loopcount = 0;
 
 	for(int x = 0; x < heightBMP; ++x)
@@ -50,7 +50,7 @@ void Heightmap::CreateHeightmap(Renderer* render, LPCWSTR argFileName)
 		}	
 	}
 
-	render->CreateVertexBuffer(vertexcount*sizeof(HEIGHTMAPVERTEX),
+	render->CreateVertexBuffer(vertexcount*sizeof(VERTEX),
 		0, ECUSTOMVERTEX, EPOOL_MANAGED, v_buffer, NULL);
 
     
@@ -61,11 +61,11 @@ void Heightmap::CreateHeightmap(Renderer* render, LPCWSTR argFileName)
 	VOID* pVoid2; // a void pointer
 
     // lock v_buffer and load the vertices into it
-    if( FAILED( render->LockVertexBuffer(v_buffer, 0, sizeof(HEIGHTMAPVERTEX) * vertexcount, (void**)&pVoid, 0)))
+    if( FAILED( render->LockVertexBuffer(v_buffer, 0, sizeof(VERTEX) * vertexcount, (void**)&pVoid, 0)))
 	{
 		l->WriteToFile(Error, "VBLockFailed", 0);
 	}
-	memcpy(pVoid, vertices, sizeof(HEIGHTMAPVERTEX) * vertexcount);
+	memcpy(pVoid, vertices, sizeof(VERTEX) * vertexcount);
 
 	if (FAILED(render->UnlockVertexBuffer(v_buffer)))
 	{
@@ -183,7 +183,7 @@ void Heightmap::RenderHeightmap(Renderer* render)
 	{
 		l->WriteToFile(Error, "SetTransformFailed", 0);
 	}
-	if( FAILED(render->SetStreamSource(0, v_buffer, 0, sizeof(HEIGHTMAPVERTEX))))
+	if( FAILED(render->SetStreamSource(0, v_buffer, 0, sizeof(VERTEX))))
 	{
 		l->WriteToFile(Error, "SetStreamSourceFailed", 0);
 	}

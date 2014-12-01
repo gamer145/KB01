@@ -261,28 +261,32 @@ HRESULT DirectXRenderer::DrawIndexedPrimitive(EPRIMITIVETYPE type, int baseverte
 	return g_pd3dDevice->DrawIndexedPrimitive(static_cast<D3DPRIMITIVETYPE>(type), basevertexindex, minvertexindex, numvertices, startindex, primcount);
 }
 
-HRESULT DirectXRenderer::LoadShaderFromFile(std::string shadername, std::string shaderfilepath, std::string shaderfunctionname)
+HRESULT DirectXRenderer::LoadShaderFromFile(std::string shadername, std::string shaderfilepath, std::string vertexshaderfunctionname, std::string pixelshaderfunctionname)
 {
 	HRESULT result;
 
 	Shader* newshader = new Shader();
 
-	LPD3DXBUFFER pCode;
+	LPD3DXBUFFER pCode = NULL;
+	LPD3DXBUFFER compileerrors = NULL;
 	LPDIRECT3DVERTEXDECLARATION9    g_pVertexDeclaration = NULL;
 
 	LPDIRECT3DVERTEXSHADER9         g_pVertexShader = NULL;
 
+	LPDIRECT3DPIXELSHADER9         g_pPixelShader = NULL;
 
 	D3DVERTEXELEMENT9 decl[] =
 	{
-		{ 0, 0, D3DDECLTYPE_FLOAT2, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0 },
+		{ 0, 0, D3DDECLTYPE_FLOAT4, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0 },
+		{ 0, 0, D3DDECLTYPE_FLOAT4, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_COLOR, 0 },
 		D3DDECL_END()
 	};
+
+	
 
 	g_pd3dDevice->CreateVertexDeclaration(decl, &g_pVertexDeclaration);
 
 
-    pCode = NULL;
 
 	LPD3DXCONSTANTTABLE constanttable = NULL;
 
@@ -290,20 +294,87 @@ HRESULT DirectXRenderer::LoadShaderFromFile(std::string shadername, std::string 
 
 	LPCWSTR strpath = stemp.c_str();
 
-	if(FAILED(D3DXCompileShaderFromFile(strpath, NULL, NULL, shaderfunctionname.c_str(), "vs_2_0", 0, &pCode, NULL, &constanttable)))
+	if (!vertexshaderfunctionname.empty())
 	{
-		// insert logger here, log that the compiling failed
+		DWORD error = 0;
 
-		
+		std::string errorstring;
+
+		if (HRESULT hr = FAILED(D3DXCompileShaderFromFile(strpath, NULL, NULL, vertexshaderfunctionname.c_str(), "vs_2_0", 1, &pCode, &compileerrors, &constanttable)))
+		{
+			// insert logger here, log that the compiling failed
+
+			std::cout << hr;
+
+			error = GetLastError();
+
+			errorstring = DXGetErrorDescriptionA(error);
+
+		}
+
+		//errorstring = DXGetErrorDescriptionA((HRESULT)compileerrors->GetBufferPointer());
+
+		result = g_pd3dDevice->CreateVertexShader((DWORD*)pCode->GetBufferPointer(),
+			&g_pVertexShader);
+
+		newshader->SetVertexShader(g_pVertexShader);
+
 	}
 
-	result = g_pd3dDevice->CreateVertexShader((DWORD*)pCode->GetBufferPointer(),
-		&g_pVertexShader);
+	if (!pixelshaderfunctionname.empty())
+	{
+
+		if (HRESULT hr = FAILED(D3DXCompileShaderFromFile(strpath, NULL, NULL, pixelshaderfunctionname.c_str(), "ps_2_0", 0, &pCode, NULL, &constanttable)))
+		{
+			// insert logger here, log that the compiling failed
+			std::cout << hr;
+
+		}
+
+		result = g_pd3dDevice->CreatePixelShader((DWORD*)pCode->GetBufferPointer(),
+			&g_pPixelShader);
+
+		newshader->SetPixelShader(g_pPixelShader);
+
+	}
+
 	pCode->Release();
 
+	newshader->SetVertexDeclaration(g_pVertexDeclaration);
 
+	newshader->SetConstantTable(constanttable);
+
+	Shaders.insert(std::pair<std::string, Shader*>(shadername, newshader));
 
 	return result;
+}
+
+void DirectXRenderer::SetShader(std::string shadername)
+{
+	Shader* shader = Shaders[shadername];
+
+	if (shader->GetVertexShader() != NULL && shader->GetVertexDeclaration() != NULL)
+	{
+		g_pd3dDevice->SetVertexDeclaration(shader->GetVertexDeclaration());
+		g_pd3dDevice->SetVertexShader(shader->GetVertexShader());
+	}
+
+	if (shader->GetPixelShader() != NULL)
+	{
+		g_pd3dDevice->SetPixelShader(shader->GetPixelShader());
+	}
+
+}
+
+void DirectXRenderer::StopRenderingWithShaders()
+{
+	g_pd3dDevice->SetVertexShader(NULL);
+	g_pd3dDevice->SetPixelShader(NULL);
+}
+
+void DirectXRenderer::SetZBuffer(bool state)
+{
+	g_pd3dDevice->SetRenderState(D3DRS_ZENABLE, state);
 }
 
 void DirectXRenderer::Clear(DWORD count, DWORD flags, D3DCOLOR color, float z, DWORD stencil)

@@ -4,10 +4,6 @@
 #include "Logger.h"
 #include "Renderer.h"
 
-struct HEIGHTMAPVERTEX
-{
-   float x, y, z, tx, ty;
-};
 
 class Heightmap
 {

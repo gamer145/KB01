@@ -10,6 +10,7 @@
 #include "Resource_Manager.h"
 #include "Scene.h"
 #include "Window_Manager.h"
+#include "Skybox.h"
 
 class Scene_Manager
 {
@@ -31,6 +32,7 @@ private:
 	Window* CurrentWindow;
 	Renderer* myDirectXRenderer;
 	Heightmap* hoogteMap;
+	Skybox* skybox;
 };
 
 #endif

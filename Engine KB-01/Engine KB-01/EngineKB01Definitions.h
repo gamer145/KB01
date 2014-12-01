@@ -29,7 +29,27 @@ typedef EDWORD ECOLOR;
 #define ECUSTOMVERTEX (EFVF_XYZ|EFVF_TEX1)
 
 
+struct VERTEX
+{
+	VERTEX()
+	{
+		x = 0.0f;
+		y = 0.0f;
+		z = 0.0f;
+		tx = 0.0f;
+		ty = 0.0f;
+	}
+	VERTEX(float ix, float iy, float iz, float itx, float ity)
+	{
+		x = ix;
+		y = iy;
+		z = iz;
+		tx = itx;
+		ty = ity;
+	}
 
+	float x, y, z, tx, ty;
+};
 
 struct CameraData
 {

@@ -30,6 +30,9 @@ void Scene_Manager::SetUpManager(Window_Manager* windowManager, Resource_Manager
 	hoogteMap = new Heightmap();
 	hoogteMap->CreateHeightmap(myDirectXRenderer, L"..//Models//hoogtemap2.bmp");
 
+	skybox = new Skybox();
+	skybox->InitializeSkybox(myDirectXRenderer, myResourceManager);
+
 	myInputHandler = new InputHandler(CurrentWindow);
 	CurrentScene->initCamera(myInputHandler);
 
@@ -75,6 +78,10 @@ bool Scene_Manager::UpdateScene()
 
 		hoogteMap->SetupHeightmapMatrix(0, 0, 0, CurrentScene->getCamera()->getOffSetMatrix());
 		hoogteMap->RenderHeightmap(myDirectXRenderer);
+
+
+		skybox->DrawSkybox(myDirectXRenderer, CurrentScene->getCamera()->getPosition());
+
 
 		CurrentScene->endS();
 		CurrentWindow->updateWindow();

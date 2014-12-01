@@ -99,7 +99,7 @@ LevelLoader::~LevelLoader()
 					sscanf_s(strMultiplier1.c_str(), "%f", &multiplier);
 					SkyboxPosition->MatrixScaling( multiplier, multiplier, multiplier);
 					skybox->setPosition(SkyboxPosition);
-					currentScene->AddObject(skybox);
+					//currentScene->AddObject(skybox);
 				}
 				else if(strT == "Camera")
 				{

@@ -99,6 +99,7 @@
     <ClCompile Include="MeshWrapper.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderLoader.cpp" />
+    <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="TextureWrapper.cpp" />
     <ClCompile Include="VectorWrapper.cpp" />
     <ClCompile Include="VertexBufferWrapper.cpp" />
@@ -132,6 +133,7 @@
     <ClInclude Include="MeshWrapper.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderLoader.h" />
+    <ClInclude Include="Skybox.h" />
     <ClInclude Include="TextureWrapper.h" />
     <ClInclude Include="VectorWrapper.h" />
     <ClInclude Include="VertexBufferWrapper.h" />

@@ -69,17 +69,26 @@ void Scene::endS()
 void Scene::Draw()
 {
 
+	//myDirectXRenderer->LoadShaderFromFile("firstshader", "../Shaders/TextShader.fx", "TextShader", "ColorShader");
+
 			myDirectXRenderer->SetUpWorld(currentCamera->getOffSetMatrix(), currentCamera->getPosition(), currentCamera->getProjectionMatrix());
+
+			//myDirectXRenderer->SetShader("firstshader");
 
 			for(std::vector<VisualObject*>::iterator i = activeObjects.begin(); i != activeObjects.end(); ++i)
 			{
 				VisualObject* currentobj = *i;
+
+
 
 				currentobj->draw(myDirectXRenderer, currentCamera->getOffSetMatrix());
 				
 
     
 			}
+
+			//myDirectXRenderer->StopRenderingWithShaders();
+
 }
 
 
