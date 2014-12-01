@@ -61,17 +61,17 @@ void Camera::ModifyCameraForward(float modifier)
 	float XModifier = XRatio * modifier;
 	float ZModifier = ZRatio * modifier;
 
-	EyePoint->SetX(XModifier);
-	LookatPoint->SetX(XModifier);
+	EyePoint->ModX(XModifier);
+	LookatPoint->ModX(XModifier);
 
-	EyePoint->SetZ(ZModifier);
-	LookatPoint->SetZ(ZModifier);
+	EyePoint->ModZ(ZModifier);
+	LookatPoint->ModZ(ZModifier);
 }
 
 void Camera::ModifyCameraHeight(float modifier)
 {
-	EyePoint->SetY(modifier);
-	LookatPoint->SetY(modifier);
+	EyePoint->ModY(modifier);
+	LookatPoint->ModY(modifier);
 }
 
 //Logic for sideways Movement. The movement is done in a 2DPlane. 
@@ -95,11 +95,11 @@ void Camera::ModifyCameraSide(float modifier)
 	float ZModifier = ZRatio * -modifier;
 
 
-	EyePoint->SetX(XModifier);
-	LookatPoint->SetX(XModifier);
+	EyePoint->ModX(XModifier);
+	LookatPoint->ModX(XModifier);
 
-	EyePoint->SetZ(ZModifier);
-	LookatPoint->SetZ(ZModifier);
+	EyePoint->ModZ(ZModifier);
+	LookatPoint->ModZ(ZModifier);
 }
 
 
@@ -112,24 +112,23 @@ void Camera::ModifyCameraXRotation(float modifier)
 	float EPZ = EyePoint->GetZ();
 
 
-
 	if (LPX >= EPX)
-	{
-
-		LookatPoint->SetZ(-modifier);
+	{	
+		//float newLPZ = cos(abs(LPX) - abs(EPX)) + EPZ;
+		LookatPoint->ModZ(-modifier);
 	}
 	else if (LPX < EPX)
 	{
-		LookatPoint->SetZ(modifier);
+		LookatPoint->ModZ(modifier);
 	}
 
 	if (LPZ >= EPZ)
 	{
-		LookatPoint->SetX(modifier);
+		LookatPoint->ModX(modifier);
 	}
 	else if (LPZ < EPZ)
 	{
-		LookatPoint->SetX(-modifier);
+		LookatPoint->ModX(-modifier);
 	}
 } 
 
@@ -140,8 +139,8 @@ void Camera::ModifyCameraYRotation(float modifier)
 
 	if (LPZ > EPZ)
 	{
-		LookatPoint->SetY(modifier);
-		LookatPoint->SetZ(modifier);
+		LookatPoint->ModY(modifier);
+		LookatPoint->ModZ(modifier);
 	}
 }
 
