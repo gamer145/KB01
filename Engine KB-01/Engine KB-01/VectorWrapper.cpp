@@ -22,20 +22,41 @@ D3DXVECTOR3 VectorWrapper::GetVector()
 	return vector;
 }
 
+
+//Adds an increment to the existing X value
+void VectorWrapper::ModX(float modifier)
+{
+	vector.x += modifier;
+}
+
+
+//Adds an increment to the existing Y value
+void VectorWrapper::ModY(float modifier)
+{
+	vector.y += modifier;
+}
+
+//Adds an increment to the existing Z value
+void VectorWrapper::ModZ(float modifier)
+{
+	vector.z += modifier;
+}
+
 void VectorWrapper::SetX(float newX)
 {
-	vector.x += newX;
+	vector.x = newX;
 }
 
 void VectorWrapper::SetY(float newY)
 {
-	vector.y += newY;
+	vector.y = newY;
 }
 
 void VectorWrapper::SetZ(float newZ)
 {
-	vector.z += newZ;
+	vector.z = newZ;
 }
+
 
 float VectorWrapper::GetX()
 {

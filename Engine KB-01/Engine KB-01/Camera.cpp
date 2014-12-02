@@ -43,6 +43,7 @@ void Camera::SetUpVector(VectorWrapper* newVector)
 }
 
 //Logic for Forward and Backward Movement. The movement is done in a 2DPlane.
+//Logic is based on the position of the camera, and where it's looking at.
 void Camera::ModifyCameraForward(float modifier)
 {
 	float LPX = LookatPoint->GetX();
@@ -60,19 +61,21 @@ void Camera::ModifyCameraForward(float modifier)
 	float XModifier = XRatio * modifier;
 	float ZModifier = ZRatio * modifier;
 
-	EyePoint->SetX(XModifier);
-	LookatPoint->SetX(XModifier);
+	EyePoint->ModX(XModifier);
+	LookatPoint->ModX(XModifier);
 
-	EyePoint->SetZ(ZModifier);
-	LookatPoint->SetZ(ZModifier);
+	EyePoint->ModZ(ZModifier);
+	LookatPoint->ModZ(ZModifier);
 }
 
 void Camera::ModifyCameraHeight(float modifier)
 {
-	EyePoint->SetY(modifier);
-	LookatPoint->SetY(modifier);
+	EyePoint->ModY(modifier);
+	LookatPoint->ModY(modifier);
 }
 
+//Logic for sideways Movement. The movement is done in a 2DPlane. 
+//Logic is based on the position of the camera, and where it's looking at.
 void Camera::ModifyCameraSide(float modifier)
 {
 	float LPX = LookatPoint->GetX();
@@ -84,22 +87,25 @@ void Camera::ModifyCameraSide(float modifier)
 	float ZMov = (LPZ - EPZ);
 
 	float TotalMov = (abs(XMov) + abs(ZMov));
-	float XRatio = (XMov / TotalMov);
-	float ZRatio = (ZMov / TotalMov);
+	float ZRatio = (XMov / TotalMov);
+	float XRatio = (ZMov / TotalMov);
+
 
 	float XModifier = XRatio * modifier;
-	float ZModifier = ZRatio * modifier;
+	float ZModifier = ZRatio * -modifier;
 
-	EyePoint->SetX(ZModifier);
-	LookatPoint->SetX(ZModifier);
 
-	EyePoint->SetZ(XModifier);
-	LookatPoint->SetZ(XModifier);
+	EyePoint->ModX(XModifier);
+	LookatPoint->ModX(XModifier);
+
+	EyePoint->ModZ(ZModifier);
+	LookatPoint->ModZ(ZModifier);
 }
+
+
 
 void Camera::ModifyCameraXRotation(float modifier)
 {
-	
 	float LPX = LookatPoint->GetX();
 	float EPX = EyePoint->GetX();
 	float LPZ = LookatPoint->GetZ();
@@ -107,23 +113,24 @@ void Camera::ModifyCameraXRotation(float modifier)
 
 
 	if (LPX >= EPX)
-	{		
-		LookatPoint->SetZ(-modifier);
+	{	
+		//float newLPZ = cos(abs(LPX) - abs(EPX)) + EPZ;
+		LookatPoint->ModZ(-modifier);
 	}
 	else if (LPX < EPX)
 	{
-		LookatPoint->SetZ(modifier);
+		LookatPoint->ModZ(modifier);
 	}
 
 	if (LPZ >= EPZ)
 	{
-		LookatPoint->SetX(modifier);
+		LookatPoint->ModX(modifier);
 	}
 	else if (LPZ < EPZ)
 	{
-		LookatPoint->SetX(-modifier);
+		LookatPoint->ModX(-modifier);
 	}
-}
+} 
 
 void Camera::ModifyCameraYRotation(float modifier)
 {
@@ -132,8 +139,8 @@ void Camera::ModifyCameraYRotation(float modifier)
 
 	if (LPZ > EPZ)
 	{
-		LookatPoint->SetY(modifier);
-		LookatPoint->SetZ(modifier);
+		LookatPoint->ModY(modifier);
+		LookatPoint->ModZ(modifier);
 	}
 }
 

@@ -17,6 +17,11 @@ public:
 	void SetY(float newY);
 	void SetZ(float newZ);
 
+
+	void ModX(float modifier);
+	void ModY(float modifier);
+	void ModZ(float modifier);
+
 	float GetX();
 	float GetY();
 	float GetZ();
