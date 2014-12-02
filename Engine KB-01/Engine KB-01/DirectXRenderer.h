@@ -65,6 +65,15 @@ public:
 	std::map<std::string, MeshWrapper*> getMeshes();
 	std::map<std::string, TextureWrapper*> getTextures();
 
+	//oculus test code from here on
+	void setViewportOculus(const OVR::Util::Render::StereoEyeParams& params);
+	void setPixelShaderConstantsOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig);
+	void setupRenderToTextureOculus();
+	void endRenderToTextureOculus();
+	void renderSceneOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig);
+	void fillVertexBufferOculus(std::string key, VERTEX vertices[], int size);
+	void createScreenQuadOculus(float width, float height);
+	void renderEyeOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig);
 
 private:
 
@@ -74,6 +83,19 @@ private:
 	bool keepRendering;
 	D3DXMATRIX WorldMatrix;
 	
+	float backBufferWidth;
+	float backBufferHeight;
+
+	LPDIRECT3DTEXTURE9 fullSceneTexture = NULL, leftEyeTexture = NULL, rightEyeTexture = NULL;
+	LPDIRECT3DSURFACE9 fullSceneSurface = NULL, leftEyeSurface = NULL, rightEyeSurface = NULL, backBuffer = NULL;
+	VERTEX* screenQuad;
+	VERTEX* eyeLeftQuad;
+	VERTEX* eyeRightQuad;
+
+	LPDIRECT3DTEXTURE9 quadTex = NULL;
+	IDirect3DPixelShader9* lpPixelShader = NULL;
+	LPD3DXBUFFER pCode = NULL;
+
 	std::map<std::string, MeshWrapper*> Meshes;
 	std::map<std::string, TextureWrapper*> Textures;
 	std::map<std::string, Shader*> Shaders;

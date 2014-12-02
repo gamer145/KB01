@@ -5,6 +5,10 @@ DirectXRenderer::DirectXRenderer()
 	g_pD3D = NULL; 
     g_pd3dDevice = NULL;
 	
+	screenQuad = new VERTEX[4];
+	eyeLeftQuad = new VERTEX[4];
+	eyeRightQuad = new VERTEX[4];
+
 };
 
 DirectXRenderer::~DirectXRenderer()
@@ -45,6 +49,64 @@ HRESULT DirectXRenderer::InitD3D( HWND hWnd )
     {
         return E_FAIL;
     }
+
+	this->backBufferWidth = d3dpp.BackBufferWidth;
+	this->backBufferHeight = d3dpp.BackBufferHeight;
+
+	//Initialize the texture where the barrel distortion effect is drawn to
+	//See http://www.two-kings.de/tutorials/dxgraphics/dxgraphics16.html for sample code
+	g_pd3dDevice->CreateTexture(backBufferWidth,
+		backBufferHeight,
+		1,
+		D3DUSAGE_RENDERTARGET,
+		D3DFMT_A16B16G16R16,
+		D3DPOOL_DEFAULT,
+		&fullSceneTexture,
+		NULL);
+	fullSceneTexture->GetSurfaceLevel(0, &fullSceneSurface);
+
+	g_pd3dDevice->CreateTexture(backBufferWidth,
+		backBufferHeight,
+		1,
+		D3DUSAGE_RENDERTARGET,
+		D3DFMT_A16B16G16R16,
+		D3DPOOL_DEFAULT,
+		&leftEyeTexture,
+		NULL);
+	leftEyeTexture->GetSurfaceLevel(0, &leftEyeSurface);
+
+	g_pd3dDevice->CreateTexture(backBufferWidth,
+		backBufferHeight,
+		1,
+		D3DUSAGE_RENDERTARGET,
+		D3DFMT_A16B16G16R16,
+		D3DPOOL_DEFAULT,
+		&rightEyeTexture,
+		NULL);
+	rightEyeTexture->GetSurfaceLevel(0, &rightEyeSurface);
+
+	g_pd3dDevice->GetRenderTarget(0, &backBuffer);
+
+	/*
+	//set the shader	
+	D3DXCompileShaderFromFile("PixelShader.hlsl",
+		NULL,
+		NULL,
+		"main",
+		"ps_2_0",
+		NULL,
+		&pCode,
+		NULL,
+		NULL);
+
+	pd3dDevice->CreatePixelShader((DWORD*)pCode->GetBufferPointer(),
+		&lpPixelShader);
+
+		*/
+
+	//create the quad we will draw the scene on
+	//pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	createScreenQuadOculus(backBufferWidth / 2, backBufferHeight / 2);
 
 	g_pd3dDevice->SetRenderState( D3DRS_ZENABLE, TRUE );
 	g_pd3dDevice->SetRenderState( D3DRS_LIGHTING, false);
@@ -406,3 +468,186 @@ std::map<std::string, MeshWrapper*> DirectXRenderer::getMeshes()
 {
 	return Meshes;
 }
+
+// oculus test code from here on
+
+void DirectXRenderer::setViewportOculus(const OVR::Util::Render::StereoEyeParams& params)
+{
+	D3DVIEWPORT9 dxViewport;
+	dxViewport.Width = this->backBufferWidth / 2;
+	dxViewport.Height = this->backBufferHeight;
+	dxViewport.Y = params.VP.y;
+	if (params.Eye == OVR::Util::Render::StereoEye_Right){
+		dxViewport.X = this->backBufferWidth / 2;
+	}
+	else{
+		dxViewport.X = 0.0f;
+	}
+
+	dxViewport.MinZ = 0.0f;
+	dxViewport.MaxZ = 1.0f;
+	g_pd3dDevice->SetViewport(&dxViewport);
+
+}
+
+void DirectXRenderer::setupRenderToTextureOculus()
+{
+	g_pd3dDevice->SetRenderTarget(0, fullSceneSurface);
+	g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, D3DCOLOR_XRGB(0, 0, 255), 1.0f, 0);
+	g_pd3dDevice->BeginScene();
+
+};
+
+void DirectXRenderer::endRenderToTextureOculus()
+{
+	g_pd3dDevice->EndScene();
+};
+
+void DirectXRenderer::renderSceneOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig)
+{
+	g_pd3dDevice->SetRenderTarget(0, backBuffer);
+	setViewportOculus(params);
+	g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, D3DCOLOR_XRGB(0, 0, 255), 1.0f, 0);
+	g_pd3dDevice->BeginScene();
+	//apply shader
+	//render to aligned quad
+	fillVertexBufferOculus("screenVertex", screenQuad, sizeof(VERTEX) * 4);
+	SetZBuffer(false);
+	SetStreamSource(0, "screenVertex", 0, sizeof(VERTEX));
+	if (params.Eye == OVR::Util::Render::StereoEye_Right){
+		g_pd3dDevice->SetTexture(0, rightEyeTexture);
+	}
+	else{
+		g_pd3dDevice->SetTexture(0, leftEyeTexture);
+	}
+
+	//reset matrixes
+	g_pd3dDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
+	SetZBuffer(true);
+
+	g_pd3dDevice->EndScene();
+}
+
+void DirectXRenderer::fillVertexBufferOculus(std::string key, VERTEX vertices[], int size)
+{
+	//Since this method is called repeatedly, we need to check if the requested buffer already exists or not.
+	if (VertexBuffers.find(key) == VertexBuffers.end())
+	{
+		LPDIRECT3DVERTEXBUFFER9 vBuffer;
+		g_pd3dDevice->CreateVertexBuffer(size, 0, ECUSTOMVERTEX, D3DPOOL_MANAGED, &vBuffer, NULL);
+
+		void* pVertices;
+		vBuffer->Lock(0, size, (void**)&pVertices, 0);
+		memcpy(pVertices, vertices, size);
+		vBuffer->Unlock();
+
+		VertexBuffers.insert(std::pair<std::string, LPDIRECT3DVERTEXBUFFER9>(key, vBuffer));
+	}
+};
+
+void DirectXRenderer::createScreenQuadOculus(float width, float height)
+{
+	VERTEX vertices[4] = {
+			{ -width - 0.5f, height + 0.5f, 0.0f, 0.0f, 0.0f }, //top left
+			{ width - 0.5f, height + 0.5f, 0.0f, 1.0f, 0.0f }, // top right
+			{ -width - 0.5f, -height + 0.5f, 0.0f, 0.0f, 1.0f }, //bottom left
+			{ width - 0.5f, -height + 0.5f, 0.0f, 1.0f, 1.0f } // bottom right
+	};
+
+	for (int i = 0; i < 4; ++i)
+	{
+		screenQuad[i] = vertices[i];
+	}
+
+	VERTEX verticesLeftEye[4] = {
+			{ -width - 0.5f, height + 0.5f, 0.0f, 0.0f, 0.0f }, //top left
+			{ width - 0.5f, height + 0.5f, 0.0f, 0.5f, 0.0f }, // top right
+			{ -width - 0.5f, -height + 0.5f, 0.0f, 0.0f, 1.0f }, //bottom left
+			{ width - 0.5f, -height + 0.5f, 0.0f, 0.5f, 1.0f } // bottom right
+	};
+
+	for (int i = 0; i < 4; ++i)
+	{
+		eyeLeftQuad[i] = verticesLeftEye[i];
+	}
+
+	VERTEX verticesRightEye[4] = {
+			{ -width - 0.5f, height + 0.5f, 0.0f, 0.5f, 0.0f }, //top left
+			{ width - 0.5f, height + 0.5f, 0.0f, 1.0f, 0.0f }, // top right
+			{ -width - 0.5f, -height + 0.5f, 0.0f, 0.5f, 1.0f }, //bottom left
+			{ width - 0.5f, -height + 0.5f, 0.0f, 1.0f, 1.0f } // bottom right
+	};
+
+	for (int i = 0; i < 4; ++i)
+	{
+		eyeRightQuad[i] = verticesRightEye[i];
+	}
+}
+
+void DirectXRenderer::renderEyeOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig)
+{
+	std::string quadname;
+	if (params.Eye == OVR::Util::Render::StereoEye_Right){
+		g_pd3dDevice->SetRenderTarget(0, rightEyeSurface);
+		quadname = "rightQuad";
+	}
+	else{
+		g_pd3dDevice->SetRenderTarget(0, leftEyeSurface);
+		quadname = "leftQuad";
+	}
+
+	g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, D3DCOLOR_XRGB(0, 0, 255), 1.0f, 0);
+	g_pd3dDevice->BeginScene();
+
+	g_pd3dDevice->SetPixelShader(lpPixelShader);
+	setPixelShaderConstantsOculus(params, SConfig);
+
+	if (params.Eye == OVR::Util::Render::StereoEye_Right){
+		fillVertexBufferOculus(quadname, eyeRightQuad, sizeof(VERTEX) * 4);
+	}
+	else{
+		fillVertexBufferOculus(quadname, eyeLeftQuad, sizeof(VERTEX) * 4);
+	}
+	//dooásd
+	SetZBuffer(false);
+	SetStreamSource(0, quadname, 0,  sizeof(VERTEX));
+	g_pd3dDevice->SetTexture(0, fullSceneTexture);
+	
+	g_pd3dDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
+	g_pd3dDevice->SetPixelShader(NULL);
+
+	g_pd3dDevice->EndScene();
+
+};
+
+void DirectXRenderer::setPixelShaderConstantsOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig)
+{
+	float w = float(params.VP.w) / float(SConfig.GetHMDInfo().HResolution);
+	float h = float(params.VP.h) / float(SConfig.GetHMDInfo().VResolution);
+	float x = float(params.VP.x) / float(SConfig.GetHMDInfo().HResolution);
+	float y = float(params.VP.y) / float(SConfig.GetHMDInfo().VResolution);
+	float scaleFactor = 1.0f / SConfig.GetDistortionConfig().Scale;
+
+	if (params.Eye == OVR::Util::Render::StereoEye_Right){
+
+		float lensCenter[2] = { x + (w - SConfig.GetDistortionConfig().XCenterOffset * 0.5f)*0.5f, y + h*0.5f };
+		g_pd3dDevice->SetPixelShaderConstantF(0, lensCenter, 1);
+		float screenCenter[2] = { x + w*0.5f, y + h*0.5f };
+		g_pd3dDevice->SetPixelShaderConstantF(1, screenCenter, 1);
+
+	}
+	else{
+
+		float lensCenter[2] = { x + (w + SConfig.GetDistortionConfig().XCenterOffset * 0.5f)*0.5f, y + h*0.5f };
+		g_pd3dDevice->SetPixelShaderConstantF(0, lensCenter, 1);
+		float screenCenter[2] = { x + w*0.5f, y + h*0.5f };
+		g_pd3dDevice->SetPixelShaderConstantF(1, screenCenter, 1);
+	}
+
+	float scale[2] = { (w / 2) * scaleFactor, (h / 2) * scaleFactor * SConfig.GetAspect() };
+	g_pd3dDevice->SetPixelShaderConstantF(2, scale, 1);
+	float scaleIn[2] = { (2 / w), (2 / h) / SConfig.GetAspect() };
+	g_pd3dDevice->SetPixelShaderConstantF(3, scaleIn, 1);
+	float HmdWarpParam[4] = { SConfig.GetDistortionK(0), SConfig.GetDistortionK(1), SConfig.GetDistortionK(2), SConfig.GetDistortionK(3) };
+	g_pd3dDevice->SetPixelShaderConstantF(4, HmdWarpParam, 1);
+};

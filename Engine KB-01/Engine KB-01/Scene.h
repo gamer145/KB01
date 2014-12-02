@@ -10,6 +10,7 @@
 #include "InputHandler.h"
 #include <d3dx9.h>
 #include "VisualObject.h"
+#include "OVR.h"
 
 class Scene
 {
@@ -35,7 +36,8 @@ private:
 	Resource_Manager* RManager;
 	Renderer* myDirectXRenderer;
 	void Draw();
-
+	OVR::Util::Render::StereoConfig SConfig;
+	bool oculus;
 	
 };
 

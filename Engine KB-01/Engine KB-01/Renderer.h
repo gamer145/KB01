@@ -16,6 +16,7 @@
 #include "MatrixWrapper.h"
 #include "TextureWrapper.h"
 #include "VertexBufferWrapper.h"
+#include "OVR.h"
 
 class Entity;
 class Renderer
@@ -57,6 +58,14 @@ public:
 	virtual void Present() = 0;
 	virtual std::map<std::string, MeshWrapper*> getMeshes() = 0;
 	virtual std::map<std::string, TextureWrapper*> getTextures() = 0;
+	virtual void setViewportOculus(const OVR::Util::Render::StereoEyeParams& params) = 0;
+	virtual void setPixelShaderConstantsOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig) = 0;
+	virtual void setupRenderToTextureOculus() = 0;
+	virtual void endRenderToTextureOculus() = 0;
+	virtual void renderSceneOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig) = 0;
+	virtual void fillVertexBufferOculus(std::string key, VERTEX vertices[], int size) = 0;
+	virtual void createScreenQuadOculus(float width, float height) = 0;
+	virtual void renderEyeOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig) = 0;
 };
 
 #endif
