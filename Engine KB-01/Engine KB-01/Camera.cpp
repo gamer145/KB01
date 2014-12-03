@@ -8,6 +8,8 @@ Camera::Camera()
 
 	Position = new MatrixWrapper();
 	ProjectionMatrix = new MatrixWrapper();
+
+	horizontalAngle = 90;
 }
 
 Camera::~Camera()
@@ -18,8 +20,9 @@ Camera::~Camera()
 
 void Camera::Initialize()
 {
+	sinFactor = (abs(LookatPoint->GetZ()) + abs(EyePoint->GetZ()));
 	Position->MatrixLookAtLH( EyePoint, LookatPoint, UpVector );
-	ProjectionMatrix->MatrixPerspectiveFovLH(D3DX_PI / 4, 1.0f, 1.0f, 100000.0f);
+	ProjectionMatrix->MatrixPerspectiveFovLH(M_PI / 4, 1.0f, 1.0f, 100000.0f);
 }
 
 void Camera::SetInputHandler(InputHandlerInterface* IH)
@@ -106,29 +109,57 @@ void Camera::ModifyCameraSide(float modifier)
 
 void Camera::ModifyCameraXRotation(float modifier)
 {
-	float LPX = LookatPoint->GetX();
-	float EPX = EyePoint->GetX();
-	float LPZ = LookatPoint->GetZ();
-	float EPZ = EyePoint->GetZ();
-
-
-	if (LPX >= EPX)
-	{	
-		//float newLPZ = cos(abs(LPX) - abs(EPX)) + EPZ;
-		LookatPoint->ModZ(-modifier);
-	}
-	else if (LPX < EPX)
+	if (modifier != 0)
 	{
-		LookatPoint->ModZ(modifier);
-	}
+		float EPZ = EyePoint->GetZ();
+		float EPX = EyePoint->GetX();
 
-	if (LPZ >= EPZ)
-	{
-		LookatPoint->ModX(modifier);
-	}
-	else if (LPZ < EPZ)
-	{
-		LookatPoint->ModX(-modifier);
+		if (modifier > 0)
+			if (360 > horizontalAngle + 1)
+			{
+				if (horizontalAngle + 1 == 180)
+				{
+					horizontalAngle += 1;
+				}
+				horizontalAngle += 1;
+			}
+			else
+			{
+				horizontalAngle = 1;
+			}
+		else if (modifier < 0)
+			if(horizontalAngle - 1 > 0)
+			{
+				if (horizontalAngle - 1 == 180)
+				{
+					horizontalAngle -= 1;
+				}
+				horizontalAngle -= 1;
+			}
+			else
+			{
+				horizontalAngle = 359;
+			}
+
+		float calc = sin(horizontalAngle * M_PI / 180);			
+		float newLPZ = ((calc * sinFactor) + EPZ);
+		LookatPoint->SetZ(newLPZ);
+
+		float calc2 = (newLPZ - EPZ) / tan(horizontalAngle * M_PI / 180);
+		float newLPX = (calc2) + EPX;
+
+		LookatPoint->SetX(newLPX);
+		std::ostringstream ss;
+		std::string a;
+
+		ss << horizontalAngle;
+		a = ss.str();
+
+		Logger* myLogger;
+		myLogger = Logger::GetLogger();
+		myLogger->WriteToFile(Error, a, 0);
+			
+
 	}
 } 
 
@@ -158,9 +189,25 @@ ERUNSTATE Camera::Update()
 {
 	ERUNSTATE state = RUNNING;
 
+	Logger* myLogger;
+	myLogger = Logger::GetLogger();
+	std::ostringstream ss;
+	std::ostringstream sb;
+	std::string a, b;
+
+	ss << "LookatPoint: " << LookatPoint->GetX() << " " << LookatPoint->GetY() << " " << LookatPoint->GetZ();
+	
+	a = ss.str();
+	myLogger->WriteToFile(Error, a, 0);
+
 	ModifyCameraXRotation(myInputHandler->getAction(ACTION_ROTATECAMERA_X));
 	ModifyCameraYRotation(myInputHandler->getAction(ACTION_ROTATECAMERA_Y));
 	
+	sb << "LookatPoint: " << LookatPoint->GetX() << " " << LookatPoint->GetY() << " " << LookatPoint->GetZ();
+
+	b = sb.str();
+	myLogger->WriteToFile(Error, a, 0);
+
 	ModifyCameraForward(myInputHandler->getAction(ACTION_ZAXISMOVE));
 	ModifyCameraHeight(myInputHandler->getAction(ACTION_YAXISMOVE));
 	ModifyCameraSide(myInputHandler->getAction(ACTION_XAXISMOVE));
