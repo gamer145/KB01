@@ -27,9 +27,6 @@ private:
 	VectorWrapper* UpVector;
 	MatrixWrapper* ProjectionMatrix;
 	InputHandlerInterface* myInputHandler;
-	float horizontalAngle;
-	float sinFactor;
-	float cosFactor;
 	void UpdateCameraMatrix();
 
 	void ModifyCameraForward(float modifier);
