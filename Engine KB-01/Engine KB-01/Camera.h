@@ -28,8 +28,7 @@ private:
 	MatrixWrapper* ProjectionMatrix;
 	InputHandlerInterface* myInputHandler;
 	float horizontalAngle;
-	float sinFactor;
-	float cosFactor;
+	float radius;
 	void UpdateCameraMatrix();
 
 	void ModifyCameraForward(float modifier);
