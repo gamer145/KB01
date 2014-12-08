@@ -20,7 +20,7 @@ Camera::~Camera()
 
 void Camera::Initialize()
 {
-	sinFactor = (abs(LookatPoint->GetZ()) + abs(EyePoint->GetZ()));
+	radius = (abs(LookatPoint->GetZ()) + abs(EyePoint->GetZ()));
 	Position->MatrixLookAtLH( EyePoint, LookatPoint, UpVector );
 	ProjectionMatrix->MatrixPerspectiveFovLH(M_PI / 4, 1.0f, 1.0f, 100000.0f);
 }
@@ -106,7 +106,6 @@ void Camera::ModifyCameraSide(float modifier)
 }
 
 
-
 void Camera::ModifyCameraXRotation(float modifier)
 {
 	if (modifier != 0)
@@ -114,50 +113,48 @@ void Camera::ModifyCameraXRotation(float modifier)
 		float EPZ = EyePoint->GetZ();
 		float EPX = EyePoint->GetX();
 
-		if (modifier > 0)
+		if (modifier < 0)
 			if (360 > horizontalAngle + 1)
 			{
-				if (horizontalAngle + 1 == 180)
-				{
 					horizontalAngle += 1;
 				}
-				horizontalAngle += 1;
-			}
 			else
 			{
-				horizontalAngle = 1;
+				horizontalAngle = 0;
 			}
-		else if (modifier < 0)
-			if(horizontalAngle - 1 > 0)
+		else if (modifier > 0)
+			if (horizontalAngle - 1 >= 0)
 			{
-				if (horizontalAngle - 1 == 180)
-				{
 					horizontalAngle -= 1;
 				}
-				horizontalAngle -= 1;
-			}
 			else
 			{
 				horizontalAngle = 359;
 			}
 
 		float calc = sin(horizontalAngle * M_PI / 180);			
-		float newLPZ = ((calc * sinFactor) + EPZ);
+		float newLPZ = ((calc * radius) + EPZ);
+
+		float newLPX;
+		float calc2;
+
+		if (horizontalAngle == 180)
+		{
+			newLPX = -radius + EPX;
+		}
+		else if (horizontalAngle == 0)
+		{
+			newLPX = radius + EPX;
+		}
+		else
+		{
+			calc2 = (newLPZ - EPZ) / tan(horizontalAngle * M_PI / 180);
+			newLPX = calc2 + EPX;
+		}
+
 		LookatPoint->SetZ(newLPZ);
-
-		float calc2 = (newLPZ - EPZ) / tan(horizontalAngle * M_PI / 180);
-		float newLPX = (calc2) + EPX;
-
 		LookatPoint->SetX(newLPX);
-		std::ostringstream ss;
-		std::string a;
 
-		ss << horizontalAngle;
-		a = ss.str();
-
-		Logger* myLogger;
-		myLogger = Logger::GetLogger();
-		myLogger->WriteToFile(Error, a, 0);
 			
 
 	}
@@ -165,6 +162,7 @@ void Camera::ModifyCameraXRotation(float modifier)
 
 void Camera::ModifyCameraYRotation(float modifier)
 {
+	//Fix me D I do not work, but i iz not very important :(
 	float LPZ = LookatPoint->GetZ();
 	float EPZ = EyePoint->GetZ();
 
@@ -187,7 +185,7 @@ MatrixWrapper* Camera::getProjectionMatrix()
 
 ERUNSTATE Camera::Update()
 {
-		ERUNSTATE state = RUNNING;
+	ERUNSTATE state = RUNNING;
 
 		ModifyCameraXRotation(myInputHandler->getAction(ACTION_ROTATECAMERA_X));
 		ModifyCameraYRotation(myInputHandler->getAction(ACTION_ROTATECAMERA_Y));
@@ -212,10 +210,10 @@ ERUNSTATE Camera::UpdateOculus(Renderer* renderer, const OVR::Util::Render::Ster
 	renderer->setProjectionMatrixOculus(params, SConfig);
 
 	ERUNSTATE state = RUNNING;
-	
+
 	ModifyCameraXRotation(myInputHandler->getAction(ACTION_ROTATECAMERA_X));
 	ModifyCameraYRotation(myInputHandler->getAction(ACTION_ROTATECAMERA_Y));
-
+	
 	ModifyCameraForward(myInputHandler->getAction(ACTION_ZAXISMOVE));
 	ModifyCameraHeight(myInputHandler->getAction(ACTION_YAXISMOVE));
 	ModifyCameraSide(myInputHandler->getAction(ACTION_XAXISMOVE));
