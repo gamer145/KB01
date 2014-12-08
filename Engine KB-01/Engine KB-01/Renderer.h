@@ -56,6 +56,7 @@ public:
 	virtual void BeginS() = 0;
 	virtual void EndS() = 0;
 	virtual void Present() = 0;
+	virtual void PresentWithWindow(HWND hwnd) = 0;
 	virtual std::map<std::string, MeshWrapper*> getMeshes() = 0;
 	virtual std::map<std::string, TextureWrapper*> getTextures() = 0;
 	virtual void setViewportOculus(const OVR::Util::Render::StereoEyeParams& params) = 0;
@@ -66,6 +67,10 @@ public:
 	virtual void fillVertexBufferOculus(std::string key, VERTEX vertices[], int size) = 0;
 	virtual void createScreenQuadOculus(float width, float height) = 0;
 	virtual void renderEyeOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig) = 0;
+	virtual void setViewMatrixOculus( const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig) = 0;
+	virtual void setProjectionMatrixOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig) = 0;
+	virtual bool OculusOrNah() = 0;
+	virtual void OculusNowYah(bool newOculus) = 0;
 };
 
 #endif

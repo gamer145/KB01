@@ -44,15 +44,28 @@ void Scene::setResourceManager(Resource_Manager* r)
 
 ERUNSTATE Scene::Update()
 {
-	ERUNSTATE state = currentCamera->Update();
-	Draw();
-	return state;
+	
+		ERUNSTATE state = currentCamera->Update();
+		Draw();
+		return state;
+	
+}
+
+ERUNSTATE Scene::UpdateOculus(const OVR::Util::Render::StereoEyeParams& stereo)
+{
+	
+		myDirectXRenderer->setViewportOculus(stereo);
+
+		ERUNSTATE state = currentCamera->UpdateOculus(myDirectXRenderer, stereo, SConfig);
+		Draw();
+		return state;
+
 }
 
 void Scene::clear()
 {
 	myDirectXRenderer->Clear( 0, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
-                         D3DCOLOR_XRGB(0, 0, 0 ), 1.0f, 0 );
+                         D3DCOLOR_XRGB(255, 0, 0 ), 1.0f, 0 );
 }
 
 void Scene::beginS()
@@ -65,6 +78,11 @@ void Scene::endS()
 	myDirectXRenderer->EndS();
 
 	myDirectXRenderer->Present();
+}
+
+OVR::Util::Render::StereoConfig Scene::GetConfig()
+{
+	return SConfig;
 }
 
 void Scene::Draw()

@@ -49,9 +49,11 @@ HRESULT DirectXRenderer::InitD3D( HWND hWnd )
     {
         return E_FAIL;
     }
-
+	/*
 	this->backBufferWidth = d3dpp.BackBufferWidth;
 	this->backBufferHeight = d3dpp.BackBufferHeight;
+
+	// fixme r   this be ugly mon
 
 	//Initialize the texture where the barrel distortion effect is drawn to
 	//See http://www.two-kings.de/tutorials/dxgraphics/dxgraphics16.html for sample code
@@ -87,9 +89,9 @@ HRESULT DirectXRenderer::InitD3D( HWND hWnd )
 
 	g_pd3dDevice->GetRenderTarget(0, &backBuffer);
 
-	/*
+	
 	//set the shader	
-	D3DXCompileShaderFromFile("PixelShader.hlsl",
+	D3DXCompileShaderFromFile(L"../Shaders/PixelShader.hlsl",
 		NULL,
 		NULL,
 		"main",
@@ -99,14 +101,16 @@ HRESULT DirectXRenderer::InitD3D( HWND hWnd )
 		NULL,
 		NULL);
 
-	pd3dDevice->CreatePixelShader((DWORD*)pCode->GetBufferPointer(),
+	g_pd3dDevice->CreatePixelShader((DWORD*)pCode->GetBufferPointer(),
 		&lpPixelShader);
 
-		*/
+		
 
 	//create the quad we will draw the scene on
 	//pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	createScreenQuadOculus(backBufferWidth / 2, backBufferHeight / 2);
+
+	*/
 
 	g_pd3dDevice->SetRenderState( D3DRS_ZENABLE, TRUE );
 	g_pd3dDevice->SetRenderState( D3DRS_LIGHTING, false);
@@ -471,6 +475,16 @@ std::map<std::string, MeshWrapper*> DirectXRenderer::getMeshes()
 
 // oculus test code from here on
 
+bool DirectXRenderer::OculusOrNah()
+{
+	return oculus;
+}
+
+void DirectXRenderer::OculusNowYah(bool newOculus)
+{
+	oculus = newOculus;
+}
+
 void DirectXRenderer::setViewportOculus(const OVR::Util::Render::StereoEyeParams& params)
 {
 	D3DVIEWPORT9 dxViewport;
@@ -502,6 +516,11 @@ void DirectXRenderer::endRenderToTextureOculus()
 {
 	g_pd3dDevice->EndScene();
 };
+
+void DirectXRenderer::PresentWithWindow(HWND hwnd)
+{
+	g_pd3dDevice->Present(NULL, NULL, hwnd, NULL);
+}
 
 void DirectXRenderer::renderSceneOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig)
 {
@@ -599,7 +618,7 @@ void DirectXRenderer::renderEyeOculus(const OVR::Util::Render::StereoEyeParams& 
 	g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, D3DCOLOR_XRGB(0, 0, 255), 1.0f, 0);
 	g_pd3dDevice->BeginScene();
 
-	g_pd3dDevice->SetPixelShader(lpPixelShader);
+	//g_pd3dDevice->SetPixelShader(lpPixelShader);
 	setPixelShaderConstantsOculus(params, SConfig);
 
 	if (params.Eye == OVR::Util::Render::StereoEye_Right){
@@ -614,10 +633,63 @@ void DirectXRenderer::renderEyeOculus(const OVR::Util::Render::StereoEyeParams& 
 	g_pd3dDevice->SetTexture(0, fullSceneTexture);
 	
 	g_pd3dDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
-	g_pd3dDevice->SetPixelShader(NULL);
+	//g_pd3dDevice->SetPixelShader(NULL);
 
 	g_pd3dDevice->EndScene();
 
+};
+
+void DirectXRenderer::setViewMatrixOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig)
+{
+	float viewCenter = SConfig.GetHMDInfo().HScreenSize * 0.25f;
+	float halfIPD = SConfig.GetHMDInfo().InterpupillaryDistance * 0.5f;
+
+	D3DXMATRIX viewMatrix;
+	if (params.Eye == OVR::Util::Render::StereoEye_Left){
+		D3DXMatrixTranslation(&viewMatrix, halfIPD, 0, 0);
+		viewMatrix = scalarMultiply(&viewMatrix, viewCenter);
+	}
+	else{
+		D3DXMatrixTranslation(&viewMatrix, -halfIPD, 0, 0);
+		viewMatrix = scalarMultiply(&viewMatrix, viewCenter);
+	}
+
+	g_pd3dDevice->SetTransform(D3DTS_VIEW, &viewMatrix);
+};
+
+D3DXMATRIX  DirectXRenderer::scalarMultiply(D3DXMATRIX* matrix, float multiplyFactor)
+{
+	D3DXMATRIX multipliedMatrix;
+	for (int i = 0; i < 4; i++){
+		for (int j = 0; j < 4; j++){
+			multipliedMatrix.m[i][j] = matrix->m[i][j] * multiplyFactor;
+		};
+	}
+	return multipliedMatrix;
+};
+
+void DirectXRenderer::setProjectionMatrixOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig)
+{
+	float projectionCenterOffset = SConfig.GetProjectionCenterOffset();
+	//float projectionCenterOffset = 0.05;
+	D3DXMATRIXA16 projectionCenterMatrix;
+	D3DXMatrixPerspectiveFovLH(&projectionCenterMatrix,
+		SConfig.GetYFOVRadians(),    // the horizontal field of view
+		SConfig.GetAspect(),    // aspect ratio
+		0.3f,    // the near view-plane
+		1000.0f);    // the far view-plane
+
+	D3DXMATRIXA16 projectionMatrix;
+	if (params.Eye == OVR::Util::Render::StereoEye_Left){
+		D3DXMatrixTranslation(&projectionMatrix, projectionCenterOffset, 0, 0);
+		projectionMatrix = projectionCenterMatrix * projectionMatrix;
+	}
+	else{
+		D3DXMatrixTranslation(&projectionMatrix, -projectionCenterOffset, 0, 0);
+		projectionMatrix = projectionCenterMatrix * projectionMatrix;
+	}
+
+	g_pd3dDevice->SetTransform(D3DTS_PROJECTION, &projectionMatrix);    // set the projection transform	
 };
 
 void DirectXRenderer::setPixelShaderConstantsOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig)

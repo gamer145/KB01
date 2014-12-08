@@ -72,20 +72,64 @@ synch test 2
 
 ERUNSTATE Scene_Manager::UpdateScene()
 {
+	if (myDirectXRenderer->OculusOrNah())
+	{
+		//myDirectXRenderer->setupRenderToTextureOculus();
 		ERUNSTATE state;
 		CurrentScene->clear();
 		CurrentScene->beginS();
 
-		state = CurrentScene->Update();	
+		state = CurrentScene->UpdateOculus(CurrentScene->GetConfig().GetEyeRenderParams(OVR::Util::Render::StereoEye_Left));
+		//state = CurrentScene->Update(myDirectXRenderer->OculusOrNah(), CurrentScene->GetConfig().GetEyeRenderParams(OVR::Util::Render::StereoEye_Right));
 
-		hoogteMap->RenderHeightmap(myDirectXRenderer);
+		//hoogteMap->RenderHeightmap(myDirectXRenderer);
 
+		//  fixme r     this still no working mon
+		//skybox->DrawSkybox(myDirectXRenderer, CurrentScene->getCamera()->getPosition());
 
-		skybox->DrawSkybox(myDirectXRenderer, CurrentScene->getCamera()->getPosition());
 
 
 		CurrentScene->endS();
+
+		//myDirectXRenderer->endRenderToTextureOculus();
+
+
+		//distort the textures
+		//myDirectXRenderer->renderEyeOculus(CurrentScene->GetConfig().GetEyeRenderParams(OVR::Util::Render::StereoEye_Left), CurrentScene->GetConfig());
+		//myDirectXRenderer->renderEyeOculus(CurrentScene->GetConfig().GetEyeRenderParams(OVR::Util::Render::StereoEye_Right), CurrentScene->GetConfig());
+		//present the textures
+		//myDirectXRenderer->renderSceneOculus(CurrentScene->GetConfig().GetEyeRenderParams(OVR::Util::Render::StereoEye_Left), CurrentScene->GetConfig());
+		//myDirectXRenderer->renderSceneOculus(CurrentScene->GetConfig().GetEyeRenderParams(OVR::Util::Render::StereoEye_Right), CurrentScene->GetConfig());
+
+		myDirectXRenderer->Present();
+		//myDirectXRenderer->PresentWithWindow(CurrentWindow->getHWND());
+
+
+
 		CurrentWindow->updateWindow();
-	
+
+
 		return state;
+	}
+	else
+	{
+		ERUNSTATE state = RUNNING;
+		CurrentScene->clear();
+		CurrentScene->beginS();
+
+		state = CurrentScene->Update();
+
+		hoogteMap->RenderHeightmap(myDirectXRenderer);
+
+		//  fixme r     this still no working mon
+		skybox->DrawSkybox(myDirectXRenderer, CurrentScene->getCamera()->getPosition());
+
+		CurrentScene->endS();
+
+		myDirectXRenderer->Present();
+
+		CurrentWindow->updateWindow();
+
+		return state;
+	}
 }

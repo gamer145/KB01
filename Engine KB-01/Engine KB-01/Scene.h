@@ -20,11 +20,14 @@ public:
 	std::string writeToString();
 	void initCamera(InputHandlerInterface* IH);
 	ERUNSTATE Update();
+	ERUNSTATE UpdateOculus(const OVR::Util::Render::StereoEyeParams& stereo);
 	void SetDirectXRenderer(Renderer* render);
 	void setResourceManager(Resource_Manager* r);
 	void AddObject(VisualObject* newObject);
 	void setCamera(Camera* c);
 	Camera* getCamera();
+	OVR::Util::Render::StereoConfig GetConfig();
+
 
 	void beginS();
 	void endS();

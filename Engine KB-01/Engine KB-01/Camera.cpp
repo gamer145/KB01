@@ -187,26 +187,34 @@ MatrixWrapper* Camera::getProjectionMatrix()
 
 ERUNSTATE Camera::Update()
 {
+		ERUNSTATE state = RUNNING;
+
+		ModifyCameraXRotation(myInputHandler->getAction(ACTION_ROTATECAMERA_X));
+		ModifyCameraYRotation(myInputHandler->getAction(ACTION_ROTATECAMERA_Y));
+
+		ModifyCameraForward(myInputHandler->getAction(ACTION_ZAXISMOVE));
+		ModifyCameraHeight(myInputHandler->getAction(ACTION_YAXISMOVE));
+		ModifyCameraSide(myInputHandler->getAction(ACTION_XAXISMOVE));
+
+		if (myInputHandler->getAction(ACTION_EXIT) < 0)
+		{
+			state = EXIT;
+		}
+
+		UpdateCameraMatrix();
+		return state;
+
+}
+
+ERUNSTATE Camera::UpdateOculus(Renderer* renderer, const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig)
+{
+	renderer->setViewMatrixOculus(params, SConfig);
+	renderer->setProjectionMatrixOculus(params, SConfig);
+
 	ERUNSTATE state = RUNNING;
-
-	Logger* myLogger;
-	myLogger = Logger::GetLogger();
-	std::ostringstream ss;
-	std::ostringstream sb;
-	std::string a, b;
-
-	ss << "LookatPoint: " << LookatPoint->GetX() << " " << LookatPoint->GetY() << " " << LookatPoint->GetZ();
 	
-	a = ss.str();
-	myLogger->WriteToFile(Error, a, 0);
-
 	ModifyCameraXRotation(myInputHandler->getAction(ACTION_ROTATECAMERA_X));
 	ModifyCameraYRotation(myInputHandler->getAction(ACTION_ROTATECAMERA_Y));
-	
-	sb << "LookatPoint: " << LookatPoint->GetX() << " " << LookatPoint->GetY() << " " << LookatPoint->GetZ();
-
-	b = sb.str();
-	myLogger->WriteToFile(Error, a, 0);
 
 	ModifyCameraForward(myInputHandler->getAction(ACTION_ZAXISMOVE));
 	ModifyCameraHeight(myInputHandler->getAction(ACTION_YAXISMOVE));

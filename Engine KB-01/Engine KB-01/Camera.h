@@ -5,6 +5,7 @@
 #include "InputHandlerInterface.h"
 #include "MatrixWrapper.h"
 #include "VectorWrapper.h"
+#include "Renderer.h"
 
 class Camera : public Entity
 {
@@ -18,6 +19,7 @@ public:
 	void SetInputHandler(InputHandlerInterface* IH);
 	
 	ERUNSTATE Update();
+	ERUNSTATE UpdateOculus(Renderer* renderer, const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig);
 
 	MatrixWrapper* getProjectionMatrix();
 
