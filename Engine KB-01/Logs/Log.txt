@@ -25851,3 +25851,5 @@
 [08-12-2014 11:48:36] [Ln 0] Error: 36
 [08-12-2014 11:48:36] [Ln 0] Error: 35
 [08-12-2014 11:48:36] [Ln 0] Error: 34
+[11-12-2014 14:09:12] [Ln 0] Success: The heightdata has been retrieved.
+[11-12-2014 16:11:46] [Ln 0] Success: The heightdata has been retrieved.
