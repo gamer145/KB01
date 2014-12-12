@@ -20,6 +20,8 @@ public:
 	VectorWrapper* getDirection();
 	void setDirection(VectorWrapper* newDirection);
 
+	void Project();
+
 private:
 	LIGHTTYPE myLightType;
 	float myIntensity;

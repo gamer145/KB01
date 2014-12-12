@@ -11,7 +11,7 @@ LevelLoader::~LevelLoader()
 {
 }
 
-::Scene* LevelLoader::ReadFromFile(Resource_Manager* resourceManager, Scene* currentScene)
+Scene* LevelLoader::ReadFromFile(Resource_Manager* resourceManager, Scene* currentScene)
 {
 	std::stringstream ss;
 	std::string line, levelLocation;						

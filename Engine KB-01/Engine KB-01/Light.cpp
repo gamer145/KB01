@@ -3,11 +3,13 @@
 
 Light::Light()
 {
+
 }
 
 
 Light::~Light()
 {
+
 }
 
 void Light::Initialize()
@@ -43,4 +45,9 @@ VectorWrapper* Light::getDirection()
 void Light::setDirection(VectorWrapper* newDirection)
 {
 	myDirection = newDirection;
+}
+
+void Light::Project()
+{
+	
 }

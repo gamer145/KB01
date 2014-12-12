@@ -4,7 +4,8 @@
 #include "vector"
 #include "Resource_Manager.h"
 #include "Scene.h" 
-#include "VisualObject.h" 
+#include "VisualObject.h"
+#include "Light.h"
 #include <iostream>
 #include <sstream>
 #include <fstream>

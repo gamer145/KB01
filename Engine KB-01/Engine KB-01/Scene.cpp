@@ -32,6 +32,11 @@ void Scene::AddObject(VisualObject* newObject)
 	activeObjects.push_back(newObject);
 }
 
+void Scene::AddLight(Light* newLight)
+{
+	activeLights.push_back(newLight);
+}
+
 void Scene::SetDirectXRenderer(Renderer* render)
 {
 	myDirectXRenderer = render;

@@ -4,6 +4,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "Light.h"
 #include "Camera.h"
 #include "Renderer.h"
 #include "Resource_Manager.h"
@@ -24,6 +25,7 @@ public:
 	void SetDirectXRenderer(Renderer* render);
 	void setResourceManager(Resource_Manager* r);
 	void AddObject(VisualObject* newObject);
+	void AddLight(Light* newLight);
 	void setCamera(Camera* c);
 	Camera* getCamera();
 	OVR::Util::Render::StereoConfig GetConfig();
@@ -35,6 +37,7 @@ public:
 	
 private:
 	std::vector<VisualObject*> activeObjects;
+	std::vector<Light*> activeLights;
 	Camera* currentCamera;
 	Resource_Manager* RManager;
 	Renderer* myDirectXRenderer;

@@ -6,7 +6,6 @@
 #include "Texture.h"
 #include "Renderer.h"
 
-class DirectXRenderer;
 class VisualObject : public Entity
 {
 public:
