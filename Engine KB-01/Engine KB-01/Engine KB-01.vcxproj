@@ -94,6 +94,7 @@
     <ClCompile Include="KeyboardListener.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelLoader.cpp" />
+    <ClCompile Include="Light.cpp" />
     <ClCompile Include="ListenerInterface.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="MaterialWrapper.cpp" />
@@ -129,6 +130,7 @@
     <ClInclude Include="KeyboardListener.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="LevelLoader.h" />
+    <ClInclude Include="Light.h" />
     <ClInclude Include="ListenerInterface.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="EngineKB01Definitions.h" />

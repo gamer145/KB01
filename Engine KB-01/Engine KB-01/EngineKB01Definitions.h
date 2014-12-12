@@ -189,6 +189,13 @@ enum EPRIMITIVETYPE {
 	//EPT_FORCE_DWORD = 0x7fffffff, /* force 32-bit size enum */
 };
 
+enum LIGHTTYPE
+{
+	DIVERGENT = 1,
+	CONVERGENT = 2,
+	PARALLEL = 3,
+};
+
 enum ERUNSTATE {
 	RUNNING = 1,
 	PAUSED = 2,

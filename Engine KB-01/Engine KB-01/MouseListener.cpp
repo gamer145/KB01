@@ -92,7 +92,6 @@ bool MouseListener::getAction(EACTION action, float& value)
 			value = (0.1f * factor);
 			answer =  true;
 		}
-		answer = false;
 	}
 
 	oldMouseState = newMouseState;

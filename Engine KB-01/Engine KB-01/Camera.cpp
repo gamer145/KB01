@@ -108,28 +108,29 @@ void Camera::ModifyCameraSide(float modifier)
 
 void Camera::ModifyCameraXRotation(float modifier)
 {
+	int angleMod = round((abs(modifier) * 10));
 	if (modifier != 0)
 	{
 		float EPZ = EyePoint->GetZ();
 		float EPX = EyePoint->GetX();
 
 		if (modifier < 0)
-			if (360 > horizontalAngle + 1)
+			if (360 > horizontalAngle + angleMod)
 			{
-					horizontalAngle += 1;
-				}
+					horizontalAngle += angleMod;
+			}
 			else
 			{
-				horizontalAngle = 0;
+				horizontalAngle = -1 + angleMod;
 			}
 		else if (modifier > 0)
-			if (horizontalAngle - 1 >= 0)
+			if (horizontalAngle - angleMod >= 0)
 			{
-					horizontalAngle -= 1;
-				}
+					horizontalAngle -= angleMod;
+			}
 			else
 			{
-				horizontalAngle = 359;
+				horizontalAngle = 360 - angleMod;
 			}
 
 		float calc = sin(horizontalAngle * M_PI / 180);			
