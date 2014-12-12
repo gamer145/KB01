@@ -54,6 +54,8 @@ void VisualObject::draw(Renderer* myDirectXRenderer)
 {
 	myDirectXRenderer->SetTexture(textname);
 							
+	//myDirectXRenderer->RenderToTexture();
+
 	myDirectXRenderer->setTransform(E_WORLD, getPosition());
 
 	myDirectXRenderer->DrawSubSet(meshname);

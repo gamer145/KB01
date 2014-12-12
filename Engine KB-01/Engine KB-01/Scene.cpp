@@ -94,6 +94,8 @@ void Scene::Draw()
 
 			//myDirectXRenderer->SetShader("firstshader");
 
+			
+
 			for(std::vector<VisualObject*>::iterator i = activeObjects.begin(); i != activeObjects.end(); ++i)
 			{
 				VisualObject* currentobj = *i;

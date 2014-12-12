@@ -68,6 +68,7 @@ public:
 
 
 	//oculus test code from here on
+	void RenderToTexture();
 	void PresentWithWindow(HWND hwnd);
 	void setViewportOculus(const OVR::Util::Render::StereoEyeParams& params);
 	void setPixelShaderConstantsOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig);

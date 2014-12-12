@@ -49,7 +49,7 @@ HRESULT DirectXRenderer::InitD3D( HWND hWnd )
     {
         return E_FAIL;
     }
-	/*
+	//
 	this->backBufferWidth = d3dpp.BackBufferWidth;
 	this->backBufferHeight = d3dpp.BackBufferHeight;
 
@@ -110,12 +110,14 @@ HRESULT DirectXRenderer::InitD3D( HWND hWnd )
 	//pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 	createScreenQuadOculus(backBufferWidth / 2, backBufferHeight / 2);
 
-	*/
+	//
+
+	SetFVF(ECUSTOMVERTEX);
 
 	g_pd3dDevice->SetRenderState( D3DRS_ZENABLE, TRUE );
 	g_pd3dDevice->SetRenderState( D3DRS_LIGHTING, false);
 	g_pd3dDevice->SetRenderState( D3DRS_CULLMODE, D3DCULL_NONE);
-	//g_pd3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_POINT);
+	g_pd3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_SOLID);
 
     return S_OK;
 };
@@ -511,6 +513,19 @@ void DirectXRenderer::setupRenderToTextureOculus()
 	g_pd3dDevice->BeginScene();
 
 };
+
+void DirectXRenderer::RenderToTexture()
+{
+	
+	fillVertexBufferOculus("screenVertex", screenQuad, sizeof(VERTEX) * 4);
+	//SetZBuffer(false);
+
+
+	SetStreamSource(0, "screenVertex", 0, sizeof(VERTEX));
+
+	g_pd3dDevice->SetTexture(0, fullSceneTexture);
+	g_pd3dDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
+}
 
 void DirectXRenderer::endRenderToTextureOculus()
 {

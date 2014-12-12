@@ -59,6 +59,7 @@ public:
 	virtual void PresentWithWindow(HWND hwnd) = 0;
 	virtual std::map<std::string, MeshWrapper*> getMeshes() = 0;
 	virtual std::map<std::string, TextureWrapper*> getTextures() = 0;
+	virtual void RenderToTexture() = 0;
 	virtual void setViewportOculus(const OVR::Util::Render::StereoEyeParams& params) = 0;
 	virtual void setPixelShaderConstantsOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig) = 0;
 	virtual void setupRenderToTextureOculus() = 0;
