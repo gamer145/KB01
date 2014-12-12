@@ -36,19 +36,19 @@ struct VERTEX
 		x = 0.0f;
 		y = 0.0f;
 		z = 0.0f;
-		tx = 0.0f;
-		ty = 0.0f;
+		tu = 0.0f;
+		tv = 0.0f;
 	}
-	VERTEX(float ix, float iy, float iz, float itx, float ity)
+	VERTEX(float ix, float iy, float iz, float itu, float itv)
 	{
 		x = ix;
 		y = iy;
 		z = iz;
-		tx = itx;
-		ty = ity;
+		tu = itu;
+		tv = itv;
 	}
 
-	float x, y, z, tx, ty;
+	float x, y, z, tu, tv;
 };
 
 struct CameraData

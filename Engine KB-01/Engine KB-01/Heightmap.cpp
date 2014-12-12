@@ -43,8 +43,8 @@ void Heightmap::CreateHeightmap(Renderer* render, LPCWSTR argFileName)
 			vertices[loopcount].y = -0.010f + (float)heightmap[loopcount]/15000;
 			vertices[loopcount].z = -0.2f + (z * 0.02f);
 
-			vertices[loopcount].tx = (1.0f / widthBMP) * x;
-			vertices[loopcount].ty = (1.0f / heightBMP) * z;
+			vertices[loopcount].tu = (1.0f / widthBMP) * x;
+			vertices[loopcount].tv = (1.0f / heightBMP) * z;
 
 			loopcount++;
 		}	
