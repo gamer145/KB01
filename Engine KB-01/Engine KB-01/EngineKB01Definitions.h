@@ -26,8 +26,28 @@ typedef EDWORD ECOLOR;
 
 #define EFVF_XYZ              0x002
 #define EFVF_TEX1             0x100
-#define ECUSTOMVERTEX (EFVF_XYZ|EFVF_TEX1)
+#define EFVF_NORMAL			  0x010
+#define ECUSTOMFVF (EFVF_XYZ|EFVF_TEX1|EFVF_NORMAL)
 
+
+struct NORMALVECTOR
+{
+	NORMALVECTOR()
+	{
+		X = 0.0f;
+		Y = 0.0f;
+		Z = 0.0f;
+	}
+
+	NORMALVECTOR(float ix, float iy, float iz)
+	{
+		X = ix;
+		Y = iy;
+		Z = iz;
+	}
+
+	float X, Y, Z;
+};
 
 struct VERTEX
 {
@@ -38,17 +58,21 @@ struct VERTEX
 		z = 0.0f;
 		tu = 0.0f;
 		tv = 0.0f;
+		NORMAL = NORMALVECTOR();
 	}
-	VERTEX(float ix, float iy, float iz, float itu, float itv)
+
+	VERTEX(float ix, float iy, float iz, float itu, float itv, float inx, float iny, float inz)
 	{
 		x = ix;
 		y = iy;
 		z = iz;
 		tu = itu;
 		tv = itv;
+		NORMAL = NORMALVECTOR(inx, iny, inz);
 	}
 
 	float x, y, z, tu, tv;
+	NORMALVECTOR NORMAL;
 };
 
 struct CameraData

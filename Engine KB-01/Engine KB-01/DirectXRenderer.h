@@ -62,6 +62,7 @@ public:
 	void BeginS();
 	void EndS();
 	void Present();
+	void init_light();
 	std::map<std::string, MeshWrapper*> getMeshes();
 	std::map<std::string, TextureWrapper*> getTextures();
 

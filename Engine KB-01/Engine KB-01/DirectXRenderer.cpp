@@ -18,7 +18,6 @@ DirectXRenderer::~DirectXRenderer()
 
 LPD3DXMESH          g_pMesh = NULL; // Our mesh object in sysmem
 D3DMATERIAL9*       g_pMeshMaterials = NULL; // Materials for our mesh
-//D3DMATERIAL9        Material; // Materials for our mesh
 LPDIRECT3DTEXTURE9* g_pMeshTextures = NULL; // Textures for our mesh
 DWORD               g_dwNumMaterials = 0L;   // Number of mesh materials
 
@@ -112,12 +111,14 @@ HRESULT DirectXRenderer::InitD3D( HWND hWnd )
 
 	//
 
-	SetFVF(ECUSTOMVERTEX);
+	SetFVF(ECUSTOMFVF);
 
 	g_pd3dDevice->SetRenderState( D3DRS_ZENABLE, TRUE );
-	g_pd3dDevice->SetRenderState( D3DRS_LIGHTING, false);
-	g_pd3dDevice->SetRenderState( D3DRS_CULLMODE, D3DCULL_NONE);
+	g_pd3dDevice->SetRenderState( D3DRS_LIGHTING, true);
+	g_pd3dDevice->SetRenderState( D3DRS_CULLMODE, D3DCULL_CCW);
 	g_pd3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_SOLID);
+	g_pd3dDevice->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(100, 100, 100));
+	init_light();
 
     return S_OK;
 };
@@ -130,6 +131,26 @@ VOID DirectXRenderer::CleanUp()
     if( g_pD3D != NULL )
         g_pD3D->Release();
 };
+
+void DirectXRenderer::init_light()
+{
+	D3DLIGHT9 light;    // create the light struct
+	D3DMATERIAL9 material;    // create the material struct
+
+	ZeroMemory(&light, sizeof(light));    // clear out the light struct for use
+	light.Type = D3DLIGHT_DIRECTIONAL;    // make the light type 'directional light'
+	light.Diffuse = D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.0f);    // set the light's color
+	light.Direction = D3DXVECTOR3(1.0f, 0.3f, 1.0f);
+
+	g_pd3dDevice->SetLight(0, &light);    // send the light struct properties to light #0
+	g_pd3dDevice->LightEnable(0, TRUE);    // turn on light #0
+
+	ZeroMemory(&material, sizeof(material));    // clear out the struct for use
+	material.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);    // set diffuse color to white
+	material.Ambient = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);    // set ambient color to white
+
+	g_pd3dDevice->SetMaterial(&material);    // set the globably-used material to &material
+}
 
 
 HRESULT DirectXRenderer::SetTexture(std::string textname)
@@ -568,7 +589,7 @@ void DirectXRenderer::fillVertexBufferOculus(std::string key, VERTEX vertices[],
 	if (VertexBuffers.find(key) == VertexBuffers.end())
 	{
 		LPDIRECT3DVERTEXBUFFER9 vBuffer;
-		g_pd3dDevice->CreateVertexBuffer(size, 0, ECUSTOMVERTEX, D3DPOOL_MANAGED, &vBuffer, NULL);
+		g_pd3dDevice->CreateVertexBuffer(size, 0, ECUSTOMFVF, D3DPOOL_MANAGED, &vBuffer, NULL);
 
 		void* pVertices;
 		vBuffer->Lock(0, size, (void**)&pVertices, 0);
@@ -582,10 +603,10 @@ void DirectXRenderer::fillVertexBufferOculus(std::string key, VERTEX vertices[],
 void DirectXRenderer::createScreenQuadOculus(float width, float height)
 {
 	VERTEX vertices[4] = {
-			{ -width - 0.5f, height + 0.5f, 0.0f, 0.0f, 0.0f }, //top left
-			{ width - 0.5f, height + 0.5f, 0.0f, 1.0f, 0.0f }, // top right
-			{ -width - 0.5f, -height + 0.5f, 0.0f, 0.0f, 1.0f }, //bottom left
-			{ width - 0.5f, -height + 0.5f, 0.0f, 1.0f, 1.0f } // bottom right
+			{ -width - 0.5f, height + 0.5f, 0.0f, 0.0f, 0.0f, 0, 0, 0 }, //top left
+			{ width - 0.5f, height + 0.5f, 0.0f, 1.0f, 0.0f, 0, 0, 0 }, // top right
+			{ -width - 0.5f, -height + 0.5f, 0.0f, 0.0f, 1.0f, 0, 0, 0 }, //bottom left
+			{ width - 0.5f, -height + 0.5f, 0.0f, 1.0f, 1.0f, 0, 0, 0 } // bottom right
 	};
 
 	for (int i = 0; i < 4; ++i)
@@ -594,10 +615,10 @@ void DirectXRenderer::createScreenQuadOculus(float width, float height)
 	}
 
 	VERTEX verticesLeftEye[4] = {
-			{ -width - 0.5f, height + 0.5f, 0.0f, 0.0f, 0.0f }, //top left
-			{ width - 0.5f, height + 0.5f, 0.0f, 0.5f, 0.0f }, // top right
-			{ -width - 0.5f, -height + 0.5f, 0.0f, 0.0f, 1.0f }, //bottom left
-			{ width - 0.5f, -height + 0.5f, 0.0f, 0.5f, 1.0f } // bottom right
+			{ -width - 0.5f, height + 0.5f, 0.0f, 0.0f, 0.0f, 0, 0, 0 }, //top left
+			{ width - 0.5f, height + 0.5f, 0.0f, 0.5f, 0.0f, 0, 0, 0 }, // top right
+			{ -width - 0.5f, -height + 0.5f, 0.0f, 0.0f, 1.0f, 0, 0, 0 }, //bottom left
+			{ width - 0.5f, -height + 0.5f, 0.0f, 0.5f, 1.0f, 0, 0, 0 } // bottom right
 	};
 
 	for (int i = 0; i < 4; ++i)
@@ -606,10 +627,10 @@ void DirectXRenderer::createScreenQuadOculus(float width, float height)
 	}
 
 	VERTEX verticesRightEye[4] = {
-			{ -width - 0.5f, height + 0.5f, 0.0f, 0.5f, 0.0f }, //top left
-			{ width - 0.5f, height + 0.5f, 0.0f, 1.0f, 0.0f }, // top right
-			{ -width - 0.5f, -height + 0.5f, 0.0f, 0.5f, 1.0f }, //bottom left
-			{ width - 0.5f, -height + 0.5f, 0.0f, 1.0f, 1.0f } // bottom right
+			{ -width - 0.5f, height + 0.5f, 0.0f, 0.5f, 0.0f, 0, 0, 0 }, //top left
+			{ width - 0.5f, height + 0.5f, 0.0f, 1.0f, 0.0f, 0, 0, 0 }, // top right
+			{ -width - 0.5f, -height + 0.5f, 0.0f, 0.5f, 1.0f, 0, 0, 0 }, //bottom left
+			{ width - 0.5f, -height + 0.5f, 0.0f, 1.0f, 1.0f, 0, 0, 0 } // bottom right
 	};
 
 	for (int i = 0; i < 4; ++i)
