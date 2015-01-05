@@ -117,7 +117,7 @@ HRESULT DirectXRenderer::InitD3D( HWND hWnd )
 	g_pd3dDevice->SetRenderState( D3DRS_LIGHTING, true);
 	g_pd3dDevice->SetRenderState( D3DRS_CULLMODE, D3DCULL_CCW);
 	g_pd3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_SOLID);
-	g_pd3dDevice->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(100, 100, 100));
+	g_pd3dDevice->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(255, 255, 255));
 	init_light();
 
     return S_OK;
