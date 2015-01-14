@@ -109,6 +109,7 @@ private:
 
 	LPDIRECT3DTEXTURE9 fullSceneTexture = NULL, leftEyeTexture = NULL, rightEyeTexture = NULL;
 	LPDIRECT3DSURFACE9 fullSceneSurface = NULL, leftEyeSurface = NULL, rightEyeSurface = NULL, backBuffer = NULL;
+	LPDIRECT3DTEXTURE9 tiger = NULL;
 	VERTEX* screenQuad;
 	VERTEX* eyeLeftQuad;
 	VERTEX* eyeRightQuad;

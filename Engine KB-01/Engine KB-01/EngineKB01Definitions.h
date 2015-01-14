@@ -48,7 +48,8 @@ struct VERTEX
 		tv = itv;
 	}
 
-	float x, y, z, tu, tv;
+	float x, y, z;
+	float tu, tv;
 };
 
 struct CameraData

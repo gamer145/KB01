@@ -5,7 +5,7 @@
     MatrixWrapper::MatrixWrapper()
 	{
 		D3DXMATRIX newMatrix;
-
+		D3DXMatrixIdentity(&newMatrix);
 		matrix = newMatrix;
 	}
 

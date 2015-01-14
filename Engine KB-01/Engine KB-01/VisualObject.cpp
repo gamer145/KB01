@@ -60,5 +60,5 @@ void VisualObject::draw(Renderer* myDirectXRenderer)
 
 	myDirectXRenderer->DrawSubSet(meshname);
 
-						
+	
 }

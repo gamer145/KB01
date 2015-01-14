@@ -104,7 +104,7 @@ HRESULT DirectXRenderer::InitD3D( HWND hWnd )
 	g_pd3dDevice->CreatePixelShader((DWORD*)pCode->GetBufferPointer(),
 		&lpPixelShader);
 
-		
+	SetFVF(ECUSTOMVERTEX);
 
 	//create the quad we will draw the scene on
 	//pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
@@ -112,12 +112,22 @@ HRESULT DirectXRenderer::InitD3D( HWND hWnd )
 
 	//
 
-	SetFVF(ECUSTOMVERTEX);
+	
 
 	g_pd3dDevice->SetRenderState( D3DRS_ZENABLE, TRUE );
 	g_pd3dDevice->SetRenderState( D3DRS_LIGHTING, false);
 	g_pd3dDevice->SetRenderState( D3DRS_CULLMODE, D3DCULL_NONE);
 	g_pd3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_SOLID);
+
+	//ugly testing code
+	std::string filename = "banana.jpg";
+	std::string textLocation = "..\\Models\\" + filename;
+	LPSTR textureLPSTR = const_cast<CHAR*>(textLocation.c_str());
+
+	HRESULT result = D3DXCreateTextureFromFileA(g_pd3dDevice,
+		textureLPSTR,
+		&tiger);
+
 
     return S_OK;
 };
@@ -309,6 +319,8 @@ HRESULT DirectXRenderer::SetStreamSource(int streamnumber, std::string vertexbuf
 {
 	LPDIRECT3DVERTEXBUFFER9 vertexbuffer = VertexBuffers.find(vertexbuffername)->second;
 
+	SetFVF(ECUSTOMVERTEX);
+
 	return g_pd3dDevice->SetStreamSource(streamnumber, vertexbuffer, offset, stride);
 }
 
@@ -490,6 +502,7 @@ void DirectXRenderer::OculusNowYah(bool newOculus)
 void DirectXRenderer::setViewportOculus(const OVR::Util::Render::StereoEyeParams& params)
 {
 	D3DVIEWPORT9 dxViewport;
+	ZeroMemory(&dxViewport, sizeof(D3DVIEWPORT9));
 	dxViewport.Width = this->backBufferWidth / 2;
 	dxViewport.Height = this->backBufferHeight;
 	dxViewport.Y = params.VP.y;
@@ -524,7 +537,7 @@ void DirectXRenderer::RenderToTexture()
 	SetStreamSource(0, "screenVertex", 0, sizeof(VERTEX));
 
 	g_pd3dDevice->SetTexture(0, fullSceneTexture);
-	g_pd3dDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
+	//g_pd3dDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
 }
 
 void DirectXRenderer::endRenderToTextureOculus()
@@ -541,21 +554,26 @@ void DirectXRenderer::renderSceneOculus(const OVR::Util::Render::StereoEyeParams
 {
 	g_pd3dDevice->SetRenderTarget(0, backBuffer);
 	setViewportOculus(params);
-	g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, D3DCOLOR_XRGB(0, 0, 255), 1.0f, 0);
 	g_pd3dDevice->BeginScene();
+
+	g_pd3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER , D3DCOLOR_ARGB(255, 0, 0, 255), 1.0f, 0);
 	//apply shader
 	//render to aligned quad
 	fillVertexBufferOculus("screenVertex", screenQuad, sizeof(VERTEX) * 4);
 	SetZBuffer(false);
 	SetStreamSource(0, "screenVertex", 0, sizeof(VERTEX));
 	if (params.Eye == OVR::Util::Render::StereoEye_Right){
-		g_pd3dDevice->SetTexture(0, rightEyeTexture);
+		//g_pd3dDevice->SetTexture(0, rightEyeTexture);
+		g_pd3dDevice->SetTexture(0, tiger);
 	}
 	else{
-		g_pd3dDevice->SetTexture(0, leftEyeTexture);
+		//g_pd3dDevice->SetTexture(0, leftEyeTexture);
+		g_pd3dDevice->SetTexture(0, tiger);
 	}
 
 	//reset matrixes
+	MatrixWrapper* mat = new MatrixWrapper();
+	setTransform(E_WORLD, mat);
 	g_pd3dDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
 	SetZBuffer(true);
 
@@ -634,7 +652,7 @@ void DirectXRenderer::renderEyeOculus(const OVR::Util::Render::StereoEyeParams& 
 	g_pd3dDevice->BeginScene();
 
 	//g_pd3dDevice->SetPixelShader(lpPixelShader);
-	setPixelShaderConstantsOculus(params, SConfig);
+	//setPixelShaderConstantsOculus(params, SConfig);
 
 	if (params.Eye == OVR::Util::Render::StereoEye_Right){
 		fillVertexBufferOculus(quadname, eyeRightQuad, sizeof(VERTEX) * 4);

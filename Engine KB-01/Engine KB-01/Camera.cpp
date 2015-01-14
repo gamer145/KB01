@@ -2,9 +2,9 @@
 
 Camera::Camera()
 {
-	EyePoint = &VectorWrapper(0, 0, 0);
+	EyePoint = &VectorWrapper(-10, -10, -10);
 	LookatPoint = &VectorWrapper(0, 0, 0);
-	UpVector = &VectorWrapper(0, 0, 0);
+	UpVector = &VectorWrapper(0, 1, 0);
 
 	Position = new MatrixWrapper();
 	ProjectionMatrix = new MatrixWrapper();

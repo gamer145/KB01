@@ -80,12 +80,12 @@ ERUNSTATE Scene_Manager::UpdateScene()
 		//CurrentScene->beginS();
 
 		state = CurrentScene->UpdateOculus(CurrentScene->GetConfig().GetEyeRenderParams(OVR::Util::Render::StereoEye_Left));
-		//state = CurrentScene->Update(myDirectXRenderer->OculusOrNah(), CurrentScene->GetConfig().GetEyeRenderParams(OVR::Util::Render::StereoEye_Right));
+		state = CurrentScene->UpdateOculus(CurrentScene->GetConfig().GetEyeRenderParams(OVR::Util::Render::StereoEye_Right));
 
 		hoogteMap->RenderHeightmap(myDirectXRenderer);
 
 		//  fixme r     this still no working mon
-		//skybox->DrawSkybox(myDirectXRenderer, CurrentScene->getCamera()->getPosition());
+		skybox->DrawSkybox(myDirectXRenderer, CurrentScene->getCamera()->getPosition());
 
 
 
@@ -113,10 +113,9 @@ ERUNSTATE Scene_Manager::UpdateScene()
 	}
 	else
 	{
-		ERUNSTATE state = RUNNING;
 		CurrentScene->clear();
 		CurrentScene->beginS();
-
+		ERUNSTATE state = RUNNING;
 		//myDirectXRenderer->setupRenderToTextureOculus();
 
 		state = CurrentScene->Update();
@@ -128,7 +127,32 @@ ERUNSTATE Scene_Manager::UpdateScene()
 
 		//myDirectXRenderer->RenderToTexture();
 
+		//CurrentScene->endS();
+
+
+		//CurrentScene->clear();
+		//CurrentScene->beginS();
+
+		//myDirectXRenderer->setupRenderToTextureOculus();
+
+		//state = CurrentScene->Update();
+
+		//hoogteMap->RenderHeightmap(myDirectXRenderer);
+
+		//  fixme r     this still no working mon
+		//skybox->DrawSkybox(myDirectXRenderer, CurrentScene->getCamera()->getPosition());
+
+		//myDirectXRenderer->RenderToTexture();
+
+		//CurrentScene->endS();
+
+		//myDirectXRenderer->RenderToTexture();
+
+		//myDirectXRenderer->RenderToTexture();
+
 		CurrentScene->endS();
+
+
 
 		myDirectXRenderer->Present();
 
