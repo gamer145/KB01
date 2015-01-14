@@ -45,13 +45,16 @@ void Heightmap::CreateHeightmap(Renderer* render, LPCWSTR argFileName)
 
 			vertices[loopcount].tu = (1.0f / widthBMP) * x;
 			vertices[loopcount].tv = (1.0f / heightBMP) * z;
+			vertices[loopcount].NORMAL.X = -0.2f + (x * 0.02f);
+			vertices[loopcount].NORMAL.Y = -0.010f + (float)heightmap[loopcount] / 15000;
+			vertices[loopcount].NORMAL.Z = -0.2f + (z * 0.02f);
 
 			loopcount++;
 		}	
 	}
 
 	render->CreateVertexBuffer(vertexcount*sizeof(VERTEX),
-		0, ECUSTOMVERTEX, EPOOL_MANAGED, v_buffer, NULL);
+		0, ECUSTOMFVF, EPOOL_MANAGED, v_buffer, NULL);
 
     
 
@@ -87,12 +90,12 @@ void Heightmap::CreateHeightmap(Renderer* render, LPCWSTR argFileName)
 			indexcount++;
 			ifcount+=(heightBMP-1);
 		}
-		indices[i]=0 + 1*indexcount;	//0
-		indices[i+1]=heightBMP + 1*indexcount;	//height
-		indices[i+2]=(heightBMP+1) + 1*indexcount;	//height + 1
-		indices[i+3]=0+ 1*indexcount;    //0
-		indices[i+4]=1+ 1*indexcount;  //1
-		indices[i+5]=(heightBMP+1) + 1*indexcount;  //height + 1
+		indices[i]= 0 + 1 * indexcount;	//0
+		indices[i + 1] = (heightBMP + 1) + 1 * indexcount;	//height + 1
+		indices[i + 2] = heightBMP + 1 * indexcount;	//height
+		indices[i + 3]= 0+ 1 * indexcount;    //0
+		indices[i + 4]= 1 + 1 * indexcount;  //1
+		indices[i + 5]= (heightBMP + 1) + 1 * indexcount;  //height + 1
 		indexcount++;
 		ifindexcount++;
 	}
@@ -187,7 +190,7 @@ void Heightmap::RenderHeightmap(Renderer* render)
 	{
 		l->WriteToFile(Error, "SetStreamSourceFailed", 0);
 	}
-	if( FAILED(render->SetFVF(ECUSTOMVERTEX)))
+	if( FAILED(render->SetFVF(ECUSTOMFVF)))
 	{
 		l->WriteToFile(Error, "SetFVFFailed", 0);
 	}
@@ -195,7 +198,7 @@ void Heightmap::RenderHeightmap(Renderer* render)
 	{
 		l->WriteToFile(Error, "SetIndicesFailed", 0);
 	}
-	if( FAILED(render->SetTexture("dome.jpg")))
+	if( FAILED(render->SetTexture("dome2.jpg")))
 	{
 		l->WriteToFile(Error, "SetTextureHMFailed", 0);
 	}

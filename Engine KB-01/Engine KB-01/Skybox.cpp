@@ -7,30 +7,30 @@ Skybox::Skybox()
 
 	aSkyboxVertices = new VERTEX[amountOfVertices]();
 	
-	aSkyboxVertices[0] = VERTEX(-2.0f, -2.0f, 2.0f, 0.25f, 0.6666f);//front
-	aSkyboxVertices[1] = VERTEX(2.0f, -2.0f, 2.0f, 0.50f, 0.6666f);
-	aSkyboxVertices[2] = VERTEX(2.0f, 2.0f, 2.0f, 0.50f, 0.3333f);
-	aSkyboxVertices[3] = VERTEX(-2.0f, 2.0f, 2.0f, 0.25f, 0.3333f);
-	aSkyboxVertices[4] = VERTEX(2.0f, -2.0f, 2.0f, 0.50f, 0.6666f);//right
-	aSkyboxVertices[5] = VERTEX(2.0f, -2.0f, -2.0f, 0.75f, 0.6666f);
-	aSkyboxVertices[6] = VERTEX(2.0f, 2.0f, -2.0f, 0.75f, 0.3333f);
-	aSkyboxVertices[7] = VERTEX(2.0f, 2.0f, 2.0f, 0.50f, 0.3333f);
-	aSkyboxVertices[8] = VERTEX(2.0f, -2.0f, -2.0f, 0.75f, 0.6666f);//back
-	aSkyboxVertices[9] = VERTEX(-2.0f, -2.0f, -2.0f, 1.0f, 0.6666f);
-	aSkyboxVertices[10] = VERTEX(-2.0f, 2.0f, -2.0f, 1.0f, 0.3333f);
-	aSkyboxVertices[11] = VERTEX(2.0f, 2.0f, -2.0f, 0.75f, 0.3333f);
-	aSkyboxVertices[12] = VERTEX(-2.0f, -2.0f, -2.0f, 0.0f, 0.6666f);//left
-	aSkyboxVertices[13] = VERTEX(-2.0f, -2.0f, 2.0f, 0.25f, 0.6666f);
-	aSkyboxVertices[14] = VERTEX(-2.0f, 2.0f, 2.0f, 0.25f, 0.3333f);
-	aSkyboxVertices[15] = VERTEX(-2.0f, 2.0f, -2.0f, 0.0f, 0.3333f);
-	aSkyboxVertices[16] = VERTEX(-2.0f, 2.0f, 2.0f, 0.25f, 0.3333f);//top
-	aSkyboxVertices[17] = VERTEX(2.0f, 2.0f, 2.0f, 0.50f, 0.3333f);
-	aSkyboxVertices[18] = VERTEX(2.0f, 2.0f, -2.0f, 0.50f, 0.0f);
-	aSkyboxVertices[19] = VERTEX(-2.0f, 2.0f, -2.0f, 0.25f, 0.0f);
-	aSkyboxVertices[20] = VERTEX(-2.0f, -2.0f, 2.0f, 0.25f, 0.6666f);//bottom
-	aSkyboxVertices[21] = VERTEX(2.0f, -2.0f, 2.0f, 0.50f, 0.6666f);
-	aSkyboxVertices[22] = VERTEX(2.0f, -2.0f, -2.0f, 0.50f, 1.0f);
-	aSkyboxVertices[23] = VERTEX(-2.0f, -2.0f, -2.0f, 0.25f, 1.0f);
+	aSkyboxVertices[0] = VERTEX(-2.0f, -2.0f, 2.0f, 0.25f, 0.6666f, 0, 0, 0);//front
+	aSkyboxVertices[1] = VERTEX(2.0f, -2.0f, 2.0f, 0.50f, 0.6666f, 0, 0, 0);
+	aSkyboxVertices[2] = VERTEX(2.0f, 2.0f, 2.0f, 0.50f, 0.3333f, 0, 0, 0);
+	aSkyboxVertices[3] = VERTEX(-2.0f, 2.0f, 2.0f, 0.25f, 0.3333f, 0, 0, 0);
+	aSkyboxVertices[4] = VERTEX(2.0f, -2.0f, 2.0f, 0.50f, 0.6666f, 0, 0, 0);//right
+	aSkyboxVertices[5] = VERTEX(2.0f, -2.0f, -2.0f, 0.75f, 0.6666f, 0, 0, 0);
+	aSkyboxVertices[6] = VERTEX(2.0f, 2.0f, -2.0f, 0.75f, 0.3333f, 0, 0, 0);
+	aSkyboxVertices[7] = VERTEX(2.0f, 2.0f, 2.0f, 0.50f, 0.3333f, 0, 0, 0);
+	aSkyboxVertices[8] = VERTEX(2.0f, -2.0f, -2.0f, 0.75f, 0.6666f, 0, 0, 0);//back
+	aSkyboxVertices[9] = VERTEX(-2.0f, -2.0f, -2.0f, 1.0f, 0.6666f, 0, 0, 0);
+	aSkyboxVertices[10] = VERTEX(-2.0f, 2.0f, -2.0f, 1.0f, 0.3333f, 0, 0, 0);
+	aSkyboxVertices[11] = VERTEX(2.0f, 2.0f, -2.0f, 0.75f, 0.3333f, 0, 0, 0);
+	aSkyboxVertices[12] = VERTEX(-2.0f, -2.0f, -2.0f, 0.0f, 0.6666f, 0, 0, 0);//left
+	aSkyboxVertices[13] = VERTEX(-2.0f, -2.0f, 2.0f, 0.25f, 0.6666f, 0, 0, 0);
+	aSkyboxVertices[14] = VERTEX(-2.0f, 2.0f, 2.0f, 0.25f, 0.3333f, 0, 0, 0);
+	aSkyboxVertices[15] = VERTEX(-2.0f, 2.0f, -2.0f, 0.0f, 0.3333f, 0, 0, 0);
+	aSkyboxVertices[16] = VERTEX(-2.0f, 2.0f, 2.0f, 0.25f, 0.3333f, 0, 0, 0);//top
+	aSkyboxVertices[17] = VERTEX(2.0f, 2.0f, 2.0f, 0.50f, 0.3333f, 0, 0, 0);
+	aSkyboxVertices[18] = VERTEX(2.0f, 2.0f, -2.0f, 0.50f, 0.0f, 0, 0, 0);
+	aSkyboxVertices[19] = VERTEX(-2.0f, 2.0f, -2.0f, 0.25f, 0.0f, 0, 0, 0);
+	aSkyboxVertices[20] = VERTEX(-2.0f, -2.0f, 2.0f, 0.25f, 0.6666f, 0, 0, 0);//bottom
+	aSkyboxVertices[21] = VERTEX(2.0f, -2.0f, 2.0f, 0.50f, 0.6666f, 0, 0, 0);
+	aSkyboxVertices[22] = VERTEX(2.0f, -2.0f, -2.0f, 0.50f, 1.0f, 0, 0, 0);
+	aSkyboxVertices[23] = VERTEX(-2.0f, -2.0f, -2.0f, 0.25f, 1.0f, 0, 0, 0);
 
 	aSkyboxIndices = new unsigned int[amountOfIndices];
 
@@ -67,7 +67,7 @@ void Skybox::InitializeSkybox(Renderer* renderer, Resource_Manager* resourcemana
 		
 
 		renderer->CreateIndexBuffer(amountOfIndices * sizeof(int), 0, FMT_INDEX32, EPOOL_DEFAULT, i_buffer, NULL);
-		renderer->CreateVertexBuffer(amountOfVertices * sizeof(VERTEX), 0, ECUSTOMVERTEX, EPOOL_DEFAULT, v_buffer, NULL);
+		renderer->CreateVertexBuffer(amountOfVertices * sizeof(VERTEX), 0, ECUSTOMFVF, EPOOL_DEFAULT, v_buffer, NULL);
 	}
 }
 
@@ -84,7 +84,7 @@ void Skybox::DrawSkybox(Renderer* renderer, MatrixWrapper* cameraposition)
 	{
 		l->WriteToFile(Error, "SetStreamSourceFailed", 0);
 	}
-	if (FAILED(renderer->SetFVF(ECUSTOMVERTEX)))
+	if (FAILED(renderer->SetFVF(ECUSTOMFVF)))
 	{
 		l->WriteToFile(Error, "SetFVFFailed", 0);
 	}

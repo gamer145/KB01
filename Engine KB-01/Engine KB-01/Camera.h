@@ -17,7 +17,8 @@ public:
 	void SetLookAtPoint(VectorWrapper* newVector);
 	void SetUpVector(VectorWrapper* newVector);
 	void SetInputHandler(InputHandlerInterface* IH);
-	
+	void CalculateAngles();
+
 	ERUNSTATE Update();
 	ERUNSTATE UpdateOculus(Renderer* renderer, const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig);
 
@@ -30,6 +31,7 @@ private:
 	MatrixWrapper* ProjectionMatrix;
 	InputHandlerInterface* myInputHandler;
 	float horizontalAngle;
+	float verticalAngle;
 	float radius;
 	void UpdateCameraMatrix();
 

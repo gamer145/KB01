@@ -3,8 +3,6 @@
 
 #include <d3dx9.h>
 
-
-
 class VectorWrapper
 {
 public:
@@ -12,6 +10,7 @@ public:
 	~VectorWrapper();
 	void SetVector(D3DXVECTOR3 newVector);
 	D3DXVECTOR3 GetVector();
+	void Normalize();
 
 	void SetX(float newX);
 	void SetY(float newY);

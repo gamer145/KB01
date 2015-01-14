@@ -17,6 +17,11 @@ void VectorWrapper::SetVector(D3DXVECTOR3 newVector)
 	vector = newVector;
 }
 
+void VectorWrapper::Normalize()
+{
+	D3DXVec3Normalize(&vector, &vector);
+}
+
 D3DXVECTOR3 VectorWrapper::GetVector()
 {
 	return vector;

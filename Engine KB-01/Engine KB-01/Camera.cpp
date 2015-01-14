@@ -8,13 +8,17 @@ Camera::Camera()
 
 	Position = new MatrixWrapper();
 	ProjectionMatrix = new MatrixWrapper();
-
-	horizontalAngle = 90;
 }
 
 Camera::~Camera()
 {
 
+}
+
+void Camera::CalculateAngles()
+{
+	horizontalAngle = 90;
+	verticalAngle = 90;
 }
 
 
@@ -23,6 +27,7 @@ void Camera::Initialize()
 	radius = (abs(LookatPoint->GetZ()) + abs(EyePoint->GetZ()));
 	Position->MatrixLookAtLH( EyePoint, LookatPoint, UpVector );
 	ProjectionMatrix->MatrixPerspectiveFovLH(M_PI / 4, 1.0f, 1.0f, 100000.0f);
+	CalculateAngles();
 }
 
 void Camera::SetInputHandler(InputHandlerInterface* IH)
@@ -154,23 +159,60 @@ void Camera::ModifyCameraXRotation(float modifier)
 		}
 
 		LookatPoint->SetZ(newLPZ);
-		LookatPoint->SetX(newLPX);
-
-			
+		LookatPoint->SetX(newLPX);			
 
 	}
 } 
 
 void Camera::ModifyCameraYRotation(float modifier)
 {
-	//Fix me D I do not work, but i iz not very important :(
-	float LPZ = LookatPoint->GetZ();
-	float EPZ = EyePoint->GetZ();
-
-	if (LPZ > EPZ)
+	int angleMod = round((abs(modifier) * 10));
+	if (modifier != 0)
 	{
-		LookatPoint->ModY(modifier);
-		LookatPoint->ModZ(modifier);
+		float EPZ = EyePoint->GetZ();
+		float EPY = EyePoint->GetY();
+
+		if (modifier < 0)
+			if (360 > verticalAngle + angleMod)
+			{
+				verticalAngle += angleMod;
+			}
+			else
+			{
+				verticalAngle = -1 + angleMod;
+			}
+		else if (modifier > 0)
+			if (verticalAngle - angleMod >= 0)
+			{
+				verticalAngle -= angleMod;
+			}
+			else
+			{
+				verticalAngle = 360 - angleMod;
+			}
+
+		float calc = sin(verticalAngle * M_PI / 180);
+		float newLPZ = ((calc * radius) + EPZ);
+
+		float newLPY;
+		float calc2;
+
+		if (verticalAngle == 180)
+		{
+			newLPY = -radius + EPY;
+		}
+		else if (verticalAngle == 0)
+		{
+			newLPY = radius + EPY;
+		}
+		else
+		{
+			calc2 = (newLPZ - EPZ) / tan(verticalAngle * M_PI / 180);
+			newLPY = calc2 + EPY;
+		}
+
+		LookatPoint->SetZ(newLPZ);
+		LookatPoint->SetY(newLPY);
 	}
 }
 
@@ -227,89 +269,6 @@ ERUNSTATE Camera::UpdateOculus(Renderer* renderer, const OVR::Util::Render::Ster
 	UpdateCameraMatrix();
 	return state;
 }
-
-/*void Camera::Update()
-{
-
-		if (myInputHandler->getKeyBoardListener()->ProcessKBInput((byte)DIKEYBOARD_W))
-		{
-			ModifyWorldZ(-0.1f);
-		}
-
-		if (myInputHandler->getKeyBoardListener()->ProcessKBInput((byte)DIKEYBOARD_Q))
-		{
-			ModifyWorldX(0.1f);
-		}
-
-		if (myInputHandler->getKeyBoardListener()->ProcessKBInput((byte)DIKEYBOARD_A))
-		{
-			ModifyWorldX(0.2f);
-			ModifyWorldXAngle(0.05f);
-		}
-
-		if (myInputHandler->getKeyBoardListener()->ProcessKBInput((byte)DIKEYBOARD_D))
-		{
-			ModifyWorldX(-0.2f);
-			ModifyWorldXAngle(-0.05f);
-		}
-
-		if (myInputHandler->getKeyBoardListener()->ProcessKBInput((byte)DIKEYBOARD_S))
-		{
-			ModifyWorldZ(0.1f);
-		}
-
-		if (myInputHandler->getKeyBoardListener()->ProcessKBInput((byte)DIKEYBOARD_E))
-		{
-			ModifyWorldX(-0.1f);
-		}
-
-		if (myInputHandler->getKeyBoardListener()->ProcessKBInput((byte)DIKEYBOARD_SPACE))
-		{
-  			ModifyWorldY(-0.1f);
-		}
-
-		if (myInputHandler->getKeyBoardListener()->ProcessKBInput((byte)DIKEYBOARD_LCONTROL))
-		{
-			ModifyWorldY(0.1f);
-		}
-
-		//-----
-
-		if (myInputHandler->getMouseListener()->getMousewheel() > mousewheel) {
-			ModifyWorldZ(-0.1f);
-			mousewheel = myInputHandler->getMouseListener()->getMousewheel();
-		}
-		else if (myInputHandler->getMouseListener()->getMousewheel() < mousewheel) {
-			ModifyWorldZ(0.1f);
-			mousewheel = myInputHandler->getMouseListener()->getMousewheel();
-		}
-		
-		if (myInputHandler->getMouseListener()->getXPos() < xpos)
-		{
-			ModifyWorldXAngle(0.02f);
-			xpos = myInputHandler->getMouseListener()->getXPos();
-		}
-
-		if (myInputHandler->getMouseListener()->getXPos() > xpos)
-		{
-			ModifyWorldXAngle(-0.02f);
-			xpos = myInputHandler->getMouseListener()->getXPos();
-		}
-
-		if (myInputHandler->getMouseListener()->getYPos() < ypos)
-		{
-			ModifyWorldYAngle(0.01f);
-			ypos = myInputHandler->getMouseListener()->getYPos();
-		}
-
-		if (myInputHandler->getMouseListener()->getYPos() > ypos)
-		{
-			ModifyWorldYAngle(-0.01f);
-			ypos = myInputHandler->getMouseListener()->getYPos();
-		}
-
-		UpdateOffSetMatrix();
-}*/
 
 void Camera::UpdateCameraMatrix()
 {
