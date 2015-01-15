@@ -2,6 +2,11 @@
 
 
 
+VectorWrapper::VectorWrapper()
+{
+
+}
+
 VectorWrapper::VectorWrapper(float x, float y, float z)
 {
 	vector = D3DXVECTOR3(x, y, z);

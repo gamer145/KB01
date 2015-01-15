@@ -26,7 +26,7 @@ void Scene_Manager::SetUpManager(Window_Manager* windowManager, Resource_Manager
 	CurrentScene = levelLoader->ReadFromFile(myResourceManager, CurrentScene);
 
 
-	myResourceManager->loadManualTexture("dome2.jpg");
+	myResourceManager->loadManualTexture("dome.jpg");
 	hoogteMap = new Heightmap();
 	hoogteMap->CreateHeightmap(myDirectXRenderer, L"..//Models//hoogtemap2.bmp");
 

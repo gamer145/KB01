@@ -159,7 +159,7 @@ void Camera::ModifyCameraXRotation(float modifier)
 		}
 
 		LookatPoint->SetZ(newLPZ);
-		LookatPoint->SetX(newLPX);			
+		LookatPoint->SetX(newLPX);
 
 	}
 } 

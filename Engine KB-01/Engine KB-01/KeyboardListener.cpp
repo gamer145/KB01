@@ -173,6 +173,8 @@ bool KeyboardListener::ProcessKBInput( byte argKeyIsPressed )
 		DoAcquire();
 	}
 	
+	ZeroMemory(keyBuffer, sizeof(keyBuffer));
+
 	dDeviceKeyboard->GetDeviceState( sizeof( keyBuffer ) , (LPVOID)&keyBuffer );
 
 	// Check if keybuffer contains given key

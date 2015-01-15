@@ -1,4 +1,5 @@
 #include "Heightmap.h"
+#include "EngineMath.h"
 
 
 Heightmap::Heightmap()
@@ -45,26 +46,88 @@ void Heightmap::CreateHeightmap(Renderer* render, LPCWSTR argFileName)
 
 			vertices[loopcount].tu = (1.0f / widthBMP) * x;
 			vertices[loopcount].tv = (1.0f / heightBMP) * z;
-			vertices[loopcount].NORMAL.X = -0.2f + (x * 0.02f);
-			vertices[loopcount].NORMAL.Y = -0.010f + (float)heightmap[loopcount] / 15000;
-			vertices[loopcount].NORMAL.Z = -0.2f + (z * 0.02f);
 
 			loopcount++;
 		}	
 	}
 
+
+    // create the indices using an int array
+	const int amountIndices = (heightBMP -1) * (widthBMP -1) * 6;
+	int indexcount = 0;
+	int ifindexcount =0;
+	int ifcount = heightBMP -1;
+	int* indices;
+	int i1, i2, i3, i4, i5, i6;
+
+	VECTOR* sideA;
+	VECTOR* sideB;
+	VERTEX* CrossProduct = new VERTEX();
+
+	indices = new int[amountIndices];
+	for(int i = 0; i < amountIndices; i+=6)
+	{
+		if(ifcount == ifindexcount )
+		{
+			indexcount++;
+			ifcount+=(heightBMP-1);
+		}
+
+		i1 = 0 + 1 * indexcount;
+		i2 = (heightBMP + 1) + 1 * indexcount;
+		i3 = heightBMP + 1 * indexcount;
+		i4 = 0 + 1 * indexcount;
+		i5 = 1 + 1 * indexcount;
+		i6 = (heightBMP + 1) + 1 * indexcount;
+
+		indices[i] = i1;	//0
+		indices[i + 1] = i2;	//height + 1
+		indices[i + 2] = i3;	//height
+		indices[i + 3] = i4;    //0
+		indices[i + 4] = i5;  //1
+		indices[i + 5] = i6;  //height + 1
+
+		//Normal Vector Calculations
+		//Required for implementing Light
+
+		sideA = new VECTOR(vertices[i2].x - vertices[i1].x, vertices[i2].y - vertices[i1].y, vertices[i2].z - vertices[i1].z);
+		sideB = new VECTOR(vertices[i3].x - vertices[i1].x, vertices[i3].y - vertices[i1].y, vertices[i3].z - vertices[i1].z);
+
+		EngineMath::CrossProductVector(CrossProduct, sideA, sideB);		
+
+		EngineMath::AddNormals(CrossProduct, &vertices[i1]);
+		EngineMath::AddNormals(CrossProduct, &vertices[i2]);
+		EngineMath::AddNormals(CrossProduct, &vertices[i3]);
+
+		sideA = new VECTOR(vertices[i2].x - vertices[i1].x, vertices[i2].y - vertices[i1].y, vertices[i2].z - vertices[i1].z);
+		sideB = new VECTOR(vertices[i3].x - vertices[i1].x, vertices[i3].y - vertices[i1].y, vertices[i3].z - vertices[i1].z);
+
+		EngineMath::CrossProductVector(CrossProduct, sideA, sideB);
+
+		EngineMath::AddNormals(CrossProduct, &vertices[i4]);
+		EngineMath::AddNormals(CrossProduct, &vertices[i5]);
+		EngineMath::AddNormals(CrossProduct, &vertices[i6]);
+		
+
+		indexcount++;
+		ifindexcount++;
+	}
+
+	for (int a = vertexcount; a > 0; a--)
+	{
+		EngineMath::Normalize(&vertices[a]);
+	}
+
+
 	render->CreateVertexBuffer(vertexcount*sizeof(VERTEX),
 		0, ECUSTOMFVF, EPOOL_MANAGED, v_buffer, NULL);
 
-    
 
-
-
-    VOID* pVoid;
+	VOID* pVoid;
 	VOID* pVoid2; // a void pointer
 
-    // lock v_buffer and load the vertices into it
-    if( FAILED( render->LockVertexBuffer(v_buffer, 0, sizeof(VERTEX) * vertexcount, (void**)&pVoid, 0)))
+	// lock v_buffer and load the vertices into it
+	if (FAILED(render->LockVertexBuffer(v_buffer, 0, sizeof(VERTEX) * vertexcount, (void**)&pVoid, 0)))
 	{
 		l->WriteToFile(Error, "VBLockFailed", 0);
 	}
@@ -74,33 +137,6 @@ void Heightmap::CreateHeightmap(Renderer* render, LPCWSTR argFileName)
 	{
 		l->WriteToFile(Error, "VBUnLockFailed", 0);
 	}
-
-    // create the indices using an int array
-	//(h - 1) * (b - 1) * 6, (6 vertices * vierkant)
-	const int amountIndices = (heightBMP -1) * (widthBMP -1) * 6;
-	int indexcount = 0;
-	int ifindexcount =0;
-	int ifcount = heightBMP -1;
-	int* indices;
-	indices = new int[amountIndices];
-	for(int i = 0; i < amountIndices; i+=6)
-	{
-		if(ifcount == ifindexcount )
-		{
-			indexcount++;
-			ifcount+=(heightBMP-1);
-		}
-		indices[i]= 0 + 1 * indexcount;	//0
-		indices[i + 1] = (heightBMP + 1) + 1 * indexcount;	//height + 1
-		indices[i + 2] = heightBMP + 1 * indexcount;	//height
-		indices[i + 3]= 0+ 1 * indexcount;    //0
-		indices[i + 4]= 1 + 1 * indexcount;  //1
-		indices[i + 5]= (heightBMP + 1) + 1 * indexcount;  //height + 1
-		indexcount++;
-		ifindexcount++;
-	}
-
-	
 
 	render->CreateIndexBuffer((amountIndices)*sizeof(int),
 		0, FMT_INDEX32, EPOOL_MANAGED, i_buffer, NULL);
@@ -198,7 +234,7 @@ void Heightmap::RenderHeightmap(Renderer* render)
 	{
 		l->WriteToFile(Error, "SetIndicesFailed", 0);
 	}
-	if( FAILED(render->SetTexture("dome2.jpg")))
+	if( FAILED(render->SetTexture("dome.jpg")))
 	{
 		l->WriteToFile(Error, "SetTextureHMFailed", 0);
 	}

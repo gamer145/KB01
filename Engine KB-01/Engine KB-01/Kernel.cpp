@@ -7,7 +7,7 @@ Kernel::Kernel()
 	myWindowManager = new Window_Manager();
 	myResourceManager = new Resource_Manager();
 	myRenderer = new DirectXRenderer();
-	myRenderer->OculusNowYah(true);
+	myRenderer->OculusNowYah(false);
 	mySceneManager = new Scene_Manager();
 
 }

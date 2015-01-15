@@ -3,6 +3,7 @@
 
 #include "Logger.h"
 #include "Renderer.h"
+#include "EngineMath.h"
 
 
 class Heightmap

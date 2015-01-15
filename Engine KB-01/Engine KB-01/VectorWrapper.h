@@ -6,11 +6,17 @@
 class VectorWrapper
 {
 public:
+	VectorWrapper();
 	VectorWrapper(float x, float y, float z);
 	~VectorWrapper();
 	void SetVector(D3DXVECTOR3 newVector);
 	D3DXVECTOR3 GetVector();
+
+	//Normalizes the Vector that calls this function to Unit Length.
 	void Normalize();
+
+	//Calculates the cross product of two given vectors and sets the current VectorWrapper to the result.
+	void CrossProduct(VectorWrapper* A, VectorWrapper* B);
 
 	void SetX(float newX);
 	void SetY(float newY);
