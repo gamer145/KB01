@@ -93,6 +93,7 @@ ERUNSTATE Scene_Manager::UpdateScene()
 
 		myDirectXRenderer->endRenderToTextureOculus();
 
+		myDirectXRenderer->setTransform(E_WORLD, CurrentScene->getCamera()->getPosition());
 
 		//distort the textures
 		myDirectXRenderer->renderEyeOculus(CurrentScene->GetConfig().GetEyeRenderParams(OVR::Util::Render::StereoEye_Left), CurrentScene->GetConfig());

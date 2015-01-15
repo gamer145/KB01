@@ -103,7 +103,7 @@ HRESULT DirectXRenderer::InitD3D( HWND hWnd )
 	g_pd3dDevice->CreatePixelShader((DWORD*)pCode->GetBufferPointer(),
 		&lpPixelShader);
 
-	SetFVF(ECUSTOMVERTEX);
+
 		
 	//create the quad we will draw the scene on
 	//pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
@@ -115,11 +115,11 @@ HRESULT DirectXRenderer::InitD3D( HWND hWnd )
 
 
 	g_pd3dDevice->SetRenderState( D3DRS_ZENABLE, TRUE );
-	g_pd3dDevice->SetRenderState( D3DRS_LIGHTING, true);
+	g_pd3dDevice->SetRenderState( D3DRS_LIGHTING, false);
 	g_pd3dDevice->SetRenderState( D3DRS_CULLMODE, D3DCULL_CCW);
 	g_pd3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_SOLID);
-	g_pd3dDevice->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(255, 255, 255));
-	init_light();
+	//g_pd3dDevice->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(255, 255, 255));
+	//init_light();
 
 	//ugly testing code
 	std::string filename = "banana.jpg";
@@ -341,7 +341,7 @@ HRESULT DirectXRenderer::SetStreamSource(int streamnumber, std::string vertexbuf
 {
 	LPDIRECT3DVERTEXBUFFER9 vertexbuffer = VertexBuffers.find(vertexbuffername)->second;
 
-	SetFVF(ECUSTOMVERTEX);
+	SetFVF(ECUSTOMFVF);
 
 	return g_pd3dDevice->SetStreamSource(streamnumber, vertexbuffer, offset, stride);
 }
@@ -594,8 +594,8 @@ void DirectXRenderer::renderSceneOculus(const OVR::Util::Render::StereoEyeParams
 	}
 
 	//reset matrixes
-	MatrixWrapper* mat = new MatrixWrapper();
-	setTransform(E_WORLD, mat);
+	//MatrixWrapper* mat = new MatrixWrapper();
+	//setTransform(E_WORLD, mat);
 	g_pd3dDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
 	SetZBuffer(true);
 

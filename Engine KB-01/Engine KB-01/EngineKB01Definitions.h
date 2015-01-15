@@ -61,7 +61,7 @@ struct VERTEX
 		NORMAL = NORMALVECTOR();
 	}
 
-	VERTEX(float ix, float iy, float iz, float itu, float itv, float inx, float iny, float inz)
+	VERTEX(float ix, float iy, float iz, float itu, float itv , float inx, float iny, float inz)
 	{
 		x = ix;
 		y = iy;
