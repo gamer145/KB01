@@ -128,7 +128,7 @@ HRESULT DirectXRenderer::InitD3D( HWND hWnd )
 		textureLPSTR,
 		&tiger);
 
-	g_pd3dDevice->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(100, 100, 100));
+	g_pd3dDevice->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(133, 133, 133));
 	init_light();
 
     return S_OK;
@@ -151,7 +151,7 @@ void DirectXRenderer::init_light()
 	ZeroMemory(&light, sizeof(light));    // clear out the light struct for use
 	light.Type = D3DLIGHT_DIRECTIONAL;    // make the light type 'directional light'
 	light.Diffuse = D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.0f);    // set the light's color
-	light.Direction = D3DXVECTOR3(1.0f, 0.3f, 1.0f);
+	light.Direction = D3DXVECTOR3(1.0f, -0.3f, -1.0f);
 
 	g_pd3dDevice->SetLight(0, &light);    // send the light struct properties to light #0
 	g_pd3dDevice->LightEnable(0, TRUE);    // turn on light #0
