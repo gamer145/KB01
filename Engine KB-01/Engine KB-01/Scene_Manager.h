@@ -4,7 +4,7 @@
 #include <map>
 #include <string>
 #include <vector>
-#include "Heightmap.h"
+#include "Ground.h"
 #include "InputHandler.h"
 #include "LevelLoader.h"
 #include "Resource_Manager.h"
@@ -31,7 +31,7 @@ private:
 	Scene* CurrentScene;
 	Window* CurrentWindow;
 	Renderer* myDirectXRenderer;
-	Heightmap* hoogteMap;
+	Ground* hoogteMap;
 	Skybox* skybox;
 };
 

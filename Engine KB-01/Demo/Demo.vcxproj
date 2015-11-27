@@ -59,7 +59,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)\LibOVR\Lib\Win32;$(SolutionDir)\LibOVR\Include;$(SolutionDir)\Debug;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Engine KB-01.lib;libovr.lib;libovrd.lib;winmm.lib;d3d9.lib;d3dx9.lib;dxguid.lib;dxerr.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Minor Oculus Engine.lib;libovr.lib;libovrd.lib;winmm.lib;d3d9.lib;d3dx9.lib;dxguid.lib;dxerr.lib;dinput8.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

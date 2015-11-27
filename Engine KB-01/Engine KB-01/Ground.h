@@ -1,19 +1,19 @@
-#ifndef HEIGHTMAP_H
-#define HEIGHTMAP_H
+#ifndef GROUND_H
+#define GROUND_H
 
 #include "Logger.h"
 #include "Renderer.h"
 #include "EngineMath.h"
 
 
-class Heightmap
+class Ground
 {
 public:
-	Heightmap();
-	~Heightmap();
-	void SetupHeightmapMatrix(float x, float y, float z);
-	void CreateHeightmap(Renderer* render, LPCWSTR argFileName);
-	void RenderHeightmap(Renderer* render);
+	Ground();
+	~Ground();
+	void SetupGroundMatrix(float x, float y, float z);
+	void CreateGround(Renderer* render, LPCWSTR argFileName);
+	void RenderGround(Renderer* render);
 	byte* LoadBMP(LPCWSTR argFileName);
 	int GetHeight();
 	int GetWidth();

@@ -1,8 +1,8 @@
-#include "Heightmap.h"
+#include "Ground.h"
 #include "EngineMath.h"
 
 
-Heightmap::Heightmap()
+Ground::Ground()
 {
 	v_buffer = "HeightMapVertexBuffer";
 	i_buffer = "HeightMapIndexBuffer";
@@ -10,11 +10,11 @@ Heightmap::Heightmap()
 	Position = new MatrixWrapper();
 }
 
-Heightmap::~Heightmap()
+Ground::~Ground()
 {
 }
 
-void Heightmap::SetupHeightmapMatrix(float x, float y, float z)
+void Ground::SetupGroundMatrix(float x, float y, float z)
 {
 	MatrixWrapper* PositionalMatrix = new MatrixWrapper();
 	MatrixWrapper* ScalingMatrix = new MatrixWrapper();
@@ -25,7 +25,7 @@ void Heightmap::SetupHeightmapMatrix(float x, float y, float z)
 	Position->SetMatrix(PositionalMatrix->GetMatrix() * ScalingMatrix->GetMatrix());
 }
 
-void Heightmap::CreateHeightmap(Renderer* render, LPCWSTR argFileName)
+void Ground::CreateGround(Renderer* render, LPCWSTR argFileName)
 {
 	render->VertexBufferExists(v_buffer);
 	render->IndexBufferExists(i_buffer);
@@ -159,7 +159,7 @@ void Heightmap::CreateHeightmap(Renderer* render, LPCWSTR argFileName)
 	}
 }
 
-byte* Heightmap::LoadBMP(LPCWSTR argFileName)
+byte* Ground::LoadBMP(LPCWSTR argFileName)
 {
 	//Load image from file
 	HDC lhdcDest;	//Handle to Device Context (Windows GDI)
@@ -214,7 +214,7 @@ byte* Heightmap::LoadBMP(LPCWSTR argFileName)
 	return heightData;
 }
 
-void Heightmap::RenderHeightmap(Renderer* render)
+void Ground::RenderGround(Renderer* render)
 {
 	
 
@@ -244,12 +244,12 @@ void Heightmap::RenderHeightmap(Renderer* render)
 	}
 }
 
-int Heightmap::GetHeight()
+int Ground::GetHeight()
 {
 	return heightBMP;
 }
 
-int Heightmap::GetWidth()
+int Ground::GetWidth()
 {
 	return widthBMP;
 }

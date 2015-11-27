@@ -96,9 +96,6 @@
     <ClCompile Include="EngineMath.cpp">
       <Filter>Source Files\EngineDefinitions</Filter>
     </ClCompile>
-    <ClCompile Include="Heightmap.cpp">
-      <Filter>Source Files\WorldComponents</Filter>
-    </ClCompile>
     <ClCompile Include="Skybox.cpp">
       <Filter>Source Files\WorldComponents</Filter>
     </ClCompile>
@@ -183,6 +180,9 @@
     <ClCompile Include="Light.cpp">
       <Filter>Source Files\GameLogic</Filter>
     </ClCompile>
+    <ClCompile Include="Ground.cpp">
+      <Filter>Source Files\WorldComponents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Kernel.h">
@@ -213,9 +213,6 @@
       <Filter>Header Files\Input</Filter>
     </ClInclude>
     <ClInclude Include="Skybox.h">
-      <Filter>Header Files\WorldComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="Heightmap.h">
       <Filter>Header Files\WorldComponents</Filter>
     </ClInclude>
     <ClInclude Include="Renderer.h">
@@ -292,6 +289,9 @@
     </ClInclude>
     <ClInclude Include="Structs.h">
       <Filter>Header Files\EngineDefinitions</Filter>
+    </ClInclude>
+    <ClInclude Include="Ground.h">
+      <Filter>Header Files\WorldComponents</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

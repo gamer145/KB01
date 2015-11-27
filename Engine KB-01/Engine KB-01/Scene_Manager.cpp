@@ -27,12 +27,12 @@ void Scene_Manager::SetUpManager(Window_Manager* windowManager, Resource_Manager
 
 
 	myResourceManager->loadManualTexture("grass.jpg");
-	hoogteMap = new Heightmap();
-	hoogteMap->CreateHeightmap(myDirectXRenderer, L"..//Models//hoogtemap2.bmp");
+	hoogteMap = new Ground();
+	hoogteMap->CreateGround(myDirectXRenderer, L"..//Models//hoogtemap2.bmp");
 
 	skybox = new Skybox();
 	skybox->InitializeSkybox(myDirectXRenderer, myResourceManager);
-	hoogteMap->SetupHeightmapMatrix(0, 0, 0);
+	hoogteMap->SetupGroundMatrix(0, 0, 0);
 
 	myInputHandler = new InputHandler();
 	myInputHandler->InitInputHandler(CurrentWindow);
@@ -82,7 +82,7 @@ ERUNSTATE Scene_Manager::UpdateScene()
 		state = CurrentScene->UpdateOculus(CurrentScene->GetConfig().GetEyeRenderParams(OVR::Util::Render::StereoEye_Left));
 		state = CurrentScene->UpdateOculus(CurrentScene->GetConfig().GetEyeRenderParams(OVR::Util::Render::StereoEye_Right));
 
-		hoogteMap->RenderHeightmap(myDirectXRenderer);
+		hoogteMap->RenderGround(myDirectXRenderer);
 
 		//  fixme r     this still no working mon
 		skybox->DrawSkybox(myDirectXRenderer, CurrentScene->getCamera()->getPosition());
@@ -121,7 +121,7 @@ ERUNSTATE Scene_Manager::UpdateScene()
 
 		state = CurrentScene->Update();
 
-		hoogteMap->RenderHeightmap(myDirectXRenderer);
+		hoogteMap->RenderGround(myDirectXRenderer);
 
 		//  fixme r     this still no working mon
 		skybox->DrawSkybox(myDirectXRenderer, CurrentScene->getCamera()->getPosition());
