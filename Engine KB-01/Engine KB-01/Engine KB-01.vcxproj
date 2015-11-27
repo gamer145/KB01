@@ -93,7 +93,6 @@
     <ClCompile Include="InputHandlerInterface.cpp" />
     <ClCompile Include="Kernel.cpp" />
     <ClCompile Include="KeyboardListener.cpp" />
-    <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelLoader.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="ListenerInterface.cpp" />
@@ -130,7 +129,6 @@
     <ClInclude Include="InputHandlerInterface.h" />
     <ClInclude Include="Kernel.h" />
     <ClInclude Include="KeyboardListener.h" />
-    <ClInclude Include="Level.h" />
     <ClInclude Include="LevelLoader.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="ListenerInterface.h" />

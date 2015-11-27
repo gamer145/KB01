@@ -234,7 +234,7 @@ void Heightmap::RenderHeightmap(Renderer* render)
 	{
 		l->WriteToFile(Error, "SetIndicesFailed", 0);
 	}
-	if( FAILED(render->SetTexture("dome.jpg")))
+	if( FAILED(render->SetTexture("grass.jpg")))
 	{
 		l->WriteToFile(Error, "SetTextureHMFailed", 0);
 	}
