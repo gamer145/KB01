@@ -228,7 +228,7 @@ MatrixWrapper* Camera::getProjectionMatrix()
 
 ERUNSTATE Camera::Update()
 {
-	ERUNSTATE state = RUNNING;
+		ERUNSTATE state = RUNNING;
 
 		ModifyCameraXRotation(myInputHandler->getAction(ACTION_ROTATECAMERA_X));
 		ModifyCameraYRotation(myInputHandler->getAction(ACTION_ROTATECAMERA_Y));
@@ -239,7 +239,15 @@ ERUNSTATE Camera::Update()
 
 		if (myInputHandler->getAction(ACTION_EXIT) < 0)
 		{
-			state = EXIT;
+			state = EXIT;		//Checks wether the a inputdevice returns the exit action.
+								//Switches state to exit, which cancels the update loop.
+								//Which in turn exits the program.
+		}
+
+		if (myInputHandler->getAction(ACTION_TOGGLEDEBUG) < 0)
+		{
+			ShowCursor(TRUE);	//To be expanded on, switch to debug run mode instead.
+								//So that further logic can be applied based on this.
 		}
 
 		UpdateCameraMatrix();

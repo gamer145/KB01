@@ -30,6 +30,21 @@ typedef EDWORD ECOLOR;
 #define ECUSTOMFVF (EFVF_XYZ|EFVF_NORMAL|EFVF_TEX1)
 
 
+struct MouseStruct
+{
+	long positionX; //The mouse's X coordinate
+	long positionY; //The mouse's Y coordinate
+	long z; // MouseWheel scrolling values
+	bool button0; //Left Mouse Button
+	bool button1; //Right Mouse Button
+	bool button2; //MouseWheel click value
+	bool button3;
+	bool button4;
+	bool button5;
+	bool button6;
+	bool button7;
+};
+
 struct VECTOR
 {
 	VECTOR()
@@ -241,6 +256,7 @@ enum EACTION {
 	ACTION_ROTATECAMERA_Y = 7,
 	ACTION_ZOOMCAMERA = 8,
 	ACTION_SWITCHRENDERSTATE = 9,
+	ACTION_TOGGLEDEBUG = 10,
 };
 
 

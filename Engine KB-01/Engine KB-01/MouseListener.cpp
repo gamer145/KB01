@@ -24,7 +24,7 @@ MouseListener::MouseListener( Window* argWindow, LPDIRECTINPUT8 argDInput )
 		int result = window->ShowMessagebox("MouseListener: kan muis niet vangen.", "Fatal Error", MB_ICONERROR | MB_OK);
 		exit(-1);
 	}
-	ShowCursor(TRUE); //Please Windows, show the mouse cursor for now. TO BE REMOVED?
+	ShowCursor(FALSE);
 }
 
 MouseListener::~MouseListener()
@@ -61,9 +61,9 @@ bool MouseListener::InitMouse()
 		SaveReleaseDevice() ;
 		return false;
 	}
-	ShowCursor(TRUE); //Please Windows, show the mouse cursor for now.
+	ShowCursor(FALSE);
 
-	return true; //We made it here so everything must've gone right
+	return true;
 }
 
 void MouseListener::setMouseAcceleration(float newAcceleration)
@@ -94,6 +94,15 @@ bool MouseListener::getAction(EACTION action, float& value)
 		}
 	}
 
+	if (action == ACTION_TOGGLEDEBUG && !answer)
+	{
+		answer = isButtonDown(2, newMouseState);
+		if (answer)
+		{
+			value = -1.0f;
+		}
+	}
+
 	oldMouseState = newMouseState;
 
 	return answer;
@@ -106,29 +115,28 @@ long MouseListener::getMousewheel()
 	return temp.z;
 }
 
-bool MouseListener::isButtonDown(int button)
+bool MouseListener::isButtonDown(int button, MouseStruct mouse)
 {
-	MouseStruct temp = GetMouseInput();
 	switch (button)
 	{
 		case 0:
-			return temp.button0;
+			return mouse.button0;
 		case 1:
-			return temp.button1;
+			return mouse.button1;
 		case 2:
-			return temp.button2;
+			return mouse.button2;
 		case 3:
-			return temp.button3;
+			return mouse.button3;
 		case 4:
-			return temp.button4;
+			return mouse.button4;
 		case 5:
-			return temp.button5;
+			return mouse.button5;
 		case 6:
-			return temp.button6;
+			return mouse.button6;
 		case 7:
-			return temp.button7;
+			return mouse.button7;
 	}
-	return temp.button0; //Als argument button niet 0-7 is.
+	return false; //Als argument button niet 0-7 is.
 }
 
 /**
@@ -154,7 +162,7 @@ MouseStruct MouseListener::GetMouseInput()
  * Function:	Mouse::SetTheMouseBuffer()
  * Description:	Setting the buffer for the mouse and getting the device-data
  */
-void MouseListener::SetTheMouseBuffer()
+ void MouseListener::SetTheMouseBuffer()
 {
 	DIDEVICEOBJECTDATA od;
 	DWORD elements = 1;
@@ -187,7 +195,7 @@ void MouseListener::SetTheMouseBuffer()
 			}
 			break;
 
-		// Mouse left button
+		// Mouse right button
 		case DIMOFS_BUTTON1:
 			if ( static_cast<long>(od.dwData) == 0 )
 			{

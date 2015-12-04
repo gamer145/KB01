@@ -17,7 +17,9 @@ public:
 	InputHandler(); //Constructor
 	~InputHandler(); //Destructor
 	HRESULT InitInputHandler(Window* argWindow); //Attempt to initialize the InputHandler object
-	float getAction(EACTION action);
+	float getAction(EACTION action);	// Checks wether one of the known listeners knows the action that is given as an argument.
+										// Then the listener itself will fill out the float value, which is then passed on to the core logic asking about the action.
+
 private:
 	MouseListener* mousewhisperer; //Pointer to MouseListener
 	KeyboardListener* keyboardwhisperer; //Pointer to KeyboardListener
