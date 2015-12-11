@@ -1,9 +1,9 @@
 #include "MouseListener.h"
 
-Logger* loggerM = Logger::GetLogger(); //Get a pointer to the Logger object
 
 MouseListener::MouseListener( Window* argWindow, LPDIRECTINPUT8 argDInput )
 {
+	loggerM = Logger::GetLogger(); //Get a pointer to the Logger object
 	//Set the default values and pass on the parameters to our own variables
 	const int MOUSEBUFFER		= 8;
 	dipdw.diph.dwSize			= sizeof(DIPROPDWORD);
@@ -71,14 +71,19 @@ void MouseListener::setMouseAcceleration(float newAcceleration)
 	mouseAcceleration = newAcceleration;
 }
 
+void MouseListener::poll()
+{
+	GetMouseInput();
+}
+
 bool MouseListener::getAction(EACTION action, float& value)
 {
-	MouseStruct newMouseState = GetMouseInput();
+	
 	bool answer = false;
 
 	if (action == ACTION_ROTATECAMERA_X && !answer)
 	{
-		long diff = newMouseState.positionX - oldMouseState.positionX;
+		long diff = bufferedMouse.positionX - oldMouseState.positionX;
 
 		if (diff < 0)
 		{
@@ -95,15 +100,16 @@ bool MouseListener::getAction(EACTION action, float& value)
 	}
 
 	if (action == ACTION_TOGGLEDEBUG && !answer)
-	{
-		answer = isButtonDown(2, newMouseState);
+	{		
+		answer = isButtonDown(2, bufferedMouse);
 		if (answer)
 		{
+			loggerM->WriteToFile(Success, "TOGGLE TOGGLED", 0);
 			value = -1.0f;
 		}
 	}
 
-	oldMouseState = newMouseState;
+	oldMouseState = bufferedMouse;
 
 	return answer;
 }

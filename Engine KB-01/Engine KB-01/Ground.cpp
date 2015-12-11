@@ -6,7 +6,7 @@ Ground::Ground()
 {
 	v_buffer = "HeightMapVertexBuffer";
 	i_buffer = "HeightMapIndexBuffer";
-
+	l = Logger::GetLogger();
 	Position = new MatrixWrapper();
 }
 

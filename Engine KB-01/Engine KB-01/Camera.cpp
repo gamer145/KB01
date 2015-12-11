@@ -226,9 +226,8 @@ MatrixWrapper* Camera::getProjectionMatrix()
 	return ProjectionMatrix;
 }
 
-ERUNSTATE Camera::Update()
+void Camera::Update(ERUNSTATE& sceneState)
 {
-		ERUNSTATE state = RUNNING;
 
 		ModifyCameraXRotation(myInputHandler->getAction(ACTION_ROTATECAMERA_X));
 		ModifyCameraYRotation(myInputHandler->getAction(ACTION_ROTATECAMERA_Y));
@@ -239,28 +238,40 @@ ERUNSTATE Camera::Update()
 
 		if (myInputHandler->getAction(ACTION_EXIT) < 0)
 		{
-			state = EXIT;		//Checks wether the a inputdevice returns the exit action.
+			sceneState = EXIT;		//Checks wether the a inputdevice returns the exit action.
 								//Switches state to exit, which cancels the update loop.
 								//Which in turn exits the program.
 		}
 
-		if (myInputHandler->getAction(ACTION_TOGGLEDEBUG) < 0)
+		else if (myInputHandler->getAction(ACTION_TOGGLEDEBUG) < 0)
 		{
-			ShowCursor(TRUE);	//To be expanded on, switch to debug run mode instead.
-								//So that further logic can be applied based on this.
+			if (sceneState == RUNNING)
+			{
+				ShowCursor(TRUE);	
+				sceneState = DEBUG;
+			}
+
+			else if (sceneState == DEBUG)
+			{
+				ShowCursor(FALSE);
+				sceneState = RUNNING;
+			}
+
+			/*	To fix, atm multiple update loops are done in a single mouse poll. Meaning the debug will always be toggled off after being turned on.
+				Potential fixes: Poll less (involve a counter?)
+				Lock state for X amount of time
+				Praise satan			
+			*/
 		}
 
 		UpdateCameraMatrix();
-		return state;
 
 }
 
-ERUNSTATE Camera::UpdateOculus(Renderer* renderer, const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig)
+void Camera::UpdateOculus(Renderer* renderer, const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig, ERUNSTATE& sceneState)
 {
 	renderer->setViewMatrixOculus(params, SConfig);
 	renderer->setProjectionMatrixOculus(params, SConfig);
-
-	ERUNSTATE state = RUNNING;
 
 	ModifyCameraXRotation(myInputHandler->getAction(ACTION_ROTATECAMERA_X));
 	ModifyCameraYRotation(myInputHandler->getAction(ACTION_ROTATECAMERA_Y));
@@ -271,11 +282,25 @@ ERUNSTATE Camera::UpdateOculus(Renderer* renderer, const OVR::Util::Render::Ster
 
 	if (myInputHandler->getAction(ACTION_EXIT) < 0)
 	{
-		state = EXIT;
+		sceneState = EXIT;
+	}
+
+	else if (myInputHandler->getAction(ACTION_TOGGLEDEBUG) < 0)
+	{
+		if (sceneState == RUNNING)
+		{
+			ShowCursor(TRUE);	//To be expanded on, switch to debug run mode instead.
+								//So that further logic can be applied based on this.
+			sceneState = DEBUG;
+		}
+		else if (sceneState == DEBUG)
+		{
+			ShowCursor(FALSE);
+			sceneState = RUNNING;
+		}
 	}
 
 	UpdateCameraMatrix();
-	return state;
 }
 
 void Camera::UpdateCameraMatrix()

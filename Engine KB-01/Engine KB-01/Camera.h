@@ -19,8 +19,8 @@ public:
 	void SetInputHandler(InputHandlerInterface* IH);
 	void CalculateAngles();
 
-	ERUNSTATE Update();
-	ERUNSTATE UpdateOculus(Renderer* renderer, const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig);
+	void Update(ERUNSTATE& sceneState);
+	void UpdateOculus(Renderer* renderer, const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig, ERUNSTATE& sceneState);
 
 	MatrixWrapper* getProjectionMatrix();
 

@@ -21,6 +21,7 @@ public:
 										// Then the listener itself will fill out the float value, which is then passed on to the core logic asking about the action.
 
 private:
+	void pollWhisperers(); //Lets whisperers poll their devices. Used in getAction.
 	MouseListener* mousewhisperer; //Pointer to MouseListener
 	KeyboardListener* keyboardwhisperer; //Pointer to KeyboardListener
 	LPDIRECTINPUT8 dInput; //Pointer to DirectInput

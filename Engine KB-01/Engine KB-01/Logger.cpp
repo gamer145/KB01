@@ -1,10 +1,10 @@
 #include "Logger.h"
 
 Logger* Logger::myLogger = NULL;
-std::string logfile = "../Logs/Log.txt";
 
 Logger::Logger()
 {
+	CreateFile();
 }
 
 Logger::~Logger()
@@ -20,6 +20,24 @@ const std::string currentDateTime() {
     return buf;
 }
 
+std::string Logger::ReplaceCharsInString(std::string strChange, char a, char b)
+{
+	for (int i = 0; i < strChange.length(); ++i)
+	{
+		if (strChange[i] == a)
+			strChange[i] = b;
+	}
+
+	return strChange;
+}
+
+void Logger::CreateFile()
+{
+	std::string formattedDatetime = ReplaceCharsInString(currentDateTime(), ':', '_');	
+	logfile = "../Logs/Log " + formattedDatetime + ".txt";	
+	std::ofstream a_file(logfile);
+}
+
 void Logger::WriteToFile(MessageType newType, const std::string& message, const int x)
 {
 	std::fstream theLogfile (logfile.c_str(), std::fstream::in | std::fstream::out | std::fstream::app);
@@ -31,7 +49,7 @@ void Logger::WriteToFile(MessageType newType, const std::string& message, const 
 	}
 	else
 	{
-		std::cout << "Error: unable to open logfile '" << logfile << "'!" << std::endl; //Veranderen naar messagebox?
+		std::cout << "Error: unable to open logfile '" << logfile << "'!" << std::endl;
 	}
 }
 

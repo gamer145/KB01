@@ -15,7 +15,8 @@ public:
 	~MouseListener(); //Destructor
 	bool getAction(EACTION action, float& value); //Asks the listener whether it knows the action or not and if the conditions have been met for it
 	void SaveReleaseDevice(); //Release mouse		
-	void setMouseAcceleration(float newAcceleration); 
+	void setMouseAcceleration(float newAcceleration);
+	void poll();
 	
 private:
 	LPDIRECTINPUT8          dInput;
@@ -26,7 +27,7 @@ private:
 	MouseStruct oldMouseState;	//The previous cycles mouseStruct, used to determine wether something has changed.
 	float mouseAcceleration;	//Value used to calculate the internal changes made by a mouse positional change. 
 								//The higher the acceleration, the more impact a single position of mouse movement has.
-	Logger* loggerM;			
+	Logger* loggerM;
 
 	long getMousewheel(); //Checks wether the mousewheel has scrolled or not, and in which direction.
 	bool isButtonDown(int button, MouseStruct mouse); //Checks wether a given button is down. See EngineDefinitions for which button is which

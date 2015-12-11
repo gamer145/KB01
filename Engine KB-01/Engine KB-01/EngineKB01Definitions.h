@@ -43,6 +43,7 @@ struct MouseStruct
 	bool button5;
 	bool button6;
 	bool button7;
+	bool buttonlock;
 };
 
 struct VECTOR
@@ -243,6 +244,7 @@ enum ERUNSTATE {
 	RUNNING = 1,
 	PAUSED = 2,
 	EXIT = 3,
+	DEBUG = 4,
 };
 
 //Defines the type of Action. The action is used to relay to the listeners, if they have any input matching the requested action.

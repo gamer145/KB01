@@ -32,8 +32,11 @@ public:
 	static Logger* GetLogger(); //Initializes the logger if it doesnt exist and returns it. If it already exists, simply returns it.
 	std::string toString(MessageType type);
 private:
+	void CreateFile(); //Creates a new log file based on when the session started. The created logfile will be used for all logging that session.
+	std::string ReplaceCharsInString(std::string strChange, char a, char b); //Replaces characters in a string, used internally to fix some format issues.
 	MessageType Type; //Enum messagetype, the type defines what action the logger should take when writing.
 	static Logger* myLogger; //The logger object to be returned after intialization. The logger keeps track of itself, so no other class has to.	
+	std::string logfile; //The current log file that the logger will write to, changes per session.
 };
 
 #endif

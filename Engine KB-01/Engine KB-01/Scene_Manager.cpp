@@ -116,8 +116,8 @@ ERUNSTATE Scene_Manager::UpdateScene()
 	{
 		CurrentScene->clear();
 		CurrentScene->beginS();
-		ERUNSTATE state = RUNNING;
 		//myDirectXRenderer->setupRenderToTextureOculus();
+		ERUNSTATE state;
 
 		state = CurrentScene->Update();
 

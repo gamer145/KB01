@@ -27,7 +27,7 @@ void Kernel::Run()
 {
 	Runstate = mySceneManager->UpdateScene();
 
-	while (Runstate == RUNNING)
+	while (Runstate == RUNNING || Runstate == DEBUG)
 	{
 		Runstate = mySceneManager->UpdateScene();
 	}

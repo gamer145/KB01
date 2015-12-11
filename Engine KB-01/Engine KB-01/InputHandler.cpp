@@ -40,11 +40,16 @@ InputHandler::~InputHandler()
 	dInput = NULL; //Just to be safe, we nullify the pointer
 }
 
-
+void InputHandler::pollWhisperers()
+{
+	mousewhisperer->poll();
+}
 
 float InputHandler::getAction(EACTION action)
 {
 	float response = 0;
+
+	pollWhisperers();
 
 	keyboardwhisperer->getAction(action, response);
 

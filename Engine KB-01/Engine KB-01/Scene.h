@@ -44,6 +44,7 @@ private:
 	void Draw();
 	OVR::Util::Render::StereoConfig SConfig;
 	bool oculus;
+	ERUNSTATE sceneState;
 	
 };
 

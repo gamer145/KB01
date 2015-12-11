@@ -2,10 +2,11 @@
 
 #include "KeyboardListener.h"
 
-Logger* loggerKB = Logger::GetLogger();
+
 
 KeyboardListener::KeyboardListener( Window* argWindow, LPDIRECTINPUT8 argDInput )
 {
+	loggerKB = Logger::GetLogger();
 	dInput				= argDInput; 
 	dDeviceKeyboard				= NULL; 
 	window = argWindow;

@@ -2,7 +2,7 @@
 
 Scene::Scene()
 {
-
+	
 }
 
 
@@ -13,6 +13,7 @@ Scene::~Scene()
 
 void Scene::initCamera(InputHandlerInterface* IH)
 {
+	sceneState = RUNNING;
 	currentCamera->Initialize();
 	currentCamera->SetInputHandler(IH);
 }
@@ -49,10 +50,9 @@ void Scene::setResourceManager(Resource_Manager* r)
 
 ERUNSTATE Scene::Update()
 {
-	
-		ERUNSTATE state = currentCamera->Update();
+		currentCamera->Update(sceneState);
 		Draw();
-		return state;
+		return sceneState;
 	
 }
 
@@ -61,9 +61,9 @@ ERUNSTATE Scene::UpdateOculus(const OVR::Util::Render::StereoEyeParams& stereo)
 	
 		myDirectXRenderer->setViewportOculus(stereo);
 
-		ERUNSTATE state = currentCamera->UpdateOculus(myDirectXRenderer, stereo, SConfig);
+		currentCamera->UpdateOculus(myDirectXRenderer, stereo, SConfig, sceneState);
 		Draw();
-		return state;
+		return sceneState;
 
 }
 
