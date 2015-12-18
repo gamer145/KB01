@@ -28,11 +28,15 @@ private:
 	VectorWrapper* EyePoint;
 	VectorWrapper* LookatPoint;
 	VectorWrapper* UpVector;
+
 	MatrixWrapper* ProjectionMatrix;
 	InputHandlerInterface* myInputHandler;
+	Logger* CameraLogger;
+
 	float horizontalAngle;
 	float verticalAngle;
 	float radius;
+
 	void UpdateCameraMatrix();
 
 	void ModifyCameraForward(float modifier);

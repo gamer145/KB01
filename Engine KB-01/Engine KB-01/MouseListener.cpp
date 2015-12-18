@@ -20,11 +20,11 @@ MouseListener::MouseListener( Window* argWindow, LPDIRECTINPUT8 argDInput )
 	if (!InitMouse()) //Try to create a mouse object
 	{
 		//Creation failed, we need to log the error, notify the user and stop the program with a negative exit code
-		loggerM->WriteToFile(FatalError, "MouseListener: kan muis niet vangen.", __LINE__);
+		loggerM->WriteToFile(FatalError, "MouseListener: kan muis niet vangen.");
 		int result = window->ShowMessagebox("MouseListener: kan muis niet vangen.", "Fatal Error", MB_ICONERROR | MB_OK);
 		exit(-1);
-	}
-	ShowCursor(FALSE);
+		ShowCursor(FALSE);
+	}	
 }
 
 MouseListener::~MouseListener()
@@ -71,14 +71,9 @@ void MouseListener::setMouseAcceleration(float newAcceleration)
 	mouseAcceleration = newAcceleration;
 }
 
-void MouseListener::poll()
-{
-	GetMouseInput();
-}
-
 bool MouseListener::getAction(EACTION action, float& value)
 {
-	
+	GetMouseInput();
 	bool answer = false;
 
 	if (action == ACTION_ROTATECAMERA_X && !answer)
@@ -102,10 +97,15 @@ bool MouseListener::getAction(EACTION action, float& value)
 	if (action == ACTION_TOGGLEDEBUG && !answer)
 	{		
 		answer = isButtonDown(2, bufferedMouse);
-		if (answer)
+		if (answer && !bufferedMouse.buttonlock[2])
 		{
-			loggerM->WriteToFile(Success, "TOGGLE TOGGLED", 0);
+			bufferedMouse.buttonlock[2] = true; //Locks the button
+			loggerM->WriteToFile(Success, "TOGGLE TOGGLED");
 			value = -1.0f;
+		}
+		else if (!answer && bufferedMouse.buttonlock[2])
+		{
+			bufferedMouse.buttonlock[2] = false;
 		}
 	}
 

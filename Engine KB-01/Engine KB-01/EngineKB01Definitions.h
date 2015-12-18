@@ -37,13 +37,13 @@ struct MouseStruct
 	long z; // MouseWheel scrolling values
 	bool button0; //Left Mouse Button
 	bool button1; //Right Mouse Button
-	bool button2; //MouseWheel click value
+	bool button2; //MouseWheel click
 	bool button3;
 	bool button4;
 	bool button5;
 	bool button6;
 	bool button7;
-	bool buttonlock;
+	bool buttonlock[8];
 };
 
 struct VECTOR

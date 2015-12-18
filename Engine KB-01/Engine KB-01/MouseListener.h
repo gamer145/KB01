@@ -16,7 +16,6 @@ public:
 	bool getAction(EACTION action, float& value); //Asks the listener whether it knows the action or not and if the conditions have been met for it
 	void SaveReleaseDevice(); //Release mouse		
 	void setMouseAcceleration(float newAcceleration);
-	void poll();
 	
 private:
 	LPDIRECTINPUT8          dInput;

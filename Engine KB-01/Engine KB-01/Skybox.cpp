@@ -78,27 +78,27 @@ void Skybox::DrawSkybox(Renderer* renderer, MatrixWrapper* cameraposition)
 
 	if (FAILED(renderer->setTransform(E_WORLD, cameraposition)))
 	{
-		l->WriteToFile(Error, "SetTransformFailed", 0);
+		l->WriteToFile(Error, "SetTransformFailed");
 	}
 	if (FAILED(renderer->SetStreamSource(0, v_buffer, 0, sizeof(VERTEX))))
 	{
-		l->WriteToFile(Error, "SetStreamSourceFailed", 0);
+		l->WriteToFile(Error, "SetStreamSourceFailed");
 	}
 	if (FAILED(renderer->SetFVF(ECUSTOMFVF)))
 	{
-		l->WriteToFile(Error, "SetFVFFailed", 0);
+		l->WriteToFile(Error, "SetFVFFailed");
 	}
 	if (FAILED(renderer->SetIndices(i_buffer)))
 	{
-		l->WriteToFile(Error, "SetIndicesFailed", 0);
+		l->WriteToFile(Error, "SetIndicesFailed");
 	}
 	if (FAILED(renderer->SetTexture("dome2.jpg")))
 	{
-		l->WriteToFile(Error, "SetTextureHMFailed", 0);
+		l->WriteToFile(Error, "SetTextureHMFailed");
 	}
 	if (FAILED(renderer->DrawIndexedPrimitive(EPT_TRIANGLELIST, 0, 0, amountOfVertices, 0, amountOfIndices / 3)))
 	{
-		l->WriteToFile(Error, "IndexDrawFailed", 0);
+		l->WriteToFile(Error, "IndexDrawFailed");
 	}
 
 	renderer->SetZBuffer(true);

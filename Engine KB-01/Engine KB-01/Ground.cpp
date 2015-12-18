@@ -129,13 +129,13 @@ void Ground::CreateGround(Renderer* render, LPCWSTR argFileName)
 	// lock v_buffer and load the vertices into it
 	if (FAILED(render->LockVertexBuffer(v_buffer, 0, sizeof(VERTEX) * vertexcount, (void**)&pVoid, 0)))
 	{
-		l->WriteToFile(Error, "VBLockFailed", 0);
+		l->WriteToFile(Error, "VBLockFailed");
 	}
 	memcpy(pVoid, vertices, sizeof(VERTEX) * vertexcount);
 
 	if (FAILED(render->UnlockVertexBuffer(v_buffer)))
 	{
-		l->WriteToFile(Error, "VBUnLockFailed", 0);
+		l->WriteToFile(Error, "VBUnLockFailed");
 	}
 
 	render->CreateIndexBuffer((amountIndices)*sizeof(int),
@@ -148,14 +148,14 @@ void Ground::CreateGround(Renderer* render, LPCWSTR argFileName)
 
 	if( FAILED( render->LockIndexBuffer(i_buffer, 0, sizeof(int) * amountIndices, (void**)&pVoid2, 0)))
 	{
-		l->WriteToFile(Error, "IBLockFailed", 0);
+		l->WriteToFile(Error, "IBLockFailed");
 	}
 
 	memcpy(pVoid2, indices, sizeof(int) * amountIndices);
   	
 	if (FAILED(render->UnlockIndexBuffer(i_buffer)))
 	{
-		l->WriteToFile(Error, "IBUnLockFailed", 0);
+		l->WriteToFile(Error, "IBUnLockFailed");
 	}
 }
 
@@ -210,7 +210,7 @@ byte* Ground::LoadBMP(LPCWSTR argFileName)
 			heightData[(lHeight*widthBMP)+lWidth+0] = GetRValue(GetPixel(lhdcDest, lHeight, lWidth));
 		}
 	}
-	l->WriteToFile(Success, "The heightdata has been retrieved.", 0);
+	l->WriteToFile(Success, "The heightdata has been retrieved.");
 	return heightData;
 }
 
@@ -220,27 +220,27 @@ void Ground::RenderGround(Renderer* render)
 
 	if( FAILED(render->setTransform(E_WORLD, Position)))
 	{
-		l->WriteToFile(Error, "SetTransformFailed", 0);
+		l->WriteToFile(Error, "SetTransformFailed");
 	}
 	if( FAILED(render->SetStreamSource(0, v_buffer, 0, sizeof(VERTEX))))
 	{
-		l->WriteToFile(Error, "SetStreamSourceFailed", 0);
+		l->WriteToFile(Error, "SetStreamSourceFailed");
 	}
 	if( FAILED(render->SetFVF(ECUSTOMFVF)))
 	{
-		l->WriteToFile(Error, "SetFVFFailed", 0);
+		l->WriteToFile(Error, "SetFVFFailed");
 	}
 	if( FAILED(render->SetIndices(i_buffer)))
 	{
-		l->WriteToFile(Error, "SetIndicesFailed", 0);
+		l->WriteToFile(Error, "SetIndicesFailed");
 	}
 	if( FAILED(render->SetTexture("grass.jpg")))
 	{
-		l->WriteToFile(Error, "SetTextureHMFailed", 0);
+		l->WriteToFile(Error, "SetTextureHMFailed");
 	}
 	if( FAILED(render->DrawIndexedPrimitive(EPT_TRIANGLELIST, 0, 0, (heightBMP * widthBMP), 0, (heightBMP-1) * (widthBMP-1) * 2)))
 	{
-		l->WriteToFile(Error, "IndexDrawFailed", 0);
+		l->WriteToFile(Error, "IndexDrawFailed");
 	}
 }
 

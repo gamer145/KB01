@@ -4,7 +4,7 @@ Logger* Logger::myLogger = NULL;
 
 Logger::Logger()
 {
-	CreateFile();
+	SetFiles();
 }
 
 Logger::~Logger()
@@ -31,32 +31,76 @@ std::string Logger::ReplaceCharsInString(std::string strChange, char a, char b)
 	return strChange;
 }
 
-void Logger::CreateFile()
+void Logger::SetFiles()
 {
 	std::string formattedDatetime = ReplaceCharsInString(currentDateTime(), ':', '_');	
-	logfile = "../Logs/Log " + formattedDatetime + ".txt";	
-	std::ofstream a_file(logfile);
+	genericlogfile = "../Logs/Log " + formattedDatetime + ".txt";
+	errorlogfile = "../Logs/Error/Log " + formattedDatetime + ".txt";
+	succeslogfile = "../Logs/Succes/Log " + formattedDatetime + ".txt";
+	warninglogfile = "../Logs/Warning/Log " + formattedDatetime + ".txt";
 }
 
-void Logger::WriteToFile(MessageType newType, const std::string& message, const int x)
+void Logger::WriteToFile(MessageType newType, const std::string& message)
 {
-	std::fstream theLogfile (logfile.c_str(), std::fstream::in | std::fstream::out | std::fstream::app);
+	std::fstream theLogfile (genericlogfile.c_str(), std::fstream::in | std::fstream::out | std::fstream::app);
 
 	if (theLogfile.is_open())
 	{
-		theLogfile << "[" << currentDateTime() << "] [Ln " << x << "] " << toString(newType) << ": " << message << std::endl;
+		theLogfile << "[" << currentDateTime() << "] " << toString(newType) << ": " << message << std::endl;
 		theLogfile.close();
 	}
 	else
 	{
-		std::cout << "Error: unable to open logfile '" << logfile << "'!" << std::endl;
+		std::cout << "Error: unable to open logfile '" << genericlogfile << "'!" << std::endl;
 	}
+
+	if (newType == Success)
+	{
+		std::fstream specialisedLog(succeslogfile.c_str(), std::fstream::in | std::fstream::out | std::fstream::app);
+		if (specialisedLog.is_open())
+		{
+			specialisedLog << "[" << currentDateTime() << "] " << toString(newType) << ": " << message << std::endl;
+			specialisedLog.close();
+		}
+		else
+		{
+			std::cout << "Error: unable to open logfile '" << succeslogfile << "'!" << std::endl;
+		}
+	}
+	else if (newType == Error || newType == FatalError)
+	{
+		std::fstream specialisedLog(errorlogfile.c_str(), std::fstream::in | std::fstream::out | std::fstream::app);
+		if (specialisedLog.is_open())
+		{
+			specialisedLog << "[" << currentDateTime() << "] " << toString(newType) << ": " << message << std::endl;
+			specialisedLog.close();
+		}
+		else
+		{
+			std::cout << "Error: unable to open logfile '" << errorlogfile << "'!" << std::endl;
+		}
+	}
+	else if (newType == Warning)
+	{
+		std::fstream specialisedLog(warninglogfile.c_str(), std::fstream::in | std::fstream::out | std::fstream::app);
+		if (specialisedLog.is_open())
+		{
+			specialisedLog << "[" << currentDateTime() << "] " << toString(newType) << ": " << message << std::endl;
+			specialisedLog.close();
+		}
+		else
+		{
+			std::cout << "Error: unable to open logfile '" << warninglogfile << "'!" << std::endl;
+		}
+	}
+
+
 }
 
 void Logger::ReadFromFile()
 {
 	std::string line = "";
-	std::ifstream myfile (logfile.c_str());
+	std::ifstream myfile (genericlogfile.c_str());
 	if (myfile.is_open())
 	{
 		while (getline(myfile,line))
@@ -67,7 +111,7 @@ void Logger::ReadFromFile()
 	}
 	else
 	{
-		std::cout << "Error: unable to open logfile '" << logfile << "'!" << std::endl; //Veranderen naar messagebox?
+		std::cout << "Error: unable to open logfile '" << genericlogfile << "'!" << std::endl; //Veranderen naar messagebox?
 	}
 }
 
@@ -78,7 +122,7 @@ MessageType Logger::GetMessageType()
 
 void Logger::RemoveLogFile()
 {
-	remove(logfile.c_str());
+	remove(genericlogfile.c_str());
 }
 
 Logger* Logger::GetLogger()

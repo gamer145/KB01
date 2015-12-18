@@ -8,6 +8,7 @@ Camera::Camera()
 
 	Position = new MatrixWrapper();
 	ProjectionMatrix = new MatrixWrapper();
+	CameraLogger = Logger::GetLogger();
 }
 
 Camera::~Camera()
@@ -249,19 +250,15 @@ void Camera::Update(ERUNSTATE& sceneState)
 			{
 				ShowCursor(TRUE);	
 				sceneState = DEBUG;
+				CameraLogger->WriteToFile(Error, "Debug aan, cursor zou zichtbaar moeten zijn");
 			}
 
 			else if (sceneState == DEBUG)
 			{
 				ShowCursor(FALSE);
 				sceneState = RUNNING;
+				CameraLogger->WriteToFile(Error, "Debug uit, cursor zou onzichtbaar moeten zijn");
 			}
-
-			/*	To fix, atm multiple update loops are done in a single mouse poll. Meaning the debug will always be toggled off after being turned on.
-				Potential fixes: Poll less (involve a counter?)
-				Lock state for X amount of time
-				Praise satan			
-			*/
 		}
 
 		UpdateCameraMatrix();

@@ -17,7 +17,7 @@ HRESULT InputHandler::InitInputHandler(Window* argWindow)
 	if (FAILED(InitDInput()))
 	{
 		//Can't initialize DirectInput so we're going to log the error, notify the user and stop the program with a negative exit code
-		loggerIH->WriteToFile(FatalError, "Could not create DirectInput interface in InputHandler!", __LINE__);
+		loggerIH->WriteToFile(FatalError, "Could not create DirectInput interface in InputHandler!");
 		argWindow->ShowMessagebox("Could not create DirectInput interface in InputHandler!", "Error", MB_ICONERROR | MB_OK);
 		return -1;
 	}
@@ -42,7 +42,7 @@ InputHandler::~InputHandler()
 
 void InputHandler::pollWhisperers()
 {
-	mousewhisperer->poll();
+	//Avoid polling for each action? Is that usefull?
 }
 
 float InputHandler::getAction(EACTION action)

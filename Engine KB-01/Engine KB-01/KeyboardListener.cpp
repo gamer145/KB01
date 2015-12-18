@@ -13,7 +13,7 @@ KeyboardListener::KeyboardListener( Window* argWindow, LPDIRECTINPUT8 argDInput 
 	if (!InitKeyboard())
 	{
 		//Kan toetsenbord niet vangen, eerst loggen en dan waarschuwen.
-		loggerKB->WriteToFile(FatalError, "KeyboardListener: kan toetsenbord niet vangen.", __LINE__);
+		loggerKB->WriteToFile(FatalError, "KeyboardListener: kan toetsenbord niet vangen.");
 		int result = window->ShowMessagebox("KeyboardListener: kan toetsenbord niet vangen.", "Fatal Error", MB_ICONERROR | MB_OK); //met result nog iets doen?
 		exit(-1);
 	}
