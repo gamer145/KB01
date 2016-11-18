@@ -410,7 +410,7 @@ HRESULT DirectXRenderer::LoadShaderFromFile(std::string shadername, std::string 
 
 			error = GetLastError();
 
-			errorstring = DXGetErrorDescriptionA(error);
+			//errorstring = DXGetErrorDescriptionA(error);
 
 		}
 
