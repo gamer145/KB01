@@ -107,11 +107,11 @@ ERUNSTATE Scene_Manager::UpdateScene()
 
 		state = CurrentScene->Update();
 
-		myDirectXRenderer->RenderToTexture();
+		//myDirectXRenderer->RenderToTexture();
 
 		CurrentScene->endS();
 
-		myDirectXRenderer->Present();
+		//myDirectXRenderer->Present();
 
 		CurrentWindow->updateWindow();
 

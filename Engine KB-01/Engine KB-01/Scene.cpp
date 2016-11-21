@@ -111,7 +111,7 @@ void Scene::Draw()
 
 			skybox->DrawSkybox(myDirectXRenderer, currentCamera->getPosition());
 			
-			ground->RenderGround(myDirectXRenderer);			
+			ground->DrawGround(myDirectXRenderer);			
 
 			for(std::vector<VisualObject*>::iterator i = activeObjects.begin(); i != activeObjects.end(); ++i)
 			{

@@ -13,7 +13,7 @@ public:
 	~Ground();
 	void SetupGroundMatrix(float x, float y, float z);
 	void CreateGround(Renderer* render, Resource_Manager* resourcemanager, LPCWSTR argFileName);
-	void RenderGround(Renderer* render);
+	void DrawGround(Renderer* render);
 	byte* LoadBMP(LPCWSTR argFileName);
 	int GetHeight();
 	int GetWidth();

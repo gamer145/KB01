@@ -226,7 +226,7 @@ byte* Ground::LoadBMP(LPCWSTR argFileName)
 	return heightData;
 }
 
-void Ground::RenderGround(Renderer* render)
+void Ground::DrawGround(Renderer* render)
 {	
 
 	if( FAILED(render->setTransform(E_WORLD, Position)))
