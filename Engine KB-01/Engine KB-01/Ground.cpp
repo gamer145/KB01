@@ -14,6 +14,11 @@ Ground::~Ground()
 {
 }
 
+void Ground::SetTexture(std::string tex)
+{
+	texture = tex;
+}
+
 void Ground::SetupGroundMatrix(float x, float y, float z)
 {
 	MatrixWrapper* PositionalMatrix = new MatrixWrapper();
@@ -25,8 +30,10 @@ void Ground::SetupGroundMatrix(float x, float y, float z)
 	Position->SetMatrix(PositionalMatrix->GetMatrix() * ScalingMatrix->GetMatrix());
 }
 
-void Ground::CreateGround(Renderer* render, LPCWSTR argFileName)
+void Ground::CreateGround(Renderer* render, Resource_Manager* resourcemanager, LPCWSTR argFileName)
 {
+	resourcemanager->loadManualTexture(texture);
+
 	render->VertexBufferExists(v_buffer);
 	render->IndexBufferExists(i_buffer);
 
@@ -239,7 +246,7 @@ void Ground::RenderGround(Renderer* render)
 	{
 		l->WriteToFile(Error, "Ground SetIndices failed");
 	}
-	if( FAILED(render->SetTexture("grass.jpg")))
+	if( FAILED(render->SetTexture(texture)))
 	{
 		l->WriteToFile(Error, "Ground SetTextureHM failed");
 	}

@@ -49,12 +49,16 @@ Skybox::Skybox()
 
 	i_buffer = "SkyboxIndexBuffer";
 	v_buffer = "SkyboxVertexBuffer";
-	texture = "dome2.jpg";
 }
 
 Skybox::~Skybox()
 {
 
+}
+
+void Skybox::SetTexture(std::string tex)
+{
+	texture = tex;
 }
 
 void Skybox::InitializeSkybox(Renderer* renderer, Resource_Manager* resourcemanager)
@@ -100,7 +104,7 @@ void Skybox::DrawSkybox(Renderer* renderer, MatrixWrapper* cameraposition)
 	{
 		l->WriteToFile(Error, "Skybox SetIndices failed");
 	}
-	if (FAILED(renderer->SetTexture("dome2.jpg")))
+	if (FAILED(renderer->SetTexture(texture)))
 	{
 		l->WriteToFile(Error, "Skybox SetTextureHM failed");
 	}

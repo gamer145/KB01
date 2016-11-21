@@ -18,25 +18,10 @@ void Scene_Manager::SetUpManager(Window_Manager* windowManager, Resource_Manager
 	myDirectXRenderer->setDrawWindow(CurrentWindow);
 	
 	myResourceManager->setDirectXRenderer(myDirectXRenderer);
-	LevelLoader* levelLoader = new LevelLoader();
+	myLevelLoader = new LevelLoader();
 
-	CurrentScene = new Scene();
-	CurrentScene->SetDirectXRenderer(myDirectXRenderer);
-	CurrentScene->setResourceManager(myResourceManager);
-	CurrentScene = levelLoader->ReadFromFile(myResourceManager, CurrentScene);
+	newScene();
 
-
-	myResourceManager->loadManualTexture("grass.jpg");
-	hoogteMap = new Ground();
-	hoogteMap->CreateGround(myDirectXRenderer, L"..//Models//hoogtemap2.bmp");
-
-	skybox = new Skybox();
-	skybox->InitializeSkybox(myDirectXRenderer, myResourceManager);
-	hoogteMap->SetupGroundMatrix(0, 0, 0);
-
-	myInputHandler = new InputHandler();
-	myInputHandler->InitInputHandler(CurrentWindow);
-	CurrentScene->initCamera(myInputHandler);
 
 	Scenes.insert (std::pair<Scene*, Window*>(CurrentScene, CurrentWindow));
 }
@@ -48,11 +33,19 @@ Window* Scene_Manager::RequestWindow()
 	return window;
 }
 
-void Scene_Manager::addScene()
+void Scene_Manager::newScene()
 {
 	Window* window = RequestWindow();
-	Scene* scene = new Scene();	
-	Scenes.insert ( std::pair<Scene*, Window*>(scene, window) ); 
+	CurrentScene = new Scene();	
+	CurrentScene->SetDirectXRenderer(myDirectXRenderer);
+	CurrentScene = myLevelLoader->ReadFromFile(myResourceManager, CurrentScene);
+	CurrentScene->initGround(myResourceManager);
+	CurrentScene->initSkybox(myResourceManager);
+
+	myInputHandler = new InputHandler();
+	myInputHandler->InitInputHandler(CurrentWindow);
+	CurrentScene->initCamera(myInputHandler);
+	Scenes.insert ( std::pair<Scene*, Window*>(CurrentScene, window) ); 
 }
 
 void Scene_Manager::setCurrentScene(std::string windowname)
@@ -81,13 +74,6 @@ ERUNSTATE Scene_Manager::UpdateScene()
 
 		state = CurrentScene->UpdateOculus(CurrentScene->GetConfig().GetEyeRenderParams(OVR::Util::Render::StereoEye_Left));
 		state = CurrentScene->UpdateOculus(CurrentScene->GetConfig().GetEyeRenderParams(OVR::Util::Render::StereoEye_Right));
-
-		hoogteMap->RenderGround(myDirectXRenderer);
-
-		//  fixme r     this still no working mon
-		skybox->DrawSkybox(myDirectXRenderer, CurrentScene->getCamera()->getPosition());
-
-
 
 		//CurrentScene->endS();
 
@@ -121,39 +107,9 @@ ERUNSTATE Scene_Manager::UpdateScene()
 
 		state = CurrentScene->Update();
 
-		hoogteMap->RenderGround(myDirectXRenderer);
-
-		//  fixme r     this still no working mon
-		skybox->DrawSkybox(myDirectXRenderer, CurrentScene->getCamera()->getPosition());
-
-		//myDirectXRenderer->RenderToTexture();
-
-		//CurrentScene->endS();
-
-
-		//CurrentScene->clear();
-		//CurrentScene->beginS();
-
-		//myDirectXRenderer->setupRenderToTextureOculus();
-
-		//state = CurrentScene->Update();
-
-		//hoogteMap->RenderHeightmap(myDirectXRenderer);
-
-		//  fixme r     this still no working mon
-		//skybox->DrawSkybox(myDirectXRenderer, CurrentScene->getCamera()->getPosition());
-
-		//myDirectXRenderer->RenderToTexture();
-
-		//CurrentScene->endS();
-
-		//myDirectXRenderer->RenderToTexture();
-
 		myDirectXRenderer->RenderToTexture();
 
 		CurrentScene->endS();
-
-
 
 		myDirectXRenderer->Present();
 

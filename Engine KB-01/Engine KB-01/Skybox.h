@@ -13,7 +13,7 @@ public:
 	~Skybox();
 	void InitializeSkybox(Renderer* renderer, Resource_Manager* resourcemanager);
 	void DrawSkybox(Renderer* renderer, MatrixWrapper* cameraposition);
-
+	void SetTexture(std::string tex);
 
 private:
 	std::string i_buffer;

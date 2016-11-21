@@ -2,7 +2,7 @@
 
 Scene::Scene()
 {
-	
+
 }
 
 
@@ -11,9 +11,26 @@ Scene::~Scene()
 
 }
 
+void Scene::initGround(Resource_Manager* RManager)
+{
+	ground = new Ground();
+	ground->SetTexture("grass.jpg");
+	ground->CreateGround(myDirectXRenderer, RManager, L"..//Models//hoogtemap2.bmp");
+	ground->SetupGroundMatrix(0, 0, 0);
+
+}
+
+void Scene::initSkybox(Resource_Manager* RManager)
+{
+	skybox = new Skybox();
+	skybox->SetTexture("dome2.jpg");
+	skybox->InitializeSkybox(myDirectXRenderer, RManager);	
+}
+
 void Scene::initCamera(InputHandlerInterface* IH)
 {
 	sceneState = RUNNING;
+	
 	currentCamera->Initialize();
 	currentCamera->SetInputHandler(IH);
 }
@@ -41,11 +58,6 @@ void Scene::AddLight(Light* newLight)
 void Scene::SetDirectXRenderer(Renderer* render)
 {
 	myDirectXRenderer = render;
-}
-
-void Scene::setResourceManager(Resource_Manager* r)
-{
-	RManager = r;
 }
 
 ERUNSTATE Scene::Update()
@@ -97,9 +109,9 @@ void Scene::Draw()
 
 			myDirectXRenderer->SetUpWorld(currentCamera->getPosition(), currentCamera->getProjectionMatrix());
 
-			//myDirectXRenderer->SetShader("firstshader");
-
+			skybox->DrawSkybox(myDirectXRenderer, currentCamera->getPosition());
 			
+			ground->RenderGround(myDirectXRenderer);			
 
 			for(std::vector<VisualObject*>::iterator i = activeObjects.begin(); i != activeObjects.end(); ++i)
 			{
