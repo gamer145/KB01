@@ -4,6 +4,8 @@
 *.pdb
 *.log
 *.tlog
+*.db
+*.opendb
 Engine KB-01/Debug
 Engine KB-01/Engine KB-01/Debug
 Engine KB-01/Demo/Debug

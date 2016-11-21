@@ -19,10 +19,9 @@ MouseListener::MouseListener( Window* argWindow, LPDIRECTINPUT8 argDInput )
 
 	if (!InitMouse()) //Try to create a mouse object
 	{
-		//Creation failed, we need to log the error, notify the user and stop the program with a negative exit code
+		//Creation failed, we need to log the error, notify the user and not display a cursor, since there is no mouse
 		loggerM->WriteToFile(FatalError, "MouseListener: kan muis niet vangen.");
 		int result = window->ShowMessagebox("MouseListener: kan muis niet vangen.", "Fatal Error", MB_ICONERROR | MB_OK);
-		exit(-1);
 		ShowCursor(FALSE);
 	}	
 }
@@ -142,7 +141,8 @@ bool MouseListener::isButtonDown(int button, MouseStruct mouse)
 		case 7:
 			return mouse.button7;
 	}
-	return false; //Als argument button niet 0-7 is.
+	return false;	//If none of the buttons are down
+					//Or if button down is outside the range of 0-7, meaning button is unsupported
 }
 
 /**
@@ -156,8 +156,8 @@ MouseStruct MouseListener::GetMouseInput()
 		//We don't have the mouse yet
 		if(!SUCCEEDED( dDeviceMouse->Acquire() ) )
 		{
-			//We can't get the mouse :(
-			//LOG DIE SHIT
+			//We can't get the mouse
+			loggerM->WriteToFile(FatalError, "MouseListener: kan muis niet vangen.");
 		}
 	}
 	SetTheMouseBuffer();
@@ -171,7 +171,7 @@ MouseStruct MouseListener::GetMouseInput()
  void MouseListener::SetTheMouseBuffer()
 {
 	DIDEVICEOBJECTDATA od;
-	DWORD elements = 1;
+	EDWORD elements = 1;
 
 	HRESULT hr = dDeviceMouse->GetDeviceData( sizeof(DIDEVICEOBJECTDATA), &od, &elements, 0 );
 	//&elements = number of elements in deviceData. 

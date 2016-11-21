@@ -12,16 +12,15 @@ KeyboardListener::KeyboardListener( Window* argWindow, LPDIRECTINPUT8 argDInput 
 	window = argWindow;
 	if (!InitKeyboard())
 	{
-		//Kan toetsenbord niet vangen, eerst loggen en dan waarschuwen.
+		//Creation failed, we need to log the error, notify the user
 		loggerKB->WriteToFile(FatalError, "KeyboardListener: kan toetsenbord niet vangen.");
-		int result = window->ShowMessagebox("KeyboardListener: kan toetsenbord niet vangen.", "Fatal Error", MB_ICONERROR | MB_OK); //met result nog iets doen?
-		exit(-1);
+		int result = window->ShowMessagebox("KeyboardListener: kan toetsenbord niet vangen.", "Fatal Error", MB_ICONERROR | MB_OK);
 	}
 }
 
 KeyboardListener::~KeyboardListener()
 {
-	SaveReleaseDevice();
+	SaveReleaseDevice(); //Cleanup the keyboard
 }
 
 /**

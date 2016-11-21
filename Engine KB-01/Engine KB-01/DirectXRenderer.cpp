@@ -346,7 +346,7 @@ HRESULT DirectXRenderer::SetStreamSource(int streamnumber, std::string vertexbuf
 	return g_pd3dDevice->SetStreamSource(streamnumber, vertexbuffer, offset, stride);
 }
 
-HRESULT DirectXRenderer::SetFVF(DWORD FVF)
+HRESULT DirectXRenderer::SetFVF(EDWORD FVF)
 {
 	return g_pd3dDevice->SetFVF(FVF);
 }
@@ -479,7 +479,7 @@ void DirectXRenderer::SetZBuffer(bool state)
 	g_pd3dDevice->SetRenderState(D3DRS_ZENABLE, state);
 }
 
-void DirectXRenderer::Clear(DWORD count, DWORD flags, D3DCOLOR color, float z, DWORD stencil)
+void DirectXRenderer::Clear(EDWORD count, EDWORD flags, ECOLOR color, float z, EDWORD stencil)
 {
 	g_pd3dDevice->Clear(count, NULL, flags, color, z, stencil);
 }

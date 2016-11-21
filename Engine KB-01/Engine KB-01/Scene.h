@@ -16,18 +16,17 @@
 class Scene
 {
 public:
-	Scene();
-	~Scene();
-	std::string writeToString();
-	void initCamera(InputHandlerInterface* IH);
-	ERUNSTATE Update();
-	ERUNSTATE UpdateOculus(const OVR::Util::Render::StereoEyeParams& stereo);
-	void SetDirectXRenderer(Renderer* render);
-	void setResourceManager(Resource_Manager* r);
-	void AddObject(VisualObject* newObject);
-	void AddLight(Light* newLight);
-	void setCamera(Camera* c);
-	Camera* getCamera();
+	Scene(); //Constructor
+	~Scene(); //Destructor
+	void initCamera(InputHandlerInterface* IH); //Initialize a new camera and give it the needs to read Input
+	ERUNSTATE Update();	//Update loop, what needs to be calculated or processed during runtime goes here
+	ERUNSTATE UpdateOculus(const OVR::Util::Render::StereoEyeParams& stereo); //Update loop for Oculus
+	void SetDirectXRenderer(Renderer* render); //Assigns a existing directX renderer device to the scene
+	void setResourceManager(Resource_Manager* r); //Assigns a existing Resource Manager to the scene
+	void AddObject(VisualObject* newObject); //Adds a new object to the list of VisualObjects in the scene
+	void AddLight(Light* newLight); //Adds a new light to the list of Lights in the scene
+	void setCamera(Camera* c); //Assigns a existing Camera to the scene
+	Camera* getCamera(); //Returns the Camera currently assigned to the scene
 	OVR::Util::Render::StereoConfig GetConfig();
 
 

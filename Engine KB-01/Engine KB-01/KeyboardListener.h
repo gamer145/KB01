@@ -13,9 +13,11 @@ class KeyboardListener
 public:
 	KeyboardListener(Window* argWindow, LPDIRECTINPUT8 argDInput);
 	~KeyboardListener();
-	bool  InitKeyboard();
-	bool getAction(EACTION action, float& value); //Asks the listener whether it knows the action or not and if the conditions have been met for it
-	void SaveReleaseDevice();
+	bool InitKeyboard();
+	bool getAction(EACTION action, float& value);	//Asks the listener whether it knows the action or not and if the conditions have been met for it
+													//Argument value will be filled inside the function, and be used if there is an answer
+	void SaveReleaseDevice();	//Always called inside the destructor
+								//Clears up the device for monitoring
 	bool ProcessKBInput(byte argKeyIsPressed);
 	bool DoAcquire();
 private:
