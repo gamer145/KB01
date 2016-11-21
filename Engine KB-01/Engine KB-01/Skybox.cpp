@@ -4,33 +4,33 @@ Skybox::Skybox()
 {
 	amountOfVertices = 24;
 	amountOfIndices = 36;
-
-	aSkyboxVertices = new VERTEX[amountOfVertices]();
+		
+	aSkyboxVertices = new LIGHTLESSVERTEX[amountOfVertices];
 	
-	aSkyboxVertices[0] = VERTEX(-2.0f, -2.0f, 2.0f, 0.25f, 0.6666f, 0, 0, 0);//front
-	aSkyboxVertices[1] = VERTEX(2.0f, -2.0f, 2.0f, 0.50f, 0.6666f, 0, 0, 0);
-	aSkyboxVertices[2] = VERTEX(2.0f, 2.0f, 2.0f, 0.50f, 0.3333f, 0, 0, 0);
-	aSkyboxVertices[3] = VERTEX(-2.0f, 2.0f, 2.0f, 0.25f, 0.3333f, 0, 0, 0);
-	aSkyboxVertices[4] = VERTEX(2.0f, -2.0f, 2.0f, 0.50f, 0.6666f, 0, 0, 0);//right
-	aSkyboxVertices[5] = VERTEX(2.0f, -2.0f, -2.0f, 0.75f, 0.6666f, 0, 0, 0);
-	aSkyboxVertices[6] = VERTEX(2.0f, 2.0f, -2.0f, 0.75f, 0.3333f, 0, 0, 0);
-	aSkyboxVertices[7] = VERTEX(2.0f, 2.0f, 2.0f, 0.50f, 0.3333f, 0, 0, 0);
-	aSkyboxVertices[8] = VERTEX(2.0f, -2.0f, -2.0f, 0.75f, 0.6666f, 0, 0, 0);//back
-	aSkyboxVertices[9] = VERTEX(-2.0f, -2.0f, -2.0f, 1.0f, 0.6666f, 0, 0, 0);
-	aSkyboxVertices[10] = VERTEX(-2.0f, 2.0f, -2.0f, 1.0f, 0.3333f, 0, 0, 0);
-	aSkyboxVertices[11] = VERTEX(2.0f, 2.0f, -2.0f, 0.75f, 0.3333f, 0, 0, 0);
-	aSkyboxVertices[12] = VERTEX(-2.0f, -2.0f, -2.0f, 0.0f, 0.6666f, 0, 0, 0);//left
-	aSkyboxVertices[13] = VERTEX(-2.0f, -2.0f, 2.0f, 0.25f, 0.6666f, 0, 0, 0);
-	aSkyboxVertices[14] = VERTEX(-2.0f, 2.0f, 2.0f, 0.25f, 0.3333f, 0, 0, 0);
-	aSkyboxVertices[15] = VERTEX(-2.0f, 2.0f, -2.0f, 0.0f, 0.3333f, 0, 0, 0);
-	aSkyboxVertices[16] = VERTEX(-2.0f, 2.0f, 2.0f, 0.25f, 0.3333f, 0, 0, 0);//top
-	aSkyboxVertices[17] = VERTEX(2.0f, 2.0f, 2.0f, 0.50f, 0.3333f, 0, 0, 0);
-	aSkyboxVertices[18] = VERTEX(2.0f, 2.0f, -2.0f, 0.50f, 0.0f, 0, 0, 0);
-	aSkyboxVertices[19] = VERTEX(-2.0f, 2.0f, -2.0f, 0.25f, 0.0f, 0, 0, 0);
-	aSkyboxVertices[20] = VERTEX(-2.0f, -2.0f, 2.0f, 0.25f, 0.6666f, 0, 0, 0);//bottom
-	aSkyboxVertices[21] = VERTEX(2.0f, -2.0f, 2.0f, 0.50f, 0.6666f, 0, 0, 0);
-	aSkyboxVertices[22] = VERTEX(2.0f, -2.0f, -2.0f, 0.50f, 1.0f, 0, 0, 0);
-	aSkyboxVertices[23] = VERTEX(-2.0f, -2.0f, -2.0f, 0.25f, 1.0f, 0, 0, 0);
+	aSkyboxVertices[0] = LIGHTLESSVERTEX(-2.0f, -2.0f, 2.0f, 0.25f, 0.6666f);//front
+	aSkyboxVertices[1] = LIGHTLESSVERTEX(2.0f, -2.0f, 2.0f, 0.50f, 0.6666f);
+	aSkyboxVertices[2] = LIGHTLESSVERTEX(2.0f, 2.0f, 2.0f, 0.50f, 0.3333f);
+	aSkyboxVertices[3] = LIGHTLESSVERTEX(-2.0f, 2.0f, 2.0f, 0.25f, 0.3333f);
+	aSkyboxVertices[4] = LIGHTLESSVERTEX(2.0f, -2.0f, 2.0f, 0.50f, 0.6666f);//right
+	aSkyboxVertices[5] = LIGHTLESSVERTEX(2.0f, -2.0f, -2.0f, 0.75f, 0.6666f);
+	aSkyboxVertices[6] = LIGHTLESSVERTEX(2.0f, 2.0f, -2.0f, 0.75f, 0.3333f);
+	aSkyboxVertices[7] = LIGHTLESSVERTEX(2.0f, 2.0f, 2.0f, 0.50f, 0.3333f);
+	aSkyboxVertices[8] = LIGHTLESSVERTEX(2.0f, -2.0f, -2.0f, 0.75f, 0.6666f);//back
+	aSkyboxVertices[9] = LIGHTLESSVERTEX(-2.0f, -2.0f, -2.0f, 1.0f, 0.6666f);
+	aSkyboxVertices[10] = LIGHTLESSVERTEX(-2.0f, 2.0f, -2.0f, 1.0f, 0.3333f);
+	aSkyboxVertices[11] = LIGHTLESSVERTEX(2.0f, 2.0f, -2.0f, 0.75f, 0.3333f);
+	aSkyboxVertices[12] = LIGHTLESSVERTEX(-2.0f, -2.0f, -2.0f, 0.0f, 0.6666f);//left
+	aSkyboxVertices[13] = LIGHTLESSVERTEX(-2.0f, -2.0f, 2.0f, 0.25f, 0.6666f);
+	aSkyboxVertices[14] = LIGHTLESSVERTEX(-2.0f, 2.0f, 2.0f, 0.25f, 0.3333f);
+	aSkyboxVertices[15] = LIGHTLESSVERTEX(-2.0f, 2.0f, -2.0f, 0.0f, 0.3333f);
+	aSkyboxVertices[16] = LIGHTLESSVERTEX(-2.0f, 2.0f, 2.0f, 0.25f, 0.3333f);//top
+	aSkyboxVertices[17] = LIGHTLESSVERTEX(2.0f, 2.0f, 2.0f, 0.50f, 0.3333f);
+	aSkyboxVertices[18] = LIGHTLESSVERTEX(2.0f, 2.0f, -2.0f, 0.50f, 0.0f);
+	aSkyboxVertices[19] = LIGHTLESSVERTEX(-2.0f, 2.0f, -2.0f, 0.25f, 0.0f);
+	aSkyboxVertices[20] = LIGHTLESSVERTEX(-2.0f, -2.0f, 2.0f, 0.25f, 0.6666f);//bottom
+	aSkyboxVertices[21] = LIGHTLESSVERTEX(2.0f, -2.0f, 2.0f, 0.50f, 0.6666f);
+	aSkyboxVertices[22] = LIGHTLESSVERTEX(2.0f, -2.0f, -2.0f, 0.50f, 1.0f);
+	aSkyboxVertices[23] = LIGHTLESSVERTEX(-2.0f, -2.0f, -2.0f, 0.25f, 1.0f);
 
 	aSkyboxIndices = new unsigned int[amountOfIndices];
 
@@ -64,10 +64,18 @@ void Skybox::InitializeSkybox(Renderer* renderer, Resource_Manager* resourcemana
 
 	if ((!i_buffer.empty()) && (!v_buffer.empty()))
 	{
-		
-
-		renderer->CreateIndexBuffer(amountOfIndices * sizeof(int), 0, FMT_INDEX32, EPOOL_DEFAULT, i_buffer, NULL);
-		renderer->CreateVertexBuffer(amountOfVertices * sizeof(VERTEX), 0, ECUSTOMFVF, EPOOL_DEFAULT, v_buffer, NULL);
+		if (FAILED(renderer->CreateIndexBuffer(amountOfIndices * sizeof(int), 0, FMT_INDEX32, EPOOL_DEFAULT, i_buffer, NULL)))
+		{
+			l->WriteToFile(Error, "Skybox CreateIndexBuffer failed");
+		}
+		if (FAILED(renderer->CreateVertexBuffer(amountOfVertices * sizeof(LIGHTLESSVERTEX), 0, ECUSTOMLIGHTLESSFVF, EPOOL_DEFAULT, v_buffer, NULL)))
+		{
+			l->WriteToFile(Error, "Skybox CreateVertexBuffer failed");
+		}
+	}
+	else
+	{
+		l->WriteToFile(Error, "Skybox Buffers not empty");
 	}
 }
 
@@ -78,27 +86,27 @@ void Skybox::DrawSkybox(Renderer* renderer, MatrixWrapper* cameraposition)
 
 	if (FAILED(renderer->setTransform(E_WORLD, cameraposition)))
 	{
-		l->WriteToFile(Error, "SetTransformFailed");
+		l->WriteToFile(Error, "Skybox SetTransform failed");
 	}
-	if (FAILED(renderer->SetStreamSource(0, v_buffer, 0, sizeof(VERTEX))))
+	if (FAILED(renderer->SetStreamSource(0, v_buffer, 0, sizeof(LIGHTLESSVERTEX))))
 	{
-		l->WriteToFile(Error, "SetStreamSourceFailed");
+		l->WriteToFile(Error, "Skybox SetStreamSource failed");
 	}
-	if (FAILED(renderer->SetFVF(ECUSTOMFVF)))
+	if (FAILED(renderer->SetFVF(ECUSTOMLIGHTLESSFVF)))
 	{
-		l->WriteToFile(Error, "SetFVFFailed");
+		l->WriteToFile(Error, "Skybox SetFVF failed");
 	}
 	if (FAILED(renderer->SetIndices(i_buffer)))
 	{
-		l->WriteToFile(Error, "SetIndicesFailed");
+		l->WriteToFile(Error, "Skybox SetIndices failed");
 	}
 	if (FAILED(renderer->SetTexture("dome2.jpg")))
 	{
-		l->WriteToFile(Error, "SetTextureHMFailed");
+		l->WriteToFile(Error, "Skybox SetTextureHM failed");
 	}
 	if (FAILED(renderer->DrawIndexedPrimitive(EPT_TRIANGLELIST, 0, 0, amountOfVertices, 0, amountOfIndices / 3)))
 	{
-		l->WriteToFile(Error, "IndexDrawFailed");
+		l->WriteToFile(Error, "Skybox IndexDraw failed");
 	}
 
 	renderer->SetZBuffer(true);

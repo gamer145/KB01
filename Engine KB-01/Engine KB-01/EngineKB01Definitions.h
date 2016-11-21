@@ -27,7 +27,8 @@ typedef EDWORD ECOLOR;
 #define EFVF_XYZ              0x002
 #define EFVF_TEX1             0x100
 #define EFVF_NORMAL			  0x010
-#define ECUSTOMFVF (EFVF_XYZ|EFVF_NORMAL|EFVF_TEX1)
+#define ECUSTOMFVF (EFVF_XYZ|EFVF_TEX1|EFVF_NORMAL)
+#define ECUSTOMLIGHTLESSFVF (EFVF_XYZ|EFVF_TEX1)
 
 
 struct MouseStruct
@@ -63,6 +64,29 @@ struct VECTOR
 	}
 
 	float X, Y, Z;
+};
+
+struct LIGHTLESSVERTEX
+{
+	LIGHTLESSVERTEX()
+	{
+		x = 0.0f;
+		y = 0.0f;
+		z = 0.0f;
+		tu = 0.0f;
+		tv = 0.0f;
+	}
+
+	LIGHTLESSVERTEX(float ix, float iy, float iz, float itu, float itv)
+	{
+		x = ix;
+		y = iy;
+		z = iz;
+		tu = itu;
+		tv = itv;
+	}
+
+	float x, y, z, tu, tv;
 };
 
 struct VERTEX

@@ -119,8 +119,11 @@ void Ground::CreateGround(Renderer* render, LPCWSTR argFileName)
 	}
 
 
-	render->CreateVertexBuffer(vertexcount*sizeof(VERTEX),
-		0, ECUSTOMFVF, EPOOL_MANAGED, v_buffer, NULL);
+	if (FAILED(render->CreateVertexBuffer(vertexcount * sizeof(VERTEX),
+		0, ECUSTOMFVF, EPOOL_MANAGED, v_buffer, NULL)))
+	{
+		l->WriteToFile(Error, "Ground CreateVertexBuffer failed");
+	}
 
 
 	VOID* pVoid;
@@ -129,17 +132,20 @@ void Ground::CreateGround(Renderer* render, LPCWSTR argFileName)
 	// lock v_buffer and load the vertices into it
 	if (FAILED(render->LockVertexBuffer(v_buffer, 0, sizeof(VERTEX) * vertexcount, (void**)&pVoid, 0)))
 	{
-		l->WriteToFile(Error, "VBLockFailed");
+		l->WriteToFile(Error, "Ground VBLock failed");
 	}
 	memcpy(pVoid, vertices, sizeof(VERTEX) * vertexcount);
 
 	if (FAILED(render->UnlockVertexBuffer(v_buffer)))
 	{
-		l->WriteToFile(Error, "VBUnLockFailed");
+		l->WriteToFile(Error, "Ground VBUnLock failed");
 	}
 
-	render->CreateIndexBuffer((amountIndices)*sizeof(int),
-		0, FMT_INDEX32, EPOOL_MANAGED, i_buffer, NULL);
+	if (FAILED(render->CreateIndexBuffer((amountIndices) * sizeof(int),
+		0, FMT_INDEX32, EPOOL_MANAGED, i_buffer, NULL)))
+	{
+		l->WriteToFile(Error, "Ground CreateIndexBuffer failed");
+	}
 
     // create an index buffer interface called i_buffer
 	
@@ -148,14 +154,14 @@ void Ground::CreateGround(Renderer* render, LPCWSTR argFileName)
 
 	if( FAILED( render->LockIndexBuffer(i_buffer, 0, sizeof(int) * amountIndices, (void**)&pVoid2, 0)))
 	{
-		l->WriteToFile(Error, "IBLockFailed");
+		l->WriteToFile(Error, "Ground IBLock failed");
 	}
 
 	memcpy(pVoid2, indices, sizeof(int) * amountIndices);
   	
 	if (FAILED(render->UnlockIndexBuffer(i_buffer)))
 	{
-		l->WriteToFile(Error, "IBUnLockFailed");
+		l->WriteToFile(Error, "Ground IBUnLock failed");
 	}
 }
 
@@ -210,37 +216,36 @@ byte* Ground::LoadBMP(LPCWSTR argFileName)
 			heightData[(lHeight*widthBMP)+lWidth+0] = GetRValue(GetPixel(lhdcDest, lHeight, lWidth));
 		}
 	}
-	l->WriteToFile(Success, "The heightdata has been retrieved.");
+	l->WriteToFile(Success, "Ground heightdata has been retrieved.");
 	return heightData;
 }
 
 void Ground::RenderGround(Renderer* render)
-{
-	
+{	
 
 	if( FAILED(render->setTransform(E_WORLD, Position)))
 	{
-		l->WriteToFile(Error, "SetTransformFailed");
+		l->WriteToFile(Error, "Ground SetTransform failed");
 	}
 	if( FAILED(render->SetStreamSource(0, v_buffer, 0, sizeof(VERTEX))))
 	{
-		l->WriteToFile(Error, "SetStreamSourceFailed");
+		l->WriteToFile(Error, "Ground SetStreamSource failed");
 	}
 	if( FAILED(render->SetFVF(ECUSTOMFVF)))
 	{
-		l->WriteToFile(Error, "SetFVFFailed");
+		l->WriteToFile(Error, "Ground SetFVF failed");
 	}
 	if( FAILED(render->SetIndices(i_buffer)))
 	{
-		l->WriteToFile(Error, "SetIndicesFailed");
+		l->WriteToFile(Error, "Ground SetIndices failed");
 	}
 	if( FAILED(render->SetTexture("grass.jpg")))
 	{
-		l->WriteToFile(Error, "SetTextureHMFailed");
+		l->WriteToFile(Error, "Ground SetTextureHM failed");
 	}
 	if( FAILED(render->DrawIndexedPrimitive(EPT_TRIANGLELIST, 0, 0, (heightBMP * widthBMP), 0, (heightBMP-1) * (widthBMP-1) * 2)))
 	{
-		l->WriteToFile(Error, "IndexDrawFailed");
+		l->WriteToFile(Error, "Ground IndexDraw failed");
 	}
 }
 

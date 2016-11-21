@@ -35,7 +35,7 @@ public:
 	virtual void addTexture(std::string textname, TextureWrapper* Text) = 0;
 	virtual void addMesh(std::string meshname, MeshWrapper* Mesh) = 0;
 	virtual void setDrawWindow(Window* windowtodrawin) = 0;
-	virtual void CreateVertexBuffer(int heightmapvertex, EDWORD usage, EDWORD fvf, EPOOL pool, std::string vertexbuffername, HANDLE handle) = 0;
+	virtual HRESULT CreateVertexBuffer(int heightmapvertex, EDWORD usage, EDWORD fvf, EPOOL pool, std::string vertexbuffername, HANDLE handle) = 0;
 	virtual HRESULT CreateIndexBuffer(int length, EDWORD usage, EFORMAT format, EPOOL pool, std::string indexbuffername, HANDLE* handle) = 0;
 	virtual HRESULT LockVertexBuffer(std::string vertexbuffername, int offsettolock, int sizetolock, void** pbdata, EDWORD flags) = 0;
 	virtual HRESULT UnlockVertexBuffer(std::string vertexbuffername) = 0;

@@ -41,7 +41,7 @@ public:
 	void addMesh(std::string meshname, MeshWrapper* Mesh);
 	void setDrawWindow(Window* windowtodrawin);
 	//void setStreamSource(VertexBufferWrapper *pStreamData, UINT OffsetInBytes);
-	void CreateVertexBuffer(int heightmapvertex, EDWORD usage, EDWORD fvf, EPOOL pool, std::string vertexbuffername, HANDLE handle);
+	HRESULT CreateVertexBuffer(int heightmapvertex, EDWORD usage, EDWORD fvf, EPOOL pool, std::string vertexbuffername, HANDLE handle);
 	HRESULT CreateIndexBuffer(int length, EDWORD usage, EFORMAT format, EPOOL pool, std::string indexbuffername, HANDLE* handle);
 	HRESULT LockVertexBuffer(std::string vertexbuffername, int offsettolock, int sizetolock, void** pbdata, EDWORD flags);
 	HRESULT UnlockVertexBuffer(std::string vertexbuffername);

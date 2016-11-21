@@ -52,6 +52,8 @@ HRESULT DirectXRenderer::InitD3D( HWND hWnd )
 	this->backBufferWidth = d3dpp.BackBufferWidth;
 	this->backBufferHeight = d3dpp.BackBufferHeight;
 
+
+	/* *OCU*
 	// fixme r   this be ugly mon
 
 	//Initialize the texture where the barrel distortion effect is drawn to
@@ -102,20 +104,19 @@ HRESULT DirectXRenderer::InitD3D( HWND hWnd )
 
 	g_pd3dDevice->CreatePixelShader((DWORD*)pCode->GetBufferPointer(),
 		&lpPixelShader);
-
+	*/
 
 		
 	//create the quad we will draw the scene on
 	//pd3dDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-	createScreenQuadOculus(backBufferWidth / 2, backBufferHeight / 2);
 
-	//
+	//*OCU* createScreenQuadOculus(backBufferWidth / 2, backBufferHeight / 2);
 
 	SetFVF(ECUSTOMFVF);
 
 
 	g_pd3dDevice->SetRenderState( D3DRS_ZENABLE, TRUE );
-	g_pd3dDevice->SetRenderState( D3DRS_LIGHTING, true);
+	g_pd3dDevice->SetRenderState( D3DRS_LIGHTING, TRUE );
 	g_pd3dDevice->SetRenderState( D3DRS_CULLMODE, D3DCULL_CCW);
 	g_pd3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_SOLID);
 
@@ -250,15 +251,17 @@ void DirectXRenderer::setStreamSource(IDirect3DVertexBuffer9 *pStreamData, UINT 
 }
 */
 
-void DirectXRenderer::CreateVertexBuffer(int heightmapvertex, EDWORD usage, EDWORD fvf, EPOOL pool, std::string vertexbuffername, HANDLE handle)
+HRESULT DirectXRenderer::CreateVertexBuffer(int heightmapvertex, EDWORD usage, EDWORD fvf, EPOOL pool, std::string vertexbuffername, HANDLE handle)
 {
 	VertexBufferExists(vertexbuffername);
 
 	LPDIRECT3DVERTEXBUFFER9 vertexbuffer = VertexBuffers.find(vertexbuffername)->second;
 
-	g_pd3dDevice->CreateVertexBuffer(heightmapvertex, usage, fvf, static_cast<D3DPOOL>(pool), &vertexbuffer, NULL);
+	HRESULT result = g_pd3dDevice->CreateVertexBuffer(heightmapvertex, usage, fvf, static_cast<D3DPOOL>(pool), &vertexbuffer, NULL);
 
 	VertexBuffers.find(vertexbuffername)->second = vertexbuffer;
+
+	return result;
 }
 
 HRESULT DirectXRenderer::CreateIndexBuffer(int length, EDWORD usage, EFORMAT format, EPOOL pool, std::string indexbuffername, HANDLE* handle)

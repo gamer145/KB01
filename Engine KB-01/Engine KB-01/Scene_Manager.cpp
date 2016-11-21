@@ -149,7 +149,7 @@ ERUNSTATE Scene_Manager::UpdateScene()
 
 		//myDirectXRenderer->RenderToTexture();
 
-		//myDirectXRenderer->RenderToTexture();
+		myDirectXRenderer->RenderToTexture();
 
 		CurrentScene->endS();
 

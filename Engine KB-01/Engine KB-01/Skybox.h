@@ -22,7 +22,7 @@ private:
 	Logger* l;
 	int amountOfVertices;
 	int amountOfIndices;
-	VERTEX* aSkyboxVertices;
+	LIGHTLESSVERTEX* aSkyboxVertices;
 	unsigned int* aSkyboxIndices;
 	//MatrixWrapper* Position;
 };

@@ -20,8 +20,8 @@ MouseListener::MouseListener( Window* argWindow, LPDIRECTINPUT8 argDInput )
 	if (!InitMouse()) //Try to create a mouse object
 	{
 		//Creation failed, we need to log the error, notify the user and not display a cursor, since there is no mouse
-		loggerM->WriteToFile(FatalError, "MouseListener: kan muis niet vangen.");
-		int result = window->ShowMessagebox("MouseListener: kan muis niet vangen.", "Fatal Error", MB_ICONERROR | MB_OK);
+		loggerM->WriteToFile(FatalError, "Can´t create mouse Object");
+		int result = window->ShowMessagebox("Can´t create mouse Object", "Fatal Error", MB_ICONERROR | MB_OK);
 		ShowCursor(FALSE);
 	}	
 }
@@ -157,7 +157,7 @@ MouseStruct MouseListener::GetMouseInput()
 		if(!SUCCEEDED( dDeviceMouse->Acquire() ) )
 		{
 			//We can't get the mouse
-			loggerM->WriteToFile(FatalError, "MouseListener: kan muis niet vangen.");
+			loggerM->WriteToFile(FatalError, "MouseListener: Can't get mouse");
 		}
 	}
 	SetTheMouseBuffer();
