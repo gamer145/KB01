@@ -223,7 +223,6 @@ byte* Ground::LoadBMP(LPCWSTR argFileName)
 			heightData[(lHeight*widthBMP)+lWidth+0] = GetRValue(GetPixel(lhdcDest, lHeight, lWidth));
 		}
 	}
-	l->WriteToFile(Success, "Ground heightdata has been retrieved.");
 	return heightData;
 }
 

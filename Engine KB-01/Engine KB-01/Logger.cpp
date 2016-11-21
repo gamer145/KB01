@@ -36,7 +36,7 @@ void Logger::SetFiles()
 	std::string formattedDatetime = ReplaceCharsInString(currentDateTime(), ':', '_');	
 	genericlogfile = "../Logs/Log " + formattedDatetime + ".txt";
 	errorlogfile = "../Logs/Error/Log " + formattedDatetime + ".txt";
-	succeslogfile = "../Logs/Succes/Log " + formattedDatetime + ".txt";
+	succeslogfile = "../Logs/Success/Log " + formattedDatetime + ".txt";
 	warninglogfile = "../Logs/Warning/Log " + formattedDatetime + ".txt";
 }
 
