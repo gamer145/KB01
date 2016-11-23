@@ -151,10 +151,11 @@ bool MouseListener::isButtonDown(int button, MouseStruct mouse)
  */
 MouseStruct MouseListener::GetMouseInput()
 {
-	if(!SUCCEEDED( dDeviceMouse->Poll()))
+
+	if(FAILED( dDeviceMouse->Poll()))
 	{
 		//We don't have the mouse yet
-		if(!SUCCEEDED( dDeviceMouse->Acquire() ) )
+		if(FAILED( dDeviceMouse->Acquire() ) )
 		{
 			//We can't get the mouse
 			loggerM->WriteToFile(FatalError, "MouseListener: Can't get mouse");
