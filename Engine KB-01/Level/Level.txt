@@ -1,11 +1,10 @@
 Camera EyePoint: 0.0,3.0,-5.0 LookAtPoint: 0.0,0.0,0.0 
-Type:Skybox - dome.x - dome.jpg Multiplier:100
-Type:Model - tiger.x - tiger.jpg PosX:0 PosY:10 PosZ:0 Fly:true
-Type:Model - tiger.x - banana.jpg PosX:0 PosY:10 PosZ:3 Fly:true
-Type:Model - tiger.x - tiger.jpg PosX:3 PosY:10 PosZ:0 Fly:true
-Type:Model - tiger.x - banana.jpg PosX:3 PosY:0 PosZ:3 Fly:true
-Type:Model - tiger.x - tiger.jpg PosX:0 PosY:0 PosZ:6 Fly:true
-Type:Model - tiger.x - tiger.jpg PosX:3 PosY:0 PosZ:6 Fly:true
-Type:Model - tiger.x - banana.jpg PosX:6 PosY:0 PosZ:3 Fly:true
-Type:Model - tiger.x - tiger.jpg PosX:6 PosY:0 PosZ:6 Fly:true
-Type:Model - tiger.x - tiger.jpg PosX:6 PosY:0 PosZ:0 Fly:true
+Model tiger.x tiger.jpg PosX:0 PosY:10 PosZ:0
+Model tiger.x banana.jpg PosX:0 PosY:10 PosZ:3
+Model tiger.x tiger.jpg PosX:3 PosY:10 PosZ:0
+Model tiger.x banana.jpg PosX:3 PosY:0 PosZ:3
+Model tiger.x tiger.jpg PosX:0 PosY:0 PosZ:6
+Model tiger.x tiger.jpg PosX:3 PosY:0 PosZ:6
+Model tiger.x banana.jpg PosX:6 PosY:0 PosZ:3
+Model tiger.x tiger.jpg PosX:6 PosY:0 PosZ:6
+Model tiger.x tiger.jpg PosX:6 PosY:0 PosZ:0

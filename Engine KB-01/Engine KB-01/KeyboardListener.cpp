@@ -73,7 +73,6 @@ bool KeyboardListener::getAction(EACTION action, float& value)
 	{
 		if (ProcessKBInput((byte)DIKEYBOARD_W))
 		{
-			loggerKB->ReadFromFile("Test");
 			value = 0.1f;
 			return true;
 		}
