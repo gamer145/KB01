@@ -13,7 +13,7 @@ HRESULT ModelLoader::LoadModel(std::string modelname, Renderer* DirectXRenderer,
 	MeshWrapper* mesh = new MeshWrapper();
 	
 	
-	if( FAILED( DirectXRenderer->LoadMeshFromFile(modelname, 272, mesh) ) )
+	if( FAILED( DirectXRenderer->LoadMeshFromFile(modelname, NULL, mesh) ) )
         {
             MessageBox( NULL, L"Could not find model", L"Meshes.exe", MB_OK );
           
@@ -21,7 +21,7 @@ HRESULT ModelLoader::LoadModel(std::string modelname, Renderer* DirectXRenderer,
 
 
 
-	object->setSubSet(272);
+	object->setSubSet(NULL);
 
 	return S_OK;
 }

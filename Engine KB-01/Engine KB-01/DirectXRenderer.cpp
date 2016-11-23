@@ -259,7 +259,7 @@ void DirectXRenderer::DrawSubSet(std::string meshname)
 	
 	LPD3DXMESH mesh = Meshes.find(meshname)->second->GetMesh();
 			
-	mesh->DrawSubset(0);		
+	mesh->DrawSubset(NULL);		
 		
 	
 }
