@@ -34,8 +34,8 @@ void Ground::CreateGround(Renderer* render, Resource_Manager* resourcemanager, L
 {
 	resourcemanager->loadManualTexture(texture);
 
-	render->VertexBufferExists(v_buffer);
-	render->IndexBufferExists(i_buffer);
+	render->VertexBufferExists(v_buffer); //Why nothing done with return variable?
+	render->IndexBufferExists(i_buffer); //Why nothing done with return variable?
 
 	byte* heightmap = LoadBMP(argFileName);
 	const int vertexcount = heightBMP * widthBMP;

@@ -1,4 +1,5 @@
 #include "Logger.h"
+#include "EngineTextHandling.h"
 
 Logger* Logger::myLogger = NULL;
 
@@ -20,20 +21,9 @@ const std::string currentDateTime() {
     return buf;
 }
 
-std::string Logger::ReplaceCharsInString(std::string strChange, char a, char b)
-{
-	for (int i = 0; i < strChange.length(); ++i)
-	{
-		if (strChange[i] == a)
-			strChange[i] = b;
-	}
-
-	return strChange;
-}
-
 void Logger::SetFiles()
 {
-	std::string formattedDatetime = ReplaceCharsInString(currentDateTime(), ':', '_');	
+	std::string formattedDatetime = EngineTextHandling::ReplaceCharsInString(currentDateTime(), ':', '_');	
 	genericlogfile = "../Logs/Log " + formattedDatetime + ".txt";
 	errorlogfile = "../Logs/Error/Log " + formattedDatetime + ".txt";
 	succeslogfile = "../Logs/Success/Log " + formattedDatetime + ".txt";
@@ -105,7 +95,28 @@ void Logger::ReadFromFile()
 	{
 		while (getline(myfile,line))
 		{
-				std::cout << line << std::endl; //Veranderen naar messagebox?
+				std::cout << line << std::endl;
+		}
+		myfile.close();
+	}
+	else
+	{
+		std::cout << "Error: unable to open logfile '" << genericlogfile << "'!" << std::endl; //Veranderen naar messagebox?
+	}
+}
+
+void Logger::ReadFromFile(std::string token)
+{
+	std::string line;
+	std::ifstream myfile(genericlogfile.c_str(), std::ifstream::in);
+	if (myfile.is_open())
+	{
+		while (getline(myfile, line))
+		{
+			if (line.find(token) != std::string::npos)
+			{
+				std::cout << line << std::endl;
+			}
 		}
 		myfile.close();
 	}

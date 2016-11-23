@@ -87,6 +87,7 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="EngineMath.cpp" />
+    <ClCompile Include="EngineTextHandling.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="IndexBufferWrapper.cpp" />
@@ -123,6 +124,7 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="EngineMath.h" />
+    <ClInclude Include="EngineTextHandling.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="IndexBufferWrapper.h" />

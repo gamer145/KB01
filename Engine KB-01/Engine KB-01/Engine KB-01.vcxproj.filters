@@ -183,6 +183,9 @@
     <ClCompile Include="Ground.cpp">
       <Filter>Source Files\WorldComponents</Filter>
     </ClCompile>
+    <ClCompile Include="EngineTextHandling.cpp">
+      <Filter>Source Files\EngineDefinitions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Kernel.h">
@@ -289,6 +292,9 @@
     </ClInclude>
     <ClInclude Include="Ground.h">
       <Filter>Header Files\WorldComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineTextHandling.h">
+      <Filter>Header Files\EngineDefinitions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
