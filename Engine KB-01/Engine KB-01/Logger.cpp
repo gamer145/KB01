@@ -99,8 +99,8 @@ void Logger::WriteToFile(MessageType newType, const std::string& message)
 
 void Logger::ReadFromFile()
 {
-	std::string line = "";
-	std::ifstream myfile (genericlogfile.c_str());
+	std::string line;
+	std::ifstream myfile (genericlogfile.c_str(), std::ifstream::in);
 	if (myfile.is_open())
 	{
 		while (getline(myfile,line))

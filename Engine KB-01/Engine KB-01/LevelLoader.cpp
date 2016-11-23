@@ -23,7 +23,7 @@ Scene* LevelLoader::ReadFromFile(Resource_Manager* resourceManager, Scene* curre
 	if (myfile.is_open())
 	{
 		while ( getline (myfile,line) )
-		{
+		{ 
 			try{
 
 			//vb: Type:Model - tiger.x - Tiger.bmp PosX:0 PosZ:0 Percentage:true
@@ -99,7 +99,7 @@ Scene* LevelLoader::ReadFromFile(Resource_Manager* resourceManager, Scene* curre
 					sscanf_s(strMultiplier1.c_str(), "%f", &multiplier);
 					SkyboxPosition->MatrixScaling( multiplier, multiplier, multiplier);
 					skybox->setPosition(SkyboxPosition);
-					//currentScene->AddObject(skybox);
+					currentScene->AddObject(skybox);
 				}
 				else if(strT == "Camera")
 				{
