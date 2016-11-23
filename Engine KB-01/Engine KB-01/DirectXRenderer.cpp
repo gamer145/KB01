@@ -16,18 +16,23 @@ DirectXRenderer::~DirectXRenderer()
 	CleanUp();
 };
 
-LPD3DXMESH          g_pMesh = NULL; // Our mesh object in sysmem
-D3DMATERIAL9*       g_pMeshMaterials = NULL; // Materials for our mesh
-LPDIRECT3DTEXTURE9* g_pMeshTextures = NULL; // Textures for our mesh
-DWORD               g_dwNumMaterials = 0L;   // Number of mesh materials
 
+/**
+* Function:	Renderer::setDrawWindow(Window* windowtodrawin)
+* Description:	Set the current window to draw our scene to
+*/
 void DirectXRenderer::setDrawWindow(Window* windowtodrawin)
 {
 	myWindow = windowtodrawin;
-	InitD3D(myWindow->getHWND());
+	InitGraphics(myWindow->getHWND());
 }
 
-HRESULT DirectXRenderer::InitD3D( HWND hWnd )
+
+/**
+* Function:	Renderer::InitGraphics( HWND hWnd )
+* Description:	Initializes the specified Graphics Device
+*/
+HRESULT DirectXRenderer::InitGraphics( HWND hWnd )
 {
 	
     if( NULL == ( g_pD3D = Direct3DCreate9( D3D_SDK_VERSION ) ) )
@@ -135,6 +140,10 @@ HRESULT DirectXRenderer::InitD3D( HWND hWnd )
     return S_OK;
 };
 
+/**
+* Function:	Renderer::CleanUp()
+* Description:	Clean up this mess of a renderer by clearing out the graphics devices.
+*/
 VOID DirectXRenderer::CleanUp()
 {
     if( g_pd3dDevice != NULL )
@@ -144,6 +153,10 @@ VOID DirectXRenderer::CleanUp()
         g_pD3D->Release();
 };
 
+/**
+* Function:	Renderer::init_light()
+* Description:	Initializes our light functionality
+*/
 void DirectXRenderer::init_light()
 {
 	D3DLIGHT9 light;    // create the light struct
@@ -164,7 +177,10 @@ void DirectXRenderer::init_light()
 	g_pd3dDevice->SetMaterial(&material);    // set the globably-used material to &material
 }
 
-
+/**
+* Function:	Renderer::SetTexture(std::string textname)
+* Description:	Sets the texture to draw with, texture has to be loaded using the Resourceloader before calling this function.
+*/
 HRESULT DirectXRenderer::SetTexture(std::string textname)
 {
 	
@@ -175,6 +191,10 @@ HRESULT DirectXRenderer::SetTexture(std::string textname)
 	return S_OK;
 }
 
+/**
+* Function: Renderer::LoadMeshFromFile(std::string filename, EDWORD options, MeshWrapper* destination)
+* Description: Loads a mesh from a local file into the resourceloader's list of meshes.
+*/
 HRESULT DirectXRenderer::LoadMeshFromFile(std::string filename, EDWORD options, MeshWrapper* destination)
 {
 
@@ -197,6 +217,10 @@ HRESULT DirectXRenderer::LoadMeshFromFile(std::string filename, EDWORD options, 
 
 }
 
+/**
+* Function: Renderer::LoadTextureFromFile(std::string filename, EDWORD options, TextureWrapper* destination)
+* Description: Loads a texture from a local file into the resourceloader's list of textures.
+*/
 HRESULT DirectXRenderer::LoadTextureFromFile(std::string filename, EDWORD options, TextureWrapper* destination)
 {
 	std::string textLocation = "..\\Models\\" + filename;
@@ -215,6 +239,10 @@ HRESULT DirectXRenderer::LoadTextureFromFile(std::string filename, EDWORD option
 
 }
 
+/**
+* Function: Renderer::SetUpWorld(MatrixWrapper* CameraMatrix, MatrixWrapper* ProjectionMatrix)
+* Description: Initializes the world, camera and projection
+*/
 void DirectXRenderer::SetUpWorld(MatrixWrapper* CameraMatrix, MatrixWrapper* ProjectionMatrix)
 {
 	g_pd3dDevice->SetTransform(D3DTS_WORLD, &WorldMatrix);
@@ -222,6 +250,10 @@ void DirectXRenderer::SetUpWorld(MatrixWrapper* CameraMatrix, MatrixWrapper* Pro
 	g_pd3dDevice->SetTransform(D3DTS_PROJECTION, &ProjectionMatrix->GetMatrix());
 }
 
+/**
+* Function: Renderer::DrawSubSet(std::string meshname)
+* Description: Draw the specified mesh's subsets.
+*/
 void DirectXRenderer::DrawSubSet(std::string meshname)
 {
 	
@@ -233,12 +265,19 @@ void DirectXRenderer::DrawSubSet(std::string meshname)
 }
 
 
-
+/**
+* Function: Renderer::addTexture(std::string textname, TextureWrapper* Text)
+* Description: Adds a texture to the Renderer-specific list of textures, which is managed by the resourcemanager
+*/
 void DirectXRenderer::addTexture(std::string textname, TextureWrapper* Text)
 {
 	Textures.insert(std::pair<std::string, TextureWrapper*>(textname, Text));
 }
 
+/**
+* Function: Renderer::addMesh(std::string meshname, MeshWrapper* Mesh)
+* Description: Adds a mesh to the Renderer-specific list of meshes, which is managed by the resourcemanager
+*/
 void DirectXRenderer::addMesh(std::string meshname, MeshWrapper* Mesh)
 {
 	Meshes.insert(std::pair<std::string, MeshWrapper*>(meshname, Mesh));
@@ -251,6 +290,10 @@ void DirectXRenderer::setStreamSource(IDirect3DVertexBuffer9 *pStreamData, UINT 
 }
 */
 
+/**
+* Function: Renderer::CreateVertexBuffer(int heightmapvertex, EDWORD usage, EDWORD fvf, EPOOL pool, std::string vertexbuffername, HANDLE handle)
+* Description: Creates a vertexbuffer
+*/
 HRESULT DirectXRenderer::CreateVertexBuffer(int heightmapvertex, EDWORD usage, EDWORD fvf, EPOOL pool, std::string vertexbuffername, HANDLE handle)
 {
 	VertexBufferExists(vertexbuffername);
@@ -264,6 +307,10 @@ HRESULT DirectXRenderer::CreateVertexBuffer(int heightmapvertex, EDWORD usage, E
 	return result;
 }
 
+/**
+* Function: Renderer::CreateIndexBuffer(int length, EDWORD usage, EFORMAT format, EPOOL pool, std::string indexbuffername, HANDLE* handle)
+* Description: Creates an indexbuffer
+*/
 HRESULT DirectXRenderer::CreateIndexBuffer(int length, EDWORD usage, EFORMAT format, EPOOL pool, std::string indexbuffername, HANDLE* handle)
 {
 	IndexBufferExists(indexbuffername);
@@ -277,6 +324,10 @@ HRESULT DirectXRenderer::CreateIndexBuffer(int length, EDWORD usage, EFORMAT for
 	return result;
 }
 
+/**
+* Function: Renderer::LockVertexBuffer(std::string vertexbuffername, int offsettolock, int sizetolock, void** pbdata, EDWORD flags)
+* Description: Locks an existing unlocked vertexbuffer
+*/
 HRESULT DirectXRenderer::LockVertexBuffer(std::string vertexbuffername, int offsettolock, int sizetolock, void** pbdata, EDWORD flags)
 {
 	LPDIRECT3DVERTEXBUFFER9 vertexbuffer = VertexBuffers.find(vertexbuffername)->second;
@@ -284,6 +335,10 @@ HRESULT DirectXRenderer::LockVertexBuffer(std::string vertexbuffername, int offs
 	return (vertexbuffer)->Lock(offsettolock, sizetolock, pbdata, flags);
 }
 
+/**
+* Function: Renderer::LockIndexBuffer(std::string indexbuffername, int offsettolock, int sizetolock, void** pbdata, EDWORD flags)
+* Description: Locks an existing unlocked indexbuffer
+*/
 HRESULT DirectXRenderer::LockIndexBuffer(std::string indexbuffername, int offsettolock, int sizetolock, void** pbdata, EDWORD flags)
 {
 	LPDIRECT3DINDEXBUFFER9 indexbuffer = IndexBuffers.find(indexbuffername)->second;
@@ -291,6 +346,10 @@ HRESULT DirectXRenderer::LockIndexBuffer(std::string indexbuffername, int offset
 	return (indexbuffer)->Lock(offsettolock, sizetolock, pbdata, flags);
 }
 
+/**
+* Function: Renderer::UnlockVertexBuffer(std::string vertexbuffername)
+* Description: Unlocks an existing locked vertexbuffer
+*/
 HRESULT DirectXRenderer::UnlockVertexBuffer(std::string vertexbuffername)
 {
 	LPDIRECT3DVERTEXBUFFER9 vertexbuffer = VertexBuffers.find(vertexbuffername)->second;
@@ -298,6 +357,10 @@ HRESULT DirectXRenderer::UnlockVertexBuffer(std::string vertexbuffername)
 	return (vertexbuffer)->Unlock();
 }
 
+/**
+* Function: Renderer::UnlockIndexBuffer(std::string indexbuffername)
+* Description: Unlocks an existing locked indexbuffer
+*/
 HRESULT DirectXRenderer::UnlockIndexBuffer(std::string indexbuffername)
 {
 	LPDIRECT3DINDEXBUFFER9 indexbuffer = IndexBuffers.find(indexbuffername)->second;
@@ -305,6 +368,10 @@ HRESULT DirectXRenderer::UnlockIndexBuffer(std::string indexbuffername)
 	return (indexbuffer)->Unlock();
 }
 
+/**
+* Function: Renderer::VertexBufferExists(std::string vertexbuffername)
+* Description: Checks if a vertexbuffer exists and returns true if it already exists, if it does not exist it initalizes a new empty vertexbuffer with the given name and returns false.
+*/
 bool DirectXRenderer::VertexBufferExists(std::string vertexbuffername)
 {
 	if (VertexBuffers.find(vertexbuffername) != VertexBuffers.end())
@@ -320,6 +387,10 @@ bool DirectXRenderer::VertexBufferExists(std::string vertexbuffername)
 	}
 }
 
+/**
+* Function: Renderer::IndexBufferExists(std::string indexbuffername)
+* Description: Checks if a indexbuffer exists and returns true if it already exists, if it does not exist it initalizes a new empty indexbuffer with the given name and returns false.
+*/
 bool DirectXRenderer::IndexBufferExists(std::string indexbuffername)
 {
 	if (IndexBuffers.find(indexbuffername) != IndexBuffers.end())
@@ -335,11 +406,19 @@ bool DirectXRenderer::IndexBufferExists(std::string indexbuffername)
 	}
 }
 
+/**
+* Function: Renderer::setTransform(ETRANSFORMSTATETYPE transform, MatrixWrapper* matrix)
+* Description: Sets the transform of given matrix
+*/
 HRESULT DirectXRenderer::setTransform(ETRANSFORMSTATETYPE transform, MatrixWrapper* matrix)
 {
 	return g_pd3dDevice->SetTransform(static_cast<D3DTRANSFORMSTATETYPE>(transform), &matrix->GetMatrix());
 }
 
+/**
+* Function: Renderer::SetStreamSource(int streamnumber, std::string vertexbuffername, int offset, int stride)
+* Description: Sets the stream source for a vertexbuffer that has been loaded
+*/
 HRESULT DirectXRenderer::SetStreamSource(int streamnumber, std::string vertexbuffername, int offset, int stride)
 {
 	LPDIRECT3DVERTEXBUFFER9 vertexbuffer = VertexBuffers.find(vertexbuffername)->second;
@@ -349,11 +428,19 @@ HRESULT DirectXRenderer::SetStreamSource(int streamnumber, std::string vertexbuf
 	return g_pd3dDevice->SetStreamSource(streamnumber, vertexbuffer, offset, stride);
 }
 
+/**
+* Function: Renderer::SetFVF(EDWORD FVF)
+* Description: Set the FVF
+*/
 HRESULT DirectXRenderer::SetFVF(EDWORD FVF)
 {
 	return g_pd3dDevice->SetFVF(FVF);
 }
 
+/**
+* Function: Renderer::SetIndices(std::string indexbuffername)
+* Description: Set the indices to draw with, loaded from a indexbuffer that has been created and filled.
+*/
 HRESULT DirectXRenderer::SetIndices(std::string indexbuffername)
 {
 	LPDIRECT3DINDEXBUFFER9 indexbuffer = IndexBuffers.find(indexbuffername)->second;
@@ -361,11 +448,19 @@ HRESULT DirectXRenderer::SetIndices(std::string indexbuffername)
 	return g_pd3dDevice->SetIndices(indexbuffer);
 }
 
+/**
+* Function: Renderer::DrawIndexedPrimitive(EPRIMITIVETYPE type, int basevertexindex, int minvertexindex, int numvertices, int startindex, int primcount)
+* Description: Draws a primitive
+*/
 HRESULT DirectXRenderer::DrawIndexedPrimitive(EPRIMITIVETYPE type, int basevertexindex, int minvertexindex, int numvertices, int startindex, int primcount)
 {
 	return g_pd3dDevice->DrawIndexedPrimitive(static_cast<D3DPRIMITIVETYPE>(type), basevertexindex, minvertexindex, numvertices, startindex, primcount);
 }
 
+/**
+* Function: Renderer::LoadShaderFromFile(std::string shadername, std::string shaderfilepath, std::string vertexshaderfunctionname, std::string pixelshaderfunctionname)
+* Description: WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE. Loads a shader from a local file into the resource manager's list.
+*/
 HRESULT DirectXRenderer::LoadShaderFromFile(std::string shadername, std::string shaderfilepath, std::string vertexshaderfunctionname, std::string pixelshaderfunctionname)
 {
 	HRESULT result;
@@ -454,6 +549,10 @@ HRESULT DirectXRenderer::LoadShaderFromFile(std::string shadername, std::string 
 	return result;
 }
 
+/**
+* Function: Renderer::SetShader(std::string shadername)
+* Description: WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE. Set a shader to draw with
+*/
 void DirectXRenderer::SetShader(std::string shadername)
 {
 	Shader* shader = Shaders[shadername];
@@ -471,59 +570,105 @@ void DirectXRenderer::SetShader(std::string shadername)
 
 }
 
+/**
+* Function: Renderer::StopRenderingWithShaders()
+* Description: WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE. Stop drawing with any shaders
+*/
 void DirectXRenderer::StopRenderingWithShaders()
 {
 	g_pd3dDevice->SetVertexShader(NULL);
 	g_pd3dDevice->SetPixelShader(NULL);
 }
 
+/**
+* Function: Renderer::SetZBuffer(bool state)
+* Description: Turn the zbuffer on or off
+*/
 void DirectXRenderer::SetZBuffer(bool state)
 {
 	g_pd3dDevice->SetRenderState(D3DRS_ZENABLE, state);
 }
 
+/**
+* Function: Renderer::Clear(EDWORD count, EDWORD flags, ECOLOR color, float z, EDWORD stencil
+* Description: Clear the scene
+*/
 void DirectXRenderer::Clear(EDWORD count, EDWORD flags, ECOLOR color, float z, EDWORD stencil)
 {
 	g_pd3dDevice->Clear(count, NULL, flags, color, z, stencil);
 }
 
+/**
+* Function: Renderer::BeginS()
+* Description: Begin the Scene
+*/
 void DirectXRenderer::BeginS()
 {
 	g_pd3dDevice->BeginScene();
 }
 
+/**
+* Function: Renderer::EndS()
+* Description: End the Scene
+*/
 void DirectXRenderer::EndS()
 {
 	g_pd3dDevice->EndScene();
 }
 
+/**
+* Function: Renderer::Present()
+* Description: Present the Scene to the current window
+*/
 void DirectXRenderer::Present()
 {
 	g_pd3dDevice->Present( NULL, NULL, NULL, NULL );
 }
 
+/**
+* Function: Renderer::getTextures()
+* Description: Returns a list of all loaded textures, managed by the resource manager
+*/
 std::map<std::string, TextureWrapper*> DirectXRenderer::getTextures()
 {
 	return Textures;
 }
 
+/**
+* Function: Renderer::getMeshes()
+* Description: Returns a list of all loaded meshes, managed by the resource manager
+*/
 std::map<std::string, MeshWrapper*> DirectXRenderer::getMeshes()
 {
 	return Meshes;
 }
 
+
+
 // oculus test code from here on
 
+/**
+* Function: Renderer::OculusOrNah()
+* Description: WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE. ALSO HAS A STUPID NAME.
+*/
 bool DirectXRenderer::OculusOrNah()
 {
 	return oculus;
 }
 
+/**
+* Function: Renderer::OculusNowYah(bool newOculus)
+* Description: WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE. ALSO HAS A STUPID NAME.
+*/
 void DirectXRenderer::OculusNowYah(bool newOculus)
 {
 	oculus = newOculus;
 }
 
+/**
+* Function: Renderer::setViewportOculus(const OVR::Util::Render::StereoEyeParams& params)
+* Description: WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
+*/
 void DirectXRenderer::setViewportOculus(const OVR::Util::Render::StereoEyeParams& params)
 {
 	D3DVIEWPORT9 dxViewport;
@@ -544,6 +689,10 @@ void DirectXRenderer::setViewportOculus(const OVR::Util::Render::StereoEyeParams
 
 }
 
+/**
+* Function: Renderer::setupRenderToTextureOculus()
+* Description: WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
+*/
 void DirectXRenderer::setupRenderToTextureOculus()
 {
 	g_pd3dDevice->SetRenderTarget(0, fullSceneSurface);
@@ -552,6 +701,10 @@ void DirectXRenderer::setupRenderToTextureOculus()
 
 };
 
+/**
+* Function: Renderer::RenderToTexture()
+* Description: WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
+*/
 void DirectXRenderer::RenderToTexture()
 {
 	
@@ -565,16 +718,28 @@ void DirectXRenderer::RenderToTexture()
 	//g_pd3dDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
 }
 
+/**
+* Function: Renderer::endRenderToTextureOculus()
+* Description: WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
+*/
 void DirectXRenderer::endRenderToTextureOculus()
 {
 	g_pd3dDevice->EndScene();
 };
 
+/**
+* Function:Renderer::PresentWithWindow(HWND hwnd)
+* Description: WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
+*/
 void DirectXRenderer::PresentWithWindow(HWND hwnd)
 {
 	g_pd3dDevice->Present(NULL, NULL, hwnd, NULL);
 }
 
+/**
+* Function: Renderer::renderSceneOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig)
+* Description: WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
+*/
 void DirectXRenderer::renderSceneOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig)
 {
 	g_pd3dDevice->SetRenderTarget(0, backBuffer);
@@ -605,6 +770,10 @@ void DirectXRenderer::renderSceneOculus(const OVR::Util::Render::StereoEyeParams
 	g_pd3dDevice->EndScene();
 }
 
+/**
+* Function: Renderer::fillVertexBufferOculus(std::string key, VERTEX vertices[], int size)
+* Description: WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
+*/
 void DirectXRenderer::fillVertexBufferOculus(std::string key, VERTEX vertices[], int size)
 {
 	//Since this method is called repeatedly, we need to check if the requested buffer already exists or not.
@@ -622,6 +791,10 @@ void DirectXRenderer::fillVertexBufferOculus(std::string key, VERTEX vertices[],
 	}
 };
 
+/**
+* Function: Renderer::createScreenQuadOculus(float width, float height)
+* Description: WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
+*/
 void DirectXRenderer::createScreenQuadOculus(float width, float height)
 {
 	VERTEX vertices[4] = {
@@ -661,6 +834,10 @@ void DirectXRenderer::createScreenQuadOculus(float width, float height)
 	}
 }
 
+/**
+* Function: Renderer::renderEyeOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig)
+* Description: WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
+*/
 void DirectXRenderer::renderEyeOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig)
 {
 	std::string quadname;
@@ -697,6 +874,10 @@ void DirectXRenderer::renderEyeOculus(const OVR::Util::Render::StereoEyeParams& 
 
 };
 
+/**
+* Function: Renderer::setViewMatrixOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig)
+* Description: WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
+*/
 void DirectXRenderer::setViewMatrixOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig)
 {
 	float viewCenter = SConfig.GetHMDInfo().HScreenSize * 0.25f;
@@ -715,6 +896,10 @@ void DirectXRenderer::setViewMatrixOculus(const OVR::Util::Render::StereoEyePara
 	g_pd3dDevice->SetTransform(D3DTS_VIEW, &viewMatrix);
 };
 
+/**
+* Function: Renderer::scalarMultiply(D3DXMATRIX* matrix, float multiplyFactor)
+* Description: WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
+*/
 D3DXMATRIX  DirectXRenderer::scalarMultiply(D3DXMATRIX* matrix, float multiplyFactor)
 {
 	D3DXMATRIX multipliedMatrix;
@@ -726,6 +911,10 @@ D3DXMATRIX  DirectXRenderer::scalarMultiply(D3DXMATRIX* matrix, float multiplyFa
 	return multipliedMatrix;
 };
 
+/**
+* Function: Renderer::setProjectionMatrixOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig)
+* Description: WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
+*/
 void DirectXRenderer::setProjectionMatrixOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig)
 {
 	float projectionCenterOffset = SConfig.GetProjectionCenterOffset();
@@ -750,6 +939,10 @@ void DirectXRenderer::setProjectionMatrixOculus(const OVR::Util::Render::StereoE
 	g_pd3dDevice->SetTransform(D3DTS_PROJECTION, &projectionMatrix);    // set the projection transform	
 };
 
+/**
+* Function: Renderer::setPixelShaderConstantsOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig)
+* Description: WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
+*/
 void DirectXRenderer::setPixelShaderConstantsOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig)
 {
 	float w = float(params.VP.w) / float(SConfig.GetHMDInfo().HResolution);

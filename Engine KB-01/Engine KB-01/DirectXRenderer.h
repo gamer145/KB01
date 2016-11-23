@@ -28,98 +28,98 @@ public:
 	*/
 
 	
-	HRESULT SetTexture(std::string);
-	HRESULT LoadMeshFromFile(std::string filename, EDWORD options, MeshWrapper* destination);
-	HRESULT LoadTextureFromFile(std::string filename, EDWORD options, TextureWrapper* destination);
-	void DrawSubSet(std::string meshname);
+	HRESULT SetTexture(std::string); //Sets the texture to draw with, texture has to be loaded using the Resourceloader before calling this function.
+	HRESULT LoadMeshFromFile(std::string filename, EDWORD options, MeshWrapper* destination); //Loads a mesh from a local file into the resourceloader's list of meshes.
+	HRESULT LoadTextureFromFile(std::string filename, EDWORD options, TextureWrapper* destination); //Loads a texture from a local file into the resourceloader's list of textures.
+	void DrawSubSet(std::string meshname); //Draw the specified mesh's subsets.
 	//void DrawPrimitive();
 	//void SetVertexFormat();
-	void SetUpWorld(MatrixWrapper* CameraMatrix, MatrixWrapper* ProjectionMatrix);
+	void SetUpWorld(MatrixWrapper* CameraMatrix, MatrixWrapper* ProjectionMatrix); //Initializes the world, camera and projection
 	//void* get3DDevice();
-	HRESULT InitD3D( HWND hWnd );
-	void addTexture(std::string textname, TextureWrapper* Text);
-	void addMesh(std::string meshname, MeshWrapper* Mesh);
-	void setDrawWindow(Window* windowtodrawin);
+	HRESULT InitGraphics( HWND hWnd ); //Initializes the specified Graphics Device
+	void addTexture(std::string textname, TextureWrapper* Text); //Adds a texture to the Renderer-specific list of textures, which is managed by the resourcemanager
+	void addMesh(std::string meshname, MeshWrapper* Mesh); //Adds a mesh to the Renderer-specific list of meshes, which is managed by the resourcemanager
+	void setDrawWindow(Window* windowtodrawin); //Set the current window to draw our scene to
 	//void setStreamSource(VertexBufferWrapper *pStreamData, UINT OffsetInBytes);
-	HRESULT CreateVertexBuffer(int heightmapvertex, EDWORD usage, EDWORD fvf, EPOOL pool, std::string vertexbuffername, HANDLE handle);
-	HRESULT CreateIndexBuffer(int length, EDWORD usage, EFORMAT format, EPOOL pool, std::string indexbuffername, HANDLE* handle);
-	HRESULT LockVertexBuffer(std::string vertexbuffername, int offsettolock, int sizetolock, void** pbdata, EDWORD flags);
-	HRESULT UnlockVertexBuffer(std::string vertexbuffername);
-	HRESULT LockIndexBuffer(std::string indexbuffername, int offsettolock, int sizetolock, void** pbdata, EDWORD flags);
-	HRESULT UnlockIndexBuffer(std::string indexbuffername);
-	bool VertexBufferExists(std::string vertexbuffername);
-	bool IndexBufferExists(std::string indexbuffername);
-	HRESULT setTransform(ETRANSFORMSTATETYPE transform, MatrixWrapper* matrix);
-	HRESULT SetStreamSource(int streamnumber, std::string vertexbuffername, int offset, int stride);
-	HRESULT SetFVF(EDWORD FVF);
-	HRESULT SetIndices(std::string indexbuffername);
-	HRESULT DrawIndexedPrimitive(EPRIMITIVETYPE type, int basevertexindex, int minvertexindex, int numvertices, int startindex, int primcount);
-	HRESULT LoadShaderFromFile(std::string shadername, std::string shaderfilepath, std::string vertexshaderfunctionname, std::string pixelshadername);
-	void SetShader(std::string shadername);
-	void StopRenderingWithShaders();
-	void SetZBuffer(bool state);
-	void Clear(EDWORD count, EDWORD flags, ECOLOR color, float z, EDWORD stencil);
-	void BeginS();
-	void EndS();
-	void Present();
-	void init_light();
-	std::map<std::string, MeshWrapper*> getMeshes();
-	std::map<std::string, TextureWrapper*> getTextures();
+	HRESULT CreateVertexBuffer(int heightmapvertex, EDWORD usage, EDWORD fvf, EPOOL pool, std::string vertexbuffername, HANDLE handle); //Creates a vertexbuffer
+	HRESULT CreateIndexBuffer(int length, EDWORD usage, EFORMAT format, EPOOL pool, std::string indexbuffername, HANDLE* handle); //Creates an indexbuffer
+	HRESULT LockVertexBuffer(std::string vertexbuffername, int offsettolock, int sizetolock, void** pbdata, EDWORD flags); //Locks an existing unlocked vertexbuffer
+	HRESULT UnlockVertexBuffer(std::string vertexbuffername); //Unlocks an existing lockedvertex buffer
+	HRESULT LockIndexBuffer(std::string indexbuffername, int offsettolock, int sizetolock, void** pbdata, EDWORD flags); //Locks an existing unlocked indexbuffer
+	HRESULT UnlockIndexBuffer(std::string indexbuffername); //Unlocks an existing locked indexbuffer
+	bool VertexBufferExists(std::string vertexbuffername); //Checks if a indexbuffer exists and returns true if it already exists, if it does not exist it initalizes a new empty indexbuffer with the given name and returns false.
+	bool IndexBufferExists(std::string indexbuffername);//Checks if a indexbuffer exists and returns true if it already exists, if it does not exist it initalizes a new empty indexbuffer with the given name and returns false.
+	HRESULT setTransform(ETRANSFORMSTATETYPE transform, MatrixWrapper* matrix); //Sets the transform of given matrix
+	HRESULT SetStreamSource(int streamnumber, std::string vertexbuffername, int offset, int stride); //Sets the stream source for a vertexbuffer that has been loaded
+	HRESULT SetFVF(EDWORD FVF); //Set the FVF
+	HRESULT SetIndices(std::string indexbuffername); //Set the indices to draw with, loaded from a indexbuffer that has been created and filled.
+	HRESULT DrawIndexedPrimitive(EPRIMITIVETYPE type, int basevertexindex, int minvertexindex, int numvertices, int startindex, int primcount); //Draws a primitive
+	HRESULT LoadShaderFromFile(std::string shadername, std::string shaderfilepath, std::string vertexshaderfunctionname, std::string pixelshadername); //WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE. Loads a shader from a local file into the resource manager's list.
+	void SetShader(std::string shadername); //WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE. Set a shader to draw with
+	void StopRenderingWithShaders(); //WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE. Stop drawing with any shaders
+	void SetZBuffer(bool state); //Turn the zbuffer on or off
+	void Clear(EDWORD count, EDWORD flags, ECOLOR color, float z, EDWORD stencil); //Clear the scene
+	void BeginS(); //Begins the current Scene
+	void EndS(); //Ends the current Scene
+	void Present(); //Presents the current Scene to the current window
+	void init_light(); //Initializes the light
+	std::map<std::string, MeshWrapper*> getMeshes(); //Returns a list of all loaded meshes, managed by the resource manager
+	std::map<std::string, TextureWrapper*> getTextures(); //Returns a list of all loaded textures, managed by the resource manager
 
 
 
-	//oculus test code from here on
-	void RenderToTexture();
-	void PresentWithWindow(HWND hwnd);
-	void setViewportOculus(const OVR::Util::Render::StereoEyeParams& params);
-	void setPixelShaderConstantsOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig);
-	void setupRenderToTextureOculus();
-	void endRenderToTextureOculus();
-	void renderSceneOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig);
-	void fillVertexBufferOculus(std::string key, VERTEX vertices[], int size);
-	void createScreenQuadOculus(float width, float height);
-	void renderEyeOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig);
-	void setViewMatrixOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig);
-	void setProjectionMatrixOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig);
-	bool OculusOrNah();
-	void OculusNowYah(bool newOculus);
+	//EVERYTHING FROM HERE IS EXPERIMENTAL OCULUS CODE AND SHOULD NOT BE USED AS IT IS NOT FINISHED AND WILL CRASH THE ENGINE IF USED.
+	void RenderToTexture(); //WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
+	void PresentWithWindow(HWND hwnd); //WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
+	void setViewportOculus(const OVR::Util::Render::StereoEyeParams& params); //WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
+	void setPixelShaderConstantsOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig); //WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
+	void setupRenderToTextureOculus(); //WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
+	void endRenderToTextureOculus(); //WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
+	void renderSceneOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig); //WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
+	void fillVertexBufferOculus(std::string key, VERTEX vertices[], int size); //WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
+	void createScreenQuadOculus(float width, float height); //WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
+	void renderEyeOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig); //WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
+	void setViewMatrixOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig); //WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
+	void setProjectionMatrixOculus(const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig); //WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
+	bool OculusOrNah(); //WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
+	void OculusNowYah(bool newOculus); //WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
 
 private:
 
-	LPDIRECT3D9         g_pD3D; 
-    LPDIRECT3DDEVICE9   g_pd3dDevice; 
-	Window* myWindow;
-	bool keepRendering;
-	D3DXMATRIX WorldMatrix;
+	LPDIRECT3D9         g_pD3D; //Your Directx9 3D, this thing is basically god
+    LPDIRECT3DDEVICE9   g_pd3dDevice; //Your Directx93D Device, This is the tool that the Directx-specific renderer uses to draw almost everything in the scene
+	Window* myWindow; //Your current window
+	bool keepRendering; //Determines whether we're rendering right now
+	D3DXMATRIX WorldMatrix; //The world matrix
 	
 	
 
-	std::map<std::string, MeshWrapper*> Meshes;
-	std::map<std::string, TextureWrapper*> Textures;
-	std::map<std::string, Shader*> Shaders;
+	std::map<std::string, MeshWrapper*> Meshes; //A list of meshes, managed by the resource manager
+	std::map<std::string, TextureWrapper*> Textures; //A list of textures, managed by the resource manager
+	std::map<std::string, Shader*> Shaders; //WARNING: INCOMPLETE/BROKEN VARIABLE. DO NOT USE. A list of directx-specific meshes, managed by the resource manager
 
-	std::map<std::string, LPDIRECT3DVERTEXBUFFER9> VertexBuffers;
-	std::map<std::string, LPDIRECT3DINDEXBUFFER9> IndexBuffers;
+	std::map<std::string, LPDIRECT3DVERTEXBUFFER9> VertexBuffers; //A list of directx-specific meshes, managed by the resource manager
+	std::map<std::string, LPDIRECT3DINDEXBUFFER9> IndexBuffers; //A list of directx-specific meshes, managed by the resource manager
 	
-	//oculus code
+	//EVERYTHING FROM HERE IS EXPERIMENTAL OCULUS CODE AND SHOULD NOT BE USED AS IT IS NOT FINISHED AND WILL CRASH THE ENGINE IF USED.
 
-	D3DXMATRIX scalarMultiply(D3DXMATRIX* matrix, float multiplyFactor);
+	D3DXMATRIX scalarMultiply(D3DXMATRIX* matrix, float multiplyFactor); //WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
 
-	float backBufferWidth;
-	float backBufferHeight;
+	float backBufferWidth; //WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
+	float backBufferHeight; //WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
 
-	LPDIRECT3DTEXTURE9 fullSceneTexture = NULL, leftEyeTexture = NULL, rightEyeTexture = NULL;
-	LPDIRECT3DSURFACE9 fullSceneSurface = NULL, leftEyeSurface = NULL, rightEyeSurface = NULL, backBuffer = NULL;
-	LPDIRECT3DTEXTURE9 tiger = NULL;
-	VERTEX* screenQuad;
-	VERTEX* eyeLeftQuad;
-	VERTEX* eyeRightQuad;
+	LPDIRECT3DTEXTURE9 fullSceneTexture = NULL, leftEyeTexture = NULL, rightEyeTexture = NULL; //WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
+	LPDIRECT3DSURFACE9 fullSceneSurface = NULL, leftEyeSurface = NULL, rightEyeSurface = NULL, backBuffer = NULL; //WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
+	LPDIRECT3DTEXTURE9 tiger = NULL; //WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
+	VERTEX* screenQuad; //WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
+	VERTEX* eyeLeftQuad; //WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
+	VERTEX* eyeRightQuad; //WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
 
-	LPDIRECT3DTEXTURE9 quadTex = NULL;
-	IDirect3DPixelShader9* lpPixelShader = NULL;
-	LPD3DXBUFFER pCode = NULL;
+	LPDIRECT3DTEXTURE9 quadTex = NULL; //WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
+	IDirect3DPixelShader9* lpPixelShader = NULL; //WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
+	LPD3DXBUFFER pCode = NULL; //WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
 
-	bool oculus;
+	bool oculus; //WARNING: INCOMPLETE/BROKEN FUNCTION. DO NOT USE.
 };
 
 #endif
