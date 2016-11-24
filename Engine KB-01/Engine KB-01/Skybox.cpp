@@ -66,8 +66,8 @@ void Skybox::InitializeSkybox(Renderer* renderer, Resource_Manager* resourcemana
 
 	resourcemanager->loadManualTexture(texture);
 
-	renderer->VertexBufferExists(v_buffer); //Why nothing done with return variable?
-	renderer->IndexBufferExists(i_buffer); //Why nothing done with return variable?
+	renderer->VertexBufferExists(v_buffer); 
+	renderer->IndexBufferExists(i_buffer); 
 
 	if ((!i_buffer.empty()) && (!v_buffer.empty()))
 	{

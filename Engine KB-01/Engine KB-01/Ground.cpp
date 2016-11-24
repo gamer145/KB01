@@ -34,8 +34,8 @@ void Ground::CreateGround(Renderer* render, Resource_Manager* resourcemanager, L
 {
 	resourcemanager->loadManualTexture(texture);
 
-	render->VertexBufferExists(v_buffer); //Why nothing done with return variable?
-	render->IndexBufferExists(i_buffer); //Why nothing done with return variable?
+	render->VertexBufferExists(v_buffer); 
+	render->IndexBufferExists(i_buffer); 
 
 	byte* heightmap = LoadBMP(argFileName);
 	const int vertexcount = heightBMP * widthBMP;
@@ -125,7 +125,7 @@ void Ground::CreateGround(Renderer* render, Resource_Manager* resourcemanager, L
 		EngineMath::Normalize(&vertices[a]);
 	}
 
-
+	//create an vertex buffer interface called v_buffer
 	if (FAILED(render->CreateVertexBuffer(vertexcount * sizeof(VERTEX),
 		0, ECUSTOMFVF, EPOOL_MANAGED, v_buffer, NULL)))
 	{
@@ -148,17 +148,14 @@ void Ground::CreateGround(Renderer* render, Resource_Manager* resourcemanager, L
 		l->WriteToFile(Error, "Ground VBUnLock failed");
 	}
 
+	// create an index buffer interface called i_buffer
 	if (FAILED(render->CreateIndexBuffer((amountIndices) * sizeof(int),
 		0, FMT_INDEX32, EPOOL_MANAGED, i_buffer, NULL)))
 	{
 		l->WriteToFile(Error, "Ground CreateIndexBuffer failed");
-	}
-
-    // create an index buffer interface called i_buffer
-	
+	}  
 
     // lock i_buffer and load the indices into it
-
 	if( FAILED( render->LockIndexBuffer(i_buffer, 0, sizeof(int) * amountIndices, (void**)&pVoid2, 0)))
 	{
 		l->WriteToFile(Error, "Ground IBLock failed");
