@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 #include "Window.h"
+#include "Logger.h"
+#include "EngineTextHandling.h"
 
 class Window_Manager
 {
@@ -12,10 +14,12 @@ public:
 	Window_Manager(); 
 	~Window_Manager();
 	Window* getWindow(std::string schermnaam);
-	void updateWindows();
+	Window* getWindow(HWND hwnd);
+	Window* getActiveWindow();
+	void LogActiveWindow();
 private:
 	std::vector<Window*> Windows;
-	static Window_Manager* myWindow_Manager;
+	Logger* loggerWM;
 	void createWindow(std::string title);
 };
 

@@ -107,25 +107,19 @@ void Scene::Draw()
 
 	//myDirectXRenderer->LoadShaderFromFile("firstshader", "../Shaders/TextShader.fx", "TextShader", "ColorShader");
 
-			myDirectXRenderer->SetUpWorld(currentCamera->getPosition(), currentCamera->getProjectionMatrix());
-
-			skybox->DrawSkybox(myDirectXRenderer, currentCamera->getPosition());
+	myDirectXRenderer->SetUpWorld(currentCamera->getPosition(), currentCamera->getProjectionMatrix());
+	
+	skybox->DrawSkybox(myDirectXRenderer, currentCamera->getPosition());
 			
-			ground->DrawGround(myDirectXRenderer);			
+	ground->DrawGround(myDirectXRenderer);			
 
-			for(std::vector<VisualObject*>::iterator i = activeObjects.begin(); i != activeObjects.end(); ++i)
-			{
-				VisualObject* currentobj = *i;
+	for(std::vector<VisualObject*>::iterator i = activeObjects.begin(); i != activeObjects.end(); ++i)
+		{
+			VisualObject* currentobj = *i;
+			currentobj->draw(myDirectXRenderer);
+		}
 
-
-
-				currentobj->draw(myDirectXRenderer);
-				
-    
-    
-			}
-
-			//myDirectXRenderer->StopRenderingWithShaders();
+	//myDirectXRenderer->StopRenderingWithShaders();
 
 }
 

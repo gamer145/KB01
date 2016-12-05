@@ -2,6 +2,7 @@
 
 Window_Manager::Window_Manager()
 {
+	loggerWM = Logger::GetLogger();
 }
 
 Window_Manager::~Window_Manager()
@@ -28,12 +29,43 @@ Window* Window_Manager::getWindow(std::string schermnaam)
 	createWindow(schermnaam);
 	return getWindow(schermnaam);
 }
-	
-void Window_Manager::updateWindows()
+
+Window* Window_Manager::getWindow(HWND hwnd)
 {
-	for(std::vector<Window*>::iterator i = Windows.begin(); i != Windows.end(); ++i)
+	for (std::vector<Window*>::iterator i = Windows.begin(); i != Windows.end(); ++i)
 	{
 		Window* currentWindow = *i;
-		currentWindow->updateWindow();
+		if (currentWindow->getHWND() == hwnd)
+		{
+			return currentWindow; //Als er een window is gevonden met die HWND, return dan die window.
+		}
+	}
+}
+
+void Window_Manager::LogActiveWindow()
+{
+	HWND activeWindow = GetForegroundWindow();
+	std::string convertedHandleString = EngineTextHandling::HwndToString(activeWindow);
+	loggerWM->WriteToFile(Error, convertedHandleString);
+}
+	
+Window* Window_Manager::getActiveWindow()
+{
+	HWND activeWindow = GetForegroundWindow();
+	for (std::vector<Window*>::iterator i = Windows.begin(); i != Windows.end(); ++i)
+	{
+		Window* currentWindow = *i;		
+		if (currentWindow->getHWND() == activeWindow)
+		{
+			currentWindow->setActiveState(true);
+			return currentWindow;
+		}
+		else
+		{
+			currentWindow->setActiveState(false);
+		}
+		
+		//loggerWM->WriteToFile(Error, "No active Window found");
+		return NULL;
 	}
 }

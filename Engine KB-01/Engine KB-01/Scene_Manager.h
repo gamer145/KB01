@@ -19,7 +19,7 @@ public:
 	void newScene();
 	ERUNSTATE UpdateScene();
 	void setCurrentScene(std::string windowname);
-	Window* RequestWindow();
+	Window* RequestWindow(std::string windowTitle);
 	
 private:
 	std::map<Scene*, Window*> Scenes;
@@ -30,6 +30,7 @@ private:
 	Scene* CurrentScene;
 	Window* CurrentWindow;
 	Renderer* myDirectXRenderer;
+	int logCount;
 
 };
 
