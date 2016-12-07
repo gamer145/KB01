@@ -44,38 +44,36 @@ void Scene_Manager::SetUpManager(Window_Manager* windowManager, Resource_Manager
 	myWindowManager = windowManager;
 	myResourceManager = resourceManager;
 	myDirectXRenderer = DirectXRenderer;
-	CurrentWindow = RequestWindow();
+	CurrentWindow = RequestWindow("Game Engine1");
 	myDirectXRenderer->setDrawWindow(CurrentWindow);
 	
 	myResourceManager->setDirectXRenderer(myDirectXRenderer);
 	myLevelLoader = new LevelLoader();
 
+	logCount = 0;
 	newScene();
-
-
-	Scenes.insert (std::pair<Scene*, Window*>(CurrentScene, CurrentWindow));
 }
 
-Window* Scene_Manager::RequestWindow()
+Window* Scene_Manager::RequestWindow(std::string windowTitle)
 {
-	std::string windowTitle = "3D Game Engine";
 	Window* window = myWindowManager->getWindow(windowTitle);
 	return window;
 }
 
 void Scene_Manager::newScene()
 {
-	Window* window = RequestWindow();
+	Window* window = RequestWindow("Game Engine" + (std::to_string(Scenes.size() + 1)));
 	CurrentScene = new Scene();	
 	CurrentScene->SetDirectXRenderer(myDirectXRenderer);
+	myDirectXRenderer->setDrawWindow(window);
 	CurrentScene = myLevelLoader->ReadFromFile(myResourceManager, CurrentScene);
 	CurrentScene->initGround(myResourceManager);
 	CurrentScene->initSkybox(myResourceManager);
 
 	myInputHandler = new InputHandler();
-	myInputHandler->InitInputHandler(CurrentWindow);
+	myInputHandler->InitInputHandler(window);
 	CurrentScene->initCamera(myInputHandler);
-	Scenes.insert ( std::pair<Scene*, Window*>(CurrentScene, window) ); 
+	Scenes.insert ( std::pair<Scene*, Window*>(CurrentScene, window) );
 }
 
 void Scene_Manager::setCurrentScene(std::string windowname)
@@ -84,73 +82,82 @@ void Scene_Manager::setCurrentScene(std::string windowname)
 	{
 		if (i->second->getSchermNaam() == windowname)
 		{
-			CurrentScene = i->first;
-			CurrentWindow = i->second;			
+			CurrentScene = i->first;		
 		}
 	}
 }
-/*
-synch test 2
-*/
 
 ERUNSTATE Scene_Manager::UpdateScene()
 {
-	/*
-	if (myDirectXRenderer->OculusOrNah())
+
+	ERUNSTATE state = RUNNING;
+	if (logCount >= 10)
 	{
+		myWindowManager->LogActiveWindow();
+		logCount = -1;
+	} 
+	logCount++;
+	if ((CurrentWindow = myWindowManager->getActiveWindow()) != NULL)
+	{
+		setCurrentScene(CurrentWindow->getSchermNaam());
+
+
+		/*
+		if (myDirectXRenderer->OculusOrNah())
+		{
+			myDirectXRenderer->setupRenderToTextureOculus();
+			//CurrentScene->clear();
+			//CurrentScene->beginS();
+
+			state = CurrentScene->UpdateOculus(CurrentScene->GetConfig().GetEyeRenderParams(OVR::Util::Render::StereoEye_Left));
+			state = CurrentScene->UpdateOculus(CurrentScene->GetConfig().GetEyeRenderParams(OVR::Util::Render::StereoEye_Right));
+
+			//CurrentScene->endS();
+
+			myDirectXRenderer->endRenderToTextureOculus();
+
+			myDirectXRenderer->setTransform(E_WORLD, CurrentScene->getCamera()->getPosition());
+
+			//distort the textures
+			myDirectXRenderer->renderEyeOculus(CurrentScene->GetConfig().GetEyeRenderParams(OVR::Util::Render::StereoEye_Left), CurrentScene->GetConfig());
+			myDirectXRenderer->renderEyeOculus(CurrentScene->GetConfig().GetEyeRenderParams(OVR::Util::Render::StereoEye_Right), CurrentScene->GetConfig());
+			//present the textures
+			myDirectXRenderer->renderSceneOculus(CurrentScene->GetConfig().GetEyeRenderParams(OVR::Util::Render::StereoEye_Left), CurrentScene->GetConfig());
+			myDirectXRenderer->renderSceneOculus(CurrentScene->GetConfig().GetEyeRenderParams(OVR::Util::Render::StereoEye_Right), CurrentScene->GetConfig());
+
+			myDirectXRenderer->Present();
+			//myDirectXRenderer->PresentWithWindow(CurrentWindow->getHWND());
+
+
+
+
+			CurrentWindow->updateWindow();
+
+
+
+			return state;
+		}
+		*/
 		
-		myDirectXRenderer->setupRenderToTextureOculus();
-		ERUNSTATE state;
-		//CurrentScene->clear();
-		//CurrentScene->beginS();
+			CurrentScene->clear();
+			CurrentScene->beginS();
+			//myDirectXRenderer->setupRenderToTextureOculus();
+			
 
-		state = CurrentScene->UpdateOculus(CurrentScene->GetConfig().GetEyeRenderParams(OVR::Util::Render::StereoEye_Left));
-		state = CurrentScene->UpdateOculus(CurrentScene->GetConfig().GetEyeRenderParams(OVR::Util::Render::StereoEye_Right));
+			state = CurrentScene->Update();
 
-		//CurrentScene->endS();
+			//myDirectXRenderer->RenderToTexture();
 
-		myDirectXRenderer->endRenderToTextureOculus();
+			CurrentScene->endS();
 
-		myDirectXRenderer->setTransform(E_WORLD, CurrentScene->getCamera()->getPosition());
-
-		//distort the textures
-		myDirectXRenderer->renderEyeOculus(CurrentScene->GetConfig().GetEyeRenderParams(OVR::Util::Render::StereoEye_Left), CurrentScene->GetConfig());
-		myDirectXRenderer->renderEyeOculus(CurrentScene->GetConfig().GetEyeRenderParams(OVR::Util::Render::StereoEye_Right), CurrentScene->GetConfig());
-		//present the textures
-		myDirectXRenderer->renderSceneOculus(CurrentScene->GetConfig().GetEyeRenderParams(OVR::Util::Render::StereoEye_Left), CurrentScene->GetConfig());
-		myDirectXRenderer->renderSceneOculus(CurrentScene->GetConfig().GetEyeRenderParams(OVR::Util::Render::StereoEye_Right), CurrentScene->GetConfig());
-
-		myDirectXRenderer->Present();
-		//myDirectXRenderer->PresentWithWindow(CurrentWindow->getHWND());
+			//myDirectXRenderer->Present();
 
 
+			CurrentWindow->updateWindow();
 
-		CurrentWindow->updateWindow();
-
+			return state;
 		
-		return state;
 	}
-	else
-	{
-*/
+	return state;
 
-
-
-		CurrentScene->clear();
-		CurrentScene->beginS();
-		//myDirectXRenderer->setupRenderToTextureOculus();
-		ERUNSTATE state;
-
-		state = CurrentScene->Update();
-
-		//myDirectXRenderer->RenderToTexture();
-
-		CurrentScene->endS();
-
-		//myDirectXRenderer->Present();
-
-		CurrentWindow->updateWindow();
-
-		return state;
-	
 }

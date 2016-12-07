@@ -13,13 +13,16 @@ class Window
 		void createWindow(std::string windowNaam);
 		void updateWindow();
 		void closeWindow();
-		LRESULT CALLBACK MsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+		static LRESULT CALLBACK MsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 		HWND getHWND();
 		std::string getSchermNaam();
 		void Window::setRenderState(bool state);
 		bool Window::getRenderState();
-		bool Window::isThisActiveWindow();
+		void Window::setActiveState(bool state);
+
 	private:
+		int windowHeight;
+		int windowWidth;
 		HWND hwnd;
 		std::string schermnaam;
 		bool RenderState;
