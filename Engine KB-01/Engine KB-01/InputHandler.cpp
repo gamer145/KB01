@@ -34,10 +34,19 @@ HRESULT InputHandler::InitInputHandler(Window* argWindow)
  */
 InputHandler::~InputHandler()
 {
-	delete mousewhisperer; //Call the destructor
-	delete keyboardwhisperer; //Call the destructor
-	dInput->Release(); //Formally tell DirectInput to let go and move on
-	dInput = NULL; //Just to be safe, we nullify the pointer
+	if (mousewhisperer != NULL) {
+		delete mousewhisperer; //Call the destructor
+	}
+	if (keyboardwhisperer != NULL) {
+		delete keyboardwhisperer; //Call the destructor
+	}
+	if (dInput != NULL) {
+		dInput->Release(); //Formally tell DirectInput to let go and move on
+		dInput = NULL; //Just to be safe, we nullify the pointer
+	}
+
+
+	
 }
 
 void InputHandler::pollWhisperers()

@@ -9,7 +9,9 @@ Light::Light()
 
 Light::~Light()
 {
-
+	if (myDirection != NULL) {
+		delete myDirection;
+	}
 }
 
 void Light::Initialize()

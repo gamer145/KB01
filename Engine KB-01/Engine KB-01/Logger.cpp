@@ -10,6 +10,7 @@ Logger::Logger()
 
 Logger::~Logger()
 {
+	delete myLogger;
 }
 
 const std::string currentDateTime() {

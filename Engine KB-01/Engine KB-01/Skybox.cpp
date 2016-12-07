@@ -53,7 +53,10 @@ Skybox::Skybox()
 
 Skybox::~Skybox()
 {
-
+	if (skyboxVertices != NULL) {
+		delete skyboxVertices;
+	}
+	
 }
 
 void Skybox::SetTexture(std::string tex)

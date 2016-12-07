@@ -8,7 +8,28 @@ Scene::Scene()
 
 Scene::~Scene()
 {
+	if (currentCamera!=NULL) {
+		delete currentCamera;
+	}
+	if (myDirectXRenderer != NULL) {
+		delete myDirectXRenderer;
+	}
+	if (ground != NULL) {
+		delete ground;
+	}
 
+	if (skybox != NULL) {
+		delete skybox;
+	}
+
+	for each (VisualObject* V in activeObjects)
+	{
+		delete V;
+	}
+	for each (Light* L in activeLights)
+	{
+		delete L;
+	}
 }
 
 void Scene::initGround(Resource_Manager* RManager)
@@ -73,7 +94,7 @@ ERUNSTATE Scene::UpdateOculus(const OVR::Util::Render::StereoEyeParams& stereo)
 	
 		myDirectXRenderer->setViewportOculus(stereo);
 
-		currentCamera->UpdateOculus(myDirectXRenderer, stereo, SConfig, sceneState);
+//		currentCamera->UpdateOculus(myDirectXRenderer, stereo, SConfig, sceneState);
 		Draw();
 		return sceneState;
 
@@ -97,11 +118,14 @@ void Scene::endS()
 	myDirectXRenderer->Present();
 }
 
+/*
 OVR::Util::Render::StereoConfig Scene::GetConfig()
 {
-	return SConfig;
+//	return SConfig;
+	return NULL;
 }
 
+*/
 void Scene::Draw()
 {
 

@@ -6,6 +6,15 @@ Window_Manager::Window_Manager()
 
 Window_Manager::~Window_Manager()
 {
+	for each(Window* W in Windows)
+	{
+		if (W != NULL) {
+			delete W;
+		}
+		
+	}
+
+	//delete myWindow_Manager;
 }
 
 void Window_Manager::createWindow(std::string title)

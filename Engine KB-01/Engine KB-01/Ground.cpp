@@ -12,6 +12,9 @@ Ground::Ground()
 
 Ground::~Ground()
 {
+	if (Position != NULL) {
+		delete Position;
+	}
 }
 
 void Ground::SetTexture(std::string tex)

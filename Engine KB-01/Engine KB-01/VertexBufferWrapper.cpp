@@ -10,7 +10,7 @@
 
 	VertexBufferWrapper::~VertexBufferWrapper()
 	{
-
+		delete VertexBuffer;
 	};
 
 
@@ -23,7 +23,9 @@
 
 	LPDIRECT3DVERTEXBUFFER9 VertexBufferWrapper::GetVertexBuffer()
 	{
+		if (VertexBuffer != NULL) {
+			return VertexBuffer;
+		}
 		
-		return VertexBuffer;
 	};
 

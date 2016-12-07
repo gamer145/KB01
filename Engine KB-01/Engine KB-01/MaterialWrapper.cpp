@@ -9,7 +9,6 @@ MaterialWrapper::MaterialWrapper(D3DMATERIAL9 _material)
 
 	MaterialWrapper::~MaterialWrapper()
 	{
-
 	};
 
 	void MaterialWrapper::SetMaterial(D3DMATERIAL9 _material)

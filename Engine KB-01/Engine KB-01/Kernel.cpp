@@ -14,7 +14,19 @@ Kernel::Kernel()
 
 Kernel::~Kernel()
 {
-
+	if (myRenderer != NULL) {
+		delete myRenderer;
+	}
+	if (myResourceManager != NULL) {
+		delete myResourceManager;
+	}
+	if (mySceneManager != NULL) {
+		delete mySceneManager;
+	}
+	if (myWindowManager != NULL) {
+		delete myWindowManager;
+	}
+	
 }
 
 void Kernel::Initialize()

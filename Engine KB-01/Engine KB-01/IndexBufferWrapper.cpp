@@ -7,7 +7,9 @@
 
 	IndexBufferWrapper::~IndexBufferWrapper()
 	{
-
+		if (IndexBuffer != NULL) {
+			delete IndexBuffer;
+		}
 	};
 
 	void IndexBufferWrapper::SetIndexBuffer(IDirect3DIndexBuffer9** _IndexBuffer)

@@ -9,6 +9,9 @@ Resource_Manager::Resource_Manager()
 
 Resource_Manager::~Resource_Manager()
 {
+	if (DirectXRenderer != NULL) {
+		delete DirectXRenderer;
+	}
 
 }
 

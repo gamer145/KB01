@@ -151,6 +151,34 @@ VOID DirectXRenderer::CleanUp()
 
     if( g_pD3D != NULL )
         g_pD3D->Release();
+
+	if (myWindow != NULL) {
+		delete myWindow;
+	}
+	if (WorldMatrix != NULL) {
+		delete WorldMatrix;
+	}
+	
+
+	for each(std::pair<std::string, MeshWrapper*> M in Meshes)
+	{
+		delete M.second;
+	}
+
+	for each(std::pair<std::string, TextureWrapper*> T in Textures)
+	{
+		delete T.second;
+	}
+
+	for each(std::pair<std::string, LPDIRECT3DVERTEXBUFFER9> V in VertexBuffers)
+	{
+		delete V.second;
+	}
+
+	for each(std::pair<std::string, LPDIRECT3DINDEXBUFFER9> I in IndexBuffers)
+	{
+		delete I.second;
+	}
 };
 
 /**

@@ -28,7 +28,7 @@ public:
 	void AddLight(Light* newLight); //Adds a new light to the list of Lights in the scene
 	void setCamera(Camera* c); //Assigns a existing Camera to the scene
 	Camera* getCamera(); //Returns the Camera currently assigned to the scene
-	OVR::Util::Render::StereoConfig GetConfig();
+	//OVR::Util::Render::StereoConfig GetConfig(); //WARNING: UNFINISHED/DEPRECATED CODE, DO NOT USE.
 	void initGround(Resource_Manager* RManager); //Initializes a new ground for this scene
 	void initSkybox(Resource_Manager* RManager); //Initializes a new skybox for this scene
 
@@ -42,7 +42,7 @@ private:
 	Camera* currentCamera;
 	Renderer* myDirectXRenderer;
 	void Draw();
-	OVR::Util::Render::StereoConfig SConfig;
+	//OVR::Util::Render::StereoConfig SConfig;
 	bool oculus;
 	ERUNSTATE sceneState;
 	Ground* ground;

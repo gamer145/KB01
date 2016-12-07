@@ -7,6 +7,36 @@ Scene_Manager::Scene_Manager()
 
 Scene_Manager::~Scene_Manager()
 {
+	if (myDirectXRenderer != NULL) {
+		delete myDirectXRenderer;
+	}
+	if (myInputHandler != NULL) {
+		delete myInputHandler;
+	}
+	if (myLevelLoader != NULL) {
+		delete myLevelLoader;
+	}
+	if (myResourceManager != NULL) {
+		delete myResourceManager;
+	}
+	if (myWindowManager != NULL) {
+		delete myWindowManager;
+	}
+	if (CurrentScene != NULL) {
+		delete CurrentScene;
+	}
+	if (CurrentWindow != NULL) {
+		delete CurrentWindow;
+	}
+
+	for each (std::pair<Scene*, Window*> S in Scenes)
+	{
+		delete S.first;
+		delete S.second;
+	}
+	
+
+
 }
 
 void Scene_Manager::SetUpManager(Window_Manager* windowManager, Resource_Manager* resourceManager, Renderer* DirectXRenderer)
@@ -65,8 +95,10 @@ synch test 2
 
 ERUNSTATE Scene_Manager::UpdateScene()
 {
+	/*
 	if (myDirectXRenderer->OculusOrNah())
 	{
+		
 		myDirectXRenderer->setupRenderToTextureOculus();
 		ERUNSTATE state;
 		//CurrentScene->clear();
@@ -95,11 +127,15 @@ ERUNSTATE Scene_Manager::UpdateScene()
 
 		CurrentWindow->updateWindow();
 
-
+		
 		return state;
 	}
 	else
 	{
+*/
+
+
+
 		CurrentScene->clear();
 		CurrentScene->beginS();
 		//myDirectXRenderer->setupRenderToTextureOculus();
@@ -116,5 +152,5 @@ ERUNSTATE Scene_Manager::UpdateScene()
 		CurrentWindow->updateWindow();
 
 		return state;
-	}
+	
 }

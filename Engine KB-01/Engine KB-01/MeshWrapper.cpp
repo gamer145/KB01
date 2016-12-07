@@ -9,7 +9,10 @@
 
 	MeshWrapper::~MeshWrapper()
 	{
-
+		if (mesh != NULL) {
+			delete mesh;
+		}
+		
 	};
 
 	void MeshWrapper::SetMesh(LPD3DXMESH _mesh)

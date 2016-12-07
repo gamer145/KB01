@@ -11,7 +11,9 @@
 
 	MatrixWrapper::~MatrixWrapper()
 	{
-
+		if (matrix != NULL) {
+			delete matrix;
+		}
 	}
 
 	void MatrixWrapper::SetMatrix(D3DXMATRIX newMatrix)

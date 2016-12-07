@@ -14,7 +14,7 @@ VectorWrapper::VectorWrapper(float x, float y, float z)
 
 VectorWrapper::~VectorWrapper()
 {
-
+	
 }
 
 void VectorWrapper::SetVector(D3DXVECTOR3 newVector)

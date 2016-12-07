@@ -13,6 +13,26 @@ Camera::Camera()
 
 Camera::~Camera()
 {
+	if (EyePoint != NULL) {
+		delete EyePoint;
+	}
+	if (LookatPoint != NULL) {
+		delete LookatPoint;
+	}
+	if (UpVector) {
+		delete UpVector;
+	}
+
+	if (ProjectionMatrix != NULL) {
+		delete ProjectionMatrix;
+	}
+	if (myInputHandler != NULL) {
+		delete myInputHandler;
+	}
+	if (CameraLogger != NULL) {
+		delete CameraLogger;
+	}
+	
 
 }
 
