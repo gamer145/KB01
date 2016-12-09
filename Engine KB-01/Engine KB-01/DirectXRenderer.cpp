@@ -125,14 +125,7 @@ HRESULT DirectXRenderer::InitGraphics( HWND hWnd )
 	g_pd3dDevice->SetRenderState( D3DRS_CULLMODE, D3DCULL_CCW);
 	g_pd3dDevice->SetRenderState( D3DRS_FILLMODE, D3DFILL_SOLID);
 
-	//ugly testing code
-	std::string filename = "banana.jpg";
-	std::string textLocation = "..\\Models\\" + filename;
-	LPSTR textureLPSTR = const_cast<CHAR*>(textLocation.c_str());
-
-	HRESULT result = D3DXCreateTextureFromFileA(g_pd3dDevice,
-		textureLPSTR,
-		&tiger);
+	
 
 	g_pd3dDevice->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(133, 133, 133));
 	init_light();
@@ -162,22 +155,31 @@ VOID DirectXRenderer::CleanUp()
 
 	for each(std::pair<std::string, MeshWrapper*> M in Meshes)
 	{
-		delete M.second;
+		if (M.second != NULL) {
+			delete M.second;
+		}
+
 	}
 
 	for each(std::pair<std::string, TextureWrapper*> T in Textures)
 	{
-		delete T.second;
+		if (T.second != NULL) {
+			delete T.second;
+		}
 	}
 
 	for each(std::pair<std::string, LPDIRECT3DVERTEXBUFFER9> V in VertexBuffers)
 	{
-		delete V.second;
+		if (V.second != NULL) {
+			delete V.second;
+		}
 	}
 
 	for each(std::pair<std::string, LPDIRECT3DINDEXBUFFER9> I in IndexBuffers)
 	{
-		delete I.second;
+		if (I.second != NULL) {
+			delete I.second;
+		}
 	}
 };
 
