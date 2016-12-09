@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <Windows.h> //Needed for showing a MessageBox
+#include "Logger.h"
 
 class Window
 {
@@ -12,21 +13,22 @@ class Window
 		int Window::ShowMessagebox(std::string body, std::string title, UINT uType);
 		void createWindow(std::string windowNaam);
 		void updateWindow();
-		void closeWindow();
-		static LRESULT CALLBACK MsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+		void closeWindow();		
 		HWND getHWND();
 		std::string getSchermNaam();
-		void Window::setRenderState(bool state);
-		bool Window::getRenderState();
+		LPCWSTR getWindowClass();
+		void setWindowClass(LPCWSTR newClassName);
 		void Window::setActiveState(bool state);
+		bool Window::getActiveState();
 
 	private:
-		int windowHeight;
-		int windowWidth;
+		static LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+		LRESULT Window::_WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 		HWND hwnd;
 		std::string schermnaam;
-		bool RenderState;
 		bool isActiveWindow;
+		Logger* loggerW;
+		LPCWSTR windowClass;
 };
 
 #endif

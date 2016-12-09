@@ -52,6 +52,7 @@ void Scene_Manager::SetUpManager(Window_Manager* windowManager, Resource_Manager
 
 	logCount = 0;
 	newScene();
+	//newScene();
 }
 
 Window* Scene_Manager::RequestWindow(std::string windowTitle)
@@ -89,8 +90,7 @@ void Scene_Manager::setCurrentScene(std::string windowname)
 
 ERUNSTATE Scene_Manager::UpdateScene()
 {
-
-	ERUNSTATE state = RUNNING;
+	ERUNSTATE state;
 	if (logCount >= 10)
 	{
 		myWindowManager->LogActiveWindow();
@@ -128,12 +128,7 @@ ERUNSTATE Scene_Manager::UpdateScene()
 			myDirectXRenderer->Present();
 			//myDirectXRenderer->PresentWithWindow(CurrentWindow->getHWND());
 
-
-
-
 			CurrentWindow->updateWindow();
-
-
 
 			return state;
 		}
@@ -152,12 +147,10 @@ ERUNSTATE Scene_Manager::UpdateScene()
 
 			//myDirectXRenderer->Present();
 
-
-			CurrentWindow->updateWindow();
-
 			return state;
 		
 	}
+	state = RUNNING;
 	return state;
 
 }

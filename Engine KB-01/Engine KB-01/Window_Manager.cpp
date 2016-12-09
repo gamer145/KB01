@@ -60,21 +60,15 @@ void Window_Manager::LogActiveWindow()
 	
 Window* Window_Manager::getActiveWindow()
 {
-	HWND activeWindow = GetForegroundWindow();
 	for (std::vector<Window*>::iterator i = Windows.begin(); i != Windows.end(); ++i)
 	{
-		Window* currentWindow = *i;		
-		if (currentWindow->getHWND() == activeWindow)
+		Window* currentWindow = *i;
+		currentWindow->updateWindow();
+		if (currentWindow->getActiveState() == true)
 		{
-			currentWindow->setActiveState(true);
 			return currentWindow;
 		}
-		else
-		{
-			currentWindow->setActiveState(false);
-		}
-		
-		//loggerWM->WriteToFile(Error, "No active Window found");
-		return NULL;
 	}
+	//loggerWM->WriteToFile(Error, "No active Window found");
+	return NULL;
 }
