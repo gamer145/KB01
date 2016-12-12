@@ -20,6 +20,7 @@ public:
 	ERUNSTATE UpdateScene();
 	void setCurrentScene(std::string windowname);
 	Window* RequestWindow(std::string windowTitle);
+	void DeleteLinkedScenes(Window* doomedWindow);
 	
 private:
 	std::map<Scene*, Window*> Scenes;

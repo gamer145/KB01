@@ -58,6 +58,11 @@ Skybox::~Skybox()
 	if (skyboxVertices != NULL) {
 		delete skyboxVertices;
 	}
+
+	if (l != NULL) {
+		l = NULL;
+		delete l;
+	}
 	
 }
 

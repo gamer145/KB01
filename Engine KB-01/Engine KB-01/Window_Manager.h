@@ -17,6 +17,7 @@ public:
 	Window* getWindow(HWND hwnd);
 	Window* getActiveWindow();
 	void LogActiveWindow();
+	void DestroyWindow(Window* DeathRowWindow);
 private:
 	std::vector<Window*> Windows;
 	Logger* loggerWM;

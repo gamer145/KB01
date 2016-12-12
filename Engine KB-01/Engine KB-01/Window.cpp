@@ -88,7 +88,7 @@ std::string Window::getSchermNaam()
 
 void Window::closeWindow()
 {
-	exit(0);
+	DestroyWindow(hwnd);
 }
 
 LRESULT Window::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)

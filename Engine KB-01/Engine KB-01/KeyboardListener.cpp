@@ -67,6 +67,10 @@ void KeyboardListener::SaveReleaseDevice()
 	}
 } 
 
+/**
+* Function:	Keyboard::getAction()
+* Description:	Checks whether actions are recognised and if the corresponding input is pressed
+*/
 bool KeyboardListener::getAction(EACTION action, float& value)
 {
 	if (action == ACTION_ZAXISMOVE)

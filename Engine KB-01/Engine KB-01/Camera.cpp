@@ -19,7 +19,7 @@ Camera::~Camera()
 	if (LookatPoint != NULL) {
 		delete LookatPoint;
 	}
-	if (UpVector) {
+	if (UpVector != NULL) {
 		delete UpVector;
 	}
 
@@ -30,6 +30,7 @@ Camera::~Camera()
 		delete myInputHandler;
 	}
 	if (CameraLogger != NULL) {
+		CameraLogger = NULL;
 		delete CameraLogger;
 	}
 	

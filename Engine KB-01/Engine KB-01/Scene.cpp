@@ -12,6 +12,7 @@ Scene::~Scene()
 		delete currentCamera;
 	}
 	if (myDirectXRenderer != NULL) {
+		myDirectXRenderer = NULL;
 		delete myDirectXRenderer;
 	}
 	if (ground != NULL) {

@@ -34,9 +34,6 @@ Scene_Manager::~Scene_Manager()
 		delete S.first;
 		delete S.second;
 	}
-	
-
-
 }
 
 void Scene_Manager::SetUpManager(Window_Manager* windowManager, Resource_Manager* resourceManager, Renderer* DirectXRenderer)
@@ -89,15 +86,43 @@ void Scene_Manager::setCurrentScene(std::string windowname)
 	}
 }
 
+void Scene_Manager::DeleteLinkedScenes(Window* doomedWindow)
+{
+	if (Scenes.size() >= 1)
+	{
+		std::vector<Scene*> linkedScenes;
+
+		for (std::map<Scene*, Window*>::iterator i = Scenes.begin(); i != Scenes.end(); ++i)
+		{	
+			if (i->second == doomedWindow)
+			{
+				linkedScenes.push_back(i->first);
+			}
+		}
+
+		if (linkedScenes.size() >= 1)
+		{
+			for each(Scene* S in linkedScenes)
+			{
+				for (std::map<Scene*, Window*>::iterator i = Scenes.begin(); i != Scenes.end(); ++i)
+				{
+					if (i->first == S)
+					{
+						Scenes.erase(i);
+						break;
+					}
+				}
+				delete S;
+			}
+		}
+
+	}
+}
+
 ERUNSTATE Scene_Manager::UpdateScene()
 {
 	ERUNSTATE state;
-	if (logCount >= 10)
-	{
-		myWindowManager->LogActiveWindow();
-		logCount = -1;
-	} 
-	logCount++;
+
 	if ((CurrentWindow = myWindowManager->getActiveWindow()) != NULL)
 	{
 		setCurrentScene(CurrentWindow->getSchermNaam());
@@ -145,6 +170,16 @@ ERUNSTATE Scene_Manager::UpdateScene()
 			//myDirectXRenderer->RenderToTexture();
 
 			CurrentScene->endS();
+
+			if (state == EXIT)
+			{
+				DeleteLinkedScenes(CurrentWindow);
+				myWindowManager->DestroyWindow(CurrentWindow);
+				if (Scenes.size() >= 1)
+				{
+					state = RUNNING;
+				}
+			}
 
 			//myDirectXRenderer->Present();
 
