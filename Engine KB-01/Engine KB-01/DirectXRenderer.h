@@ -36,7 +36,7 @@ public:
 	//void SetVertexFormat();
 	void SetUpWorld(MatrixWrapper* CameraMatrix, MatrixWrapper* ProjectionMatrix); //Initializes the world, camera and projection
 	//void* get3DDevice();
-	HRESULT InitGraphics( HWND hWnd ); //Initializes the specified Graphics Device
+	HRESULT InitGraphics( Window* window ); //Initializes the specified Graphics Device
 	void addTexture(std::string textname, TextureWrapper* Text); //Adds a texture to the Renderer-specific list of textures, which is managed by the resourcemanager
 	void addMesh(std::string meshname, MeshWrapper* Mesh); //Adds a mesh to the Renderer-specific list of meshes, which is managed by the resourcemanager
 	void setDrawWindow(Window* windowtodrawin); //Set the current window to draw our scene to

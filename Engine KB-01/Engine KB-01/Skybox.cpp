@@ -49,6 +49,8 @@ Skybox::Skybox()
 
 	i_buffer = "SkyboxIndexBuffer";
 	v_buffer = "SkyboxVertexBuffer";
+
+	l = Logger::GetLogger();
 }
 
 Skybox::~Skybox()

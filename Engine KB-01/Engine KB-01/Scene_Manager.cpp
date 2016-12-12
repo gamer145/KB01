@@ -45,14 +45,15 @@ void Scene_Manager::SetUpManager(Window_Manager* windowManager, Resource_Manager
 	myResourceManager = resourceManager;
 	myDirectXRenderer = DirectXRenderer;
 	CurrentWindow = RequestWindow("Game Engine1");
-	myDirectXRenderer->setDrawWindow(CurrentWindow);
+	myDirectXRenderer->InitGraphics(CurrentWindow);
+
 	
 	myResourceManager->setDirectXRenderer(myDirectXRenderer);
 	myLevelLoader = new LevelLoader();
 
 	logCount = 0;
 	newScene();
-	//newScene();
+	newScene();
 }
 
 Window* Scene_Manager::RequestWindow(std::string windowTitle)
@@ -101,7 +102,7 @@ ERUNSTATE Scene_Manager::UpdateScene()
 	{
 		setCurrentScene(CurrentWindow->getSchermNaam());
 
-
+		myDirectXRenderer->setDrawWindow(CurrentWindow);
 		/*
 		if (myDirectXRenderer->OculusOrNah())
 		{

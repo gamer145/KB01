@@ -31,7 +31,7 @@ public:
 	virtual HRESULT LoadTextureFromFile(std::string filename, EDWORD options, TextureWrapper* destination) = 0; //Loads a texture from a local file into the resourceloader's list of textures.
 	virtual void DrawSubSet(std::string meshname) = 0; //Draw the specified mesh's subsets.
 	virtual void SetUpWorld(MatrixWrapper* CameraMatrix, MatrixWrapper* ProjectionMatrix) = 0; //Initializes the world, camera and projection
-	virtual HRESULT InitGraphics(HWND hWnd) = 0; //Initializes the specified Graphics Device
+	virtual HRESULT InitGraphics(Window* window) = 0; //Initializes the specified Graphics Device
 	virtual void addTexture(std::string textname, TextureWrapper* Text) = 0; //Adds a texture to the Renderer-specific list of textures, which is managed by the resourcemanager
 	virtual void addMesh(std::string meshname, MeshWrapper* Mesh) = 0; //Adds a mesh to the Renderer-specific list of meshes, which is managed by the resourcemanager
 	virtual void setDrawWindow(Window* windowtodrawin) = 0; //Set the current window to draw our scene to

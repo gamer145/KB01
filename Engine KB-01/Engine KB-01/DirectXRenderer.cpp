@@ -24,7 +24,7 @@ DirectXRenderer::~DirectXRenderer()
 void DirectXRenderer::setDrawWindow(Window* windowtodrawin)
 {
 	myWindow = windowtodrawin;
-	InitGraphics(myWindow->getHWND());
+	
 }
 
 
@@ -32,7 +32,7 @@ void DirectXRenderer::setDrawWindow(Window* windowtodrawin)
 * Function:	Renderer::InitGraphics( HWND hWnd )
 * Description:	Initializes the specified Graphics Device
 */
-HRESULT DirectXRenderer::InitGraphics( HWND hWnd )
+HRESULT DirectXRenderer::InitGraphics( Window* window )
 {
 	
     if( NULL == ( g_pD3D = Direct3DCreate9( D3D_SDK_VERSION ) ) )
@@ -47,7 +47,7 @@ HRESULT DirectXRenderer::InitGraphics( HWND hWnd )
 	d3dpp.EnableAutoDepthStencil = TRUE; // clear in scene
     d3dpp.AutoDepthStencilFormat = D3DFMT_D16;
 
-    if( FAILED( g_pD3D->CreateDevice( D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hWnd,
+    if( FAILED( g_pD3D->CreateDevice( D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, window->getHWND(),
                                       D3DCREATE_SOFTWARE_VERTEXPROCESSING,
                                       &d3dpp, &g_pd3dDevice ) ) )
     {
@@ -652,7 +652,7 @@ void DirectXRenderer::EndS()
 */
 void DirectXRenderer::Present()
 {
-	g_pd3dDevice->Present( NULL, NULL, NULL, NULL );
+	g_pd3dDevice->Present( NULL, NULL, myWindow->getHWND(), NULL );
 }
 
 /**
