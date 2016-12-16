@@ -50,12 +50,26 @@ void Scene_Manager::SetUpManager(Window_Manager* windowManager, Resource_Manager
 
 	logCount = 0;
 	newScene();
-	newScene();
+	newScene(700, 100, 600, 600);
 }
 
+/**
+* Function:	Scene_Manager::RequestWindow()
+* Description: Asks the windowManager for a window with the specified name. If it doesn't exist yet it will be created
+*/
 Window* Scene_Manager::RequestWindow(std::string windowTitle)
 {
 	Window* window = myWindowManager->getWindow(windowTitle);
+	return window;
+}
+
+/**
+* Function:	Scene_Manager::RequestWindow()
+* Description: Asks the windowManager for a window with the specified name. If it doesn't exist yet it will be created with the specified dimensions
+*/
+Window* Scene_Manager::RequestWindow(std::string windowTitle, int windowX, int windowY, int windowWidth, int windowHeight)
+{
+	Window* window = myWindowManager->getWindow(windowTitle, windowX, windowY, windowWidth, windowHeight);
 	return window;
 }
 
@@ -75,11 +89,27 @@ void Scene_Manager::newScene()
 	Scenes.insert ( std::pair<Scene*, Window*>(CurrentScene, window) );
 }
 
+void Scene_Manager::newScene(int windowX, int windowY, int windowWidth, int windowHeight)
+{
+	Window* window = RequestWindow("Game Engine" + (std::to_string(Scenes.size() + 1)), windowX, windowY, windowWidth, windowHeight);
+	CurrentScene = new Scene();
+	CurrentScene->SetDirectXRenderer(myDirectXRenderer);
+	myDirectXRenderer->setDrawWindow(window);
+	CurrentScene = myLevelLoader->ReadFromFile(myResourceManager, CurrentScene);
+	CurrentScene->initGround(myResourceManager);
+	CurrentScene->initSkybox(myResourceManager);
+
+	myInputHandler = new InputHandler();
+	myInputHandler->InitInputHandler(window);
+	CurrentScene->initCamera(myInputHandler);
+	Scenes.insert(std::pair<Scene*, Window*>(CurrentScene, window));
+}
+
 void Scene_Manager::setCurrentScene(std::string windowname)
 {
 	for(std::map<Scene*, Window*>::iterator i = Scenes.begin(); i != Scenes.end(); ++i)
 	{
-		if (i->second->getSchermNaam() == windowname)
+		if (i->second->getWindowName() == windowname)
 		{
 			CurrentScene = i->first;		
 		}
@@ -125,7 +155,7 @@ ERUNSTATE Scene_Manager::UpdateScene()
 
 	if ((CurrentWindow = myWindowManager->getActiveWindow()) != NULL)
 	{
-		setCurrentScene(CurrentWindow->getSchermNaam());
+		setCurrentScene(CurrentWindow->getWindowName());
 
 		myDirectXRenderer->setDrawWindow(CurrentWindow);
 		/*
