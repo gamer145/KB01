@@ -18,17 +18,26 @@ class Resource_Manager
 public:
 	Resource_Manager();
 	~Resource_Manager();
-	void setDirectXRenderer(Renderer* newDirectXRenderer);
-	VisualObject* LoadInModel(std::string modelname, std::string texturename);
-	void loadManualTexture(std::string texturename);
 
-	bool checkText(std::string textname);
-	bool checkMesh(std::string meshname);
+	//Sets the renderer to use in the loading of all resources
+	void setDirectXRenderer(Renderer* newDirectXRenderer); 
+
+	//Loads in a complete model with mesh and texture, using both the model and texture loader, and returns the visual object it is loaded into.
+	VisualObject* LoadInModel(std::string modelname, std::string texturename); 
+
+	//Loads just a texture to use.
+	void loadManualTexture(std::string texturename); 
+
+	//Checks if a texture has already been loaded.
+	bool checkText(std::string textname); 
+
+	//Checks if a mesh has already been loaded.
+	bool checkMesh(std::string meshname); 
 
 private:
-	//LevelLoader levelLoader;
 	ModelLoader modelLoader;
-	Renderer* DirectXRenderer;
+	//The man the myth the legend.
+	Renderer* DirectXRenderer; 
 	TextureLoader textureLoader;
 };
 

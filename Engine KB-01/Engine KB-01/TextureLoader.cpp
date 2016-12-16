@@ -8,6 +8,11 @@ TextureLoader::~TextureLoader()
 {
 }
 
+
+/**
+* Function:	TextureLoader::LoadTexture(std::string texturename, Renderer* DirectXRenderer)
+* Description:	Loads a texture into memory and graphs it.
+*/
 HRESULT TextureLoader::LoadTexture(std::string texturename, Renderer* DirectXRenderer)
 {
 

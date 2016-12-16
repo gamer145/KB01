@@ -15,13 +15,19 @@ Resource_Manager::~Resource_Manager()
 
 }
 
-
+/**
+* Function:	Renderer::setDrawWindow(Window* windowtodrawin)
+* Description:	Set the current window to draw our scene to
+*/
 void Resource_Manager::setDirectXRenderer(Renderer* newDirectXRenderer)
 {
 	DirectXRenderer = newDirectXRenderer;
 }
 
-
+/**
+* Function:	Renderer::setDrawWindow(Window* windowtodrawin)
+* Description:	Set the current window to draw our scene to
+*/
 VisualObject* Resource_Manager::LoadInModel(std::string modelname, std::string texturename)
 {
 	VisualObject* object = new VisualObject;
@@ -32,11 +38,19 @@ VisualObject* Resource_Manager::LoadInModel(std::string modelname, std::string t
 	return object;
 }
 
+/**
+* Function:	Renderer::setDrawWindow(Window* windowtodrawin)
+* Description:	Set the current window to draw our scene to
+*/
 void Resource_Manager::loadManualTexture(std::string texturename)
 {
 	textureLoader.LoadTexture(texturename, DirectXRenderer);
 }
 
+/**
+* Function:	Renderer::setDrawWindow(Window* windowtodrawin)
+* Description:	Set the current window to draw our scene to
+*/
 bool Resource_Manager::checkText(std::string textname)
 {
 
@@ -54,6 +68,11 @@ bool Resource_Manager::checkText(std::string textname)
 	return false;
 }
 
+
+/**
+* Function:	Renderer::setDrawWindow(Window* windowtodrawin)
+* Description:	Set the current window to draw our scene to
+*/
 bool Resource_Manager::checkMesh(std::string meshname)
 {
 	std::map<std::string, MeshWrapper*> meshes = DirectXRenderer->getMeshes();

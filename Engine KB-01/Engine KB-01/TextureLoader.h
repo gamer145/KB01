@@ -12,7 +12,8 @@ class TextureLoader
 public:
 	TextureLoader();
 	~TextureLoader();
-	HRESULT LoadTexture(std::string texturename, Renderer* DirectXRenderer);
+	//Loads a texture into memory and graphs it.
+	HRESULT LoadTexture(std::string texturename, Renderer* DirectXRenderer); 
 };
 
 #endif

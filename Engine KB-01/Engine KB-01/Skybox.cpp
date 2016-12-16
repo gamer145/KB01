@@ -66,11 +66,19 @@ Skybox::~Skybox()
 	
 }
 
+/**
+* Function:	Skybox::SetTexture(std::string tex)
+* Description:	Sets the skybox' texture
+*/
 void Skybox::SetTexture(std::string tex)
 {
 	texture = tex;
 }
 
+/**
+* Function:	Skybox::InitializeSkybox(Renderer* renderer, Resource_Manager* resourcemanager)
+* Description:	initializes the skybox, creating the index and vertexbuffer used for drawing the skybox.
+*/
 void Skybox::InitializeSkybox(Renderer* renderer, Resource_Manager* resourcemanager)
 {
 
@@ -131,6 +139,10 @@ void Skybox::InitializeSkybox(Renderer* renderer, Resource_Manager* resourcemana
 	}
 }
 
+/**
+* Function:	Skybox::DrawSkybox(Renderer* renderer, MatrixWrapper* cameraposition)
+* Description:	Draws the skybox to the active scene.
+*/
 void Skybox::DrawSkybox(Renderer* renderer, MatrixWrapper* cameraposition)
 {
 	renderer->SetZBuffer(false);

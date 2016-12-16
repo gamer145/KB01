@@ -18,7 +18,8 @@ class LevelLoader
 public:
 	LevelLoader();
 	~LevelLoader();
-	Scene* ReadFromFile(Resource_Manager* resourceManager, Scene* currentScene); //Reads a .txt file and translates it into an existing scene the engine can use
+	//Reads a .txt file and translates it into an existing scene the engine can use
+	Scene* ReadFromFile(Resource_Manager* resourceManager, Scene* currentScene); 
 };
 
 #endif
