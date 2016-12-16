@@ -12,6 +12,10 @@ LevelLoader::~LevelLoader()
 {
 }
 
+/**
+* Function:	LevelLoader::ReadFromFile(Resource_Manager* resourceManager, Scene* currentScene)
+* Description:	Reads a .txt file and translates it into an existing scene the engine can use
+*/
 Scene* LevelLoader::ReadFromFile(Resource_Manager* resourceManager, Scene* currentScene)
 {
 	std::stringstream ss;

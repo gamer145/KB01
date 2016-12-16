@@ -14,7 +14,7 @@ class ModelLoader
 public:
 	ModelLoader();
 	~ModelLoader();
-	HRESULT LoadModel(std::string modelname, Renderer* DirectXRenderer, VisualObject* object);
+	HRESULT LoadModel(std::string modelname, Renderer* DirectXRenderer, VisualObject* object); //Loads a model from a .x file, where modelname is the filepath in a string and object is the target visualtobject to load it into.
 };
 
 #endif
