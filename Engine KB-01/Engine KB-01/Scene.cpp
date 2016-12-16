@@ -33,6 +33,11 @@ Scene::~Scene()
 	}
 }
 
+
+/**
+* Function:	Scene::initGround()
+* Description: Initializes the ground of the scene
+*/
 void Scene::initGround(Resource_Manager* RManager)
 {
 	ground = new Ground();
@@ -42,6 +47,11 @@ void Scene::initGround(Resource_Manager* RManager)
 
 }
 
+
+/**
+* Function:	Scene::initSkybox()
+* Description: Initializes the skybox of the scene
+*/
 void Scene::initSkybox(Resource_Manager* RManager)
 {
 	skybox = new Skybox();
@@ -49,6 +59,11 @@ void Scene::initSkybox(Resource_Manager* RManager)
 	skybox->InitializeSkybox(myDirectXRenderer, RManager);	
 }
 
+
+/**
+* Function:	Scene::initCamera()
+* Description: Initializes the camera of the scene
+*/
 void Scene::initCamera(InputHandlerInterface* IH)
 {
 	sceneState = RUNNING;
@@ -57,31 +72,57 @@ void Scene::initCamera(InputHandlerInterface* IH)
 	currentCamera->SetInputHandler(IH);
 }
 
+
+/**
+* Function:	Scene::setCamera()
+* Description: Sets the camera of the scene to an already build camera
+*/
 void Scene::setCamera(Camera* c)
 {
 	currentCamera = c;
 }
 
+/**
+* Function:	Scene::getCamera()
+* Description: Returns this specific scene's camera
+*/
 Camera* Scene::getCamera()
 {
 	return currentCamera;
 }
 
+/**
+* Function:	Scene::AddObject()
+* Description: Adds a VisualObject to the active object list
+*/
 void Scene::AddObject(VisualObject* newObject)
 {
 	activeObjects.push_back(newObject);
 }
 
+/**
+* Function:	Scene::AddLight()
+* Description: Adds a light to the collection of lights present in this scene
+*/
 void Scene::AddLight(Light* newLight)
 {
 	activeLights.push_back(newLight);
 }
 
-void Scene::SetDirectXRenderer(Renderer* render)
+/**
+* Function:	Scene::SetRenderer()
+* Description: Sets the renderer used by this scene
+*/
+void Scene::SetRenderer(Renderer* render)
 {
 	myDirectXRenderer = render;
 }
 
+/**
+* Function:	Scene::Update()
+* Description: Updates the current scene and it's runtime components
+* Returns a runstate based on what input is received from the inputHandler
+*/
 ERUNSTATE Scene::Update()
 {
 		currentCamera->Update(sceneState);
@@ -90,6 +131,12 @@ ERUNSTATE Scene::Update()
 	
 }
 
+/**
+* Function:	Scene::UpdateOculus()
+* Description: Updates the current scene and it's runtime components
+* Returns a runstate based on what input is received from the inputHandler
+* Oculus version
+*/
 ERUNSTATE Scene::UpdateOculus(const OVR::Util::Render::StereoEyeParams& stereo)
 {
 	
@@ -101,17 +148,32 @@ ERUNSTATE Scene::UpdateOculus(const OVR::Util::Render::StereoEyeParams& stereo)
 
 }
 
+
+/**
+* Function:	Scene::clear()
+* Description: Clears the window, in preparation for the new draw with updated values
+*/
 void Scene::clear()
 {
 	myDirectXRenderer->Clear( 0, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
                          D3DCOLOR_XRGB(255, 0, 0 ), 1.0f, 0 );
 }
 
+
+/**
+* Function:	Scene::beginS()
+* Description: Tells the renderer it's time to begin
+*/
 void Scene::beginS()
 {
 	myDirectXRenderer->BeginS();
 }
 
+
+/**
+* Function:	Scene::endS()
+* Description: Tells the renderer it's time to end and to present it's handiwork to the world
+*/
 void Scene::endS()
 {
 	myDirectXRenderer->EndS();
@@ -126,6 +188,11 @@ OVR::Util::Render::StereoConfig Scene::GetConfig()
 	return NULL;
 }
 
+*/
+
+/**
+* Function:	Scene::Draw()
+* Description: Use the renderer to draw what needs to be drawn onto the surface that needs to be drawn upon, what a drawn out charade
 */
 void Scene::Draw()
 {

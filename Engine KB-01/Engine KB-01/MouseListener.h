@@ -22,13 +22,13 @@ public:
 private:
 	LPDIRECTINPUT8          dInput;
 	LPDIRECTINPUTDEVICE8	dDeviceMouse;
-	Window* window;
+	Window* window; 
 	DIPROPDWORD dipdw;
 	MouseStruct bufferedMouse;	//The mouse struct after its filled with values given by OS
 	MouseStruct oldMouseState;	//The previous cycles mouseStruct, used to determine wether something has changed.
 	float mouseAcceleration;	//Value used to calculate the internal changes made by a mouse positional change. 
 								//The higher the acceleration, the more impact a single position of mouse movement has.
-	Logger* loggerM;
+	Logger* loggerM; //The logger used within the MouseListener
 
 	long getMousewheel(); //Checks wether the mousewheel has scrolled or not, and in which direction.
 	bool isButtonDown(int button, MouseStruct mouse); //Checks wether a given button is down. See EngineDefinitions for which button is which

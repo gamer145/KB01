@@ -123,9 +123,6 @@
     <ClCompile Include="IndexBufferWrapper.cpp">
       <Filter>Source Files\Wrappers</Filter>
     </ClCompile>
-    <ClCompile Include="InputHandler.cpp">
-      <Filter>Source Files\Input</Filter>
-    </ClCompile>
     <ClCompile Include="InputHandlerInterface.cpp">
       <Filter>Source Files\Input</Filter>
     </ClCompile>
@@ -186,6 +183,9 @@
     <ClCompile Include="EngineTextHandling.cpp">
       <Filter>Source Files\EngineDefinitions</Filter>
     </ClCompile>
+    <ClCompile Include="DirectXInputHandler.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Kernel.h">
@@ -202,9 +202,6 @@
     </ClInclude>
     <ClInclude Include="EngineMath.h">
       <Filter>Header Files\EngineDefinitions</Filter>
-    </ClInclude>
-    <ClInclude Include="InputHandler.h">
-      <Filter>Header Files\Input</Filter>
     </ClInclude>
     <ClInclude Include="Logger.h">
       <Filter>Header Files\Logger</Filter>
@@ -295,6 +292,9 @@
     </ClInclude>
     <ClInclude Include="EngineTextHandling.h">
       <Filter>Header Files\EngineDefinitions</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXInputHandler.h">
+      <Filter>Header Files\Input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

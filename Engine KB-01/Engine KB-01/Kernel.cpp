@@ -28,12 +28,21 @@ Kernel::~Kernel()
 	
 }
 
+/**
+* Function:	Kernel::Initialize()
+* Description: Uses the sceneManager as entry point to set up all managers and their relations to each other
+*/
 void Kernel::Initialize()
 {
 	mySceneManager->SetUpManager(myWindowManager, myResourceManager, myRenderer);
 
 }
 
+
+/**
+* Function:	Kernel::Run()
+* Description: The Programn loop, this is start of the programn loop and the one called to start the engine
+*/
 void Kernel::Run()
 {
 	Runstate = mySceneManager->UpdateScene();

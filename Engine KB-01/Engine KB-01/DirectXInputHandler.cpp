@@ -1,24 +1,22 @@
-#include "InputHandler.h"
-
-Logger* loggerIH = Logger::GetLogger();
+#include "DirectXInputHandler.h"
 
 /**
- * Function:	InputHandler::InputHandler(...)
+ * Function:	DirectXInputHandler::DirectXInputHandler()
  * Description:	constructor - setup DirectInput and listeners
  */
-InputHandler::InputHandler()
+DirectXInputHandler::DirectXInputHandler()
 {
-
+	loggerIH = Logger::GetLogger();
 }
 
-HRESULT InputHandler::InitInputHandler(Window* argWindow)
+HRESULT DirectXInputHandler::InitInputHandler(Window* argWindow)
 {
 	dInput = NULL; //Nullify the DirectInput pointer
 	if (FAILED(InitDInput()))
 	{
 		//Can't initialize DirectInput so we're going to log the error, notify the user and stop the program with a negative exit code
-		loggerIH->WriteToFile(FatalError, "Could not create DirectInput interface in InputHandler!");
-		argWindow->ShowMessagebox("Could not create DirectInput interface in InputHandler!", "Error", MB_ICONERROR | MB_OK);
+		loggerIH->WriteToFile(FatalError, "Could not create DirectInput interface in DirectXInputHandler!");
+		argWindow->ShowMessagebox("Could not create DirectInput interface in DirectXInputHandler!", "Error", MB_ICONERROR | MB_OK);
 		return -1;
 	}
 	//Create the Listeners now that we have DirectInput
@@ -29,10 +27,10 @@ HRESULT InputHandler::InitInputHandler(Window* argWindow)
 }
 
 /**
- * Function:	InputHandler::~InputHandler(...)
+ * Function:	DirectXInputHandler::~DirectXInputHandler()
  * Description:	destructor - get rid of leftovers
  */
-InputHandler::~InputHandler()
+DirectXInputHandler::~DirectXInputHandler()
 {
 	if (mousewhisperer != NULL) {
 		delete mousewhisperer; //Call the destructor
@@ -49,16 +47,13 @@ InputHandler::~InputHandler()
 	
 }
 
-void InputHandler::pollWhisperers()
-{
-	//Avoid polling for each action? Is that usefull?
-}
-
-float InputHandler::getAction(EACTION action)
+/**
+* Function:	DirectXInputHandler::getAction()
+* Description: Asks the whisperers whether they know a certain action or not
+*/
+float DirectXInputHandler::getAction(EACTION action)
 {
 	float response = 0;
-
-	pollWhisperers();
 
 	keyboardwhisperer->getAction(action, response);
 
@@ -68,10 +63,10 @@ float InputHandler::getAction(EACTION action)
 }
 
 /**
- * Function:	InputHandler::InitDInput()
+ * Function:	DirectXInputHandler::InitDInput()
  * Description:	Create a DirectInput instance
  */
-HRESULT InputHandler::InitDInput()
+HRESULT DirectXInputHandler::InitDInput()
 {
 	//Have DirectX fill the 'dInput' pointer with an instance of DirectInput, but check if it did this correctly and return the result accordingly
 	HRESULT result = DirectInput8Create( GetModuleHandle(NULL), DIRECTINPUT_VERSION, IID_IDirectInput8, (VOID**)&dInput, NULL );

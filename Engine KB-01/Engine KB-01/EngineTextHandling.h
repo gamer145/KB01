@@ -5,7 +5,10 @@
 
 namespace EngineTextHandling
 {
-	std::string ReplaceCharsInString(std::string strChange, char a, char b); //Replaces characters in a string, used internally to fix some format issues. Returns a new formatted string.
+	//Replaces characters in a string, used internally to fix some format issues. Returns a new formatted string.
+	std::string ReplaceCharsInString(std::string strChange, char a, char b); 
+
+	//Converts a HWND to a string, used for logging purposes. Basically just gets the title of a window
 	std::string HwndToString(HWND hWnd);
 };
 
