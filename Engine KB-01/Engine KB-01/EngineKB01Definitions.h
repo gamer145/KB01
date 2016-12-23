@@ -1,9 +1,10 @@
 #ifndef _ENGINEKB01DEFINITIONS_H_
 #define _ENGINEKB01DEFINITIONS_H_
 
-// #include <float.h>
-
+//Engine definition of DWORD
 typedef unsigned long       EDWORD;
+
+//Engine definition of BYTE
 typedef unsigned char       EBYTE;
 
 // color definitions
@@ -47,6 +48,8 @@ struct MouseStruct
 	bool buttonlock[8];
 };
 
+
+//Custom Engine VECTOR struct
 struct VECTOR
 {
 	VECTOR()
@@ -66,6 +69,8 @@ struct VECTOR
 	float X, Y, Z;
 };
 
+
+//Custom Engine Vertex struct, without the light components (no normal values)
 struct LIGHTLESSVERTEX
 {
 	LIGHTLESSVERTEX()
@@ -89,6 +94,7 @@ struct LIGHTLESSVERTEX
 	float x, y, z, tu, tv;
 };
 
+//Custom Engine Vertex struct, with the light components (normal values)
 struct VERTEX
 {
 	VERTEX()
@@ -119,11 +125,7 @@ struct VERTEX
 
 };
 
-struct CameraData
-{
-	float x, y, z, lookAtX, lookAtY, lookAtZ, upVecX, upVecY, upVecZ;
-};
-
+//Custom Engine Read Only Format used by Renderer 
 enum EFORMAT
 {
 	FMT_UNKNOWN = 0,
@@ -214,8 +216,7 @@ enum EFORMAT
 	//FMT_FORCE_DWORD = 0x7fffffff
 }; // end format definitions
 
-// transform type definitions
-
+//Custom Engine Read Only TRANSFORMSTATETYPE used by Renderer 
 enum ETRANSFORMSTATETYPE {
 	E_VIEW = 2,
 	E_PROJECTION = 3,
@@ -233,10 +234,7 @@ enum ETRANSFORMSTATETYPE {
 #define E_WORLDMATRIX(index) (ETRANSFORMSTATETYPE)(index + 256)
 #define E_WORLD  E_WORLDMATRIX(0)
 
-
-// pool definitions
-
-
+//Custom Engine Read Only POOL used by Renderer 
 enum EPOOL
 {
 	EPOOL_DEFAULT = 0,
@@ -247,6 +245,8 @@ enum EPOOL
 	//POOL_FORCE_DWORD = 0x7fffffff
 }; // end pool definitions
 
+
+//Custom Engine Read Only PRIMITIVETYPE used by Renderer 
 enum EPRIMITIVETYPE {
 	EPT_POINTLIST = 1,
 	EPT_LINELIST = 2,
@@ -257,6 +257,7 @@ enum EPRIMITIVETYPE {
 	//EPT_FORCE_DWORD = 0x7fffffff, /* force 32-bit size enum */
 };
 
+//Different types of Light objects can be
 enum LIGHTTYPE
 {
 	DIVERGENT = 1,
@@ -264,6 +265,7 @@ enum LIGHTTYPE
 	PARALLEL = 3,
 };
 
+//Different types of Running State the Engine can have
 enum ERUNSTATE {
 	RUNNING = 1,
 	PAUSED = 2,
