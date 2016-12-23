@@ -4,7 +4,6 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 #include <Windows.h>
-//#include "LevelLoader.h"
 #include "Model.h"
 #include "ModelLoader.h"
 #include "Renderer.h"
@@ -16,7 +15,10 @@
 class Resource_Manager
 {
 public:
+	//Constructor
 	Resource_Manager();
+
+	//Destructor
 	~Resource_Manager();
 
 	//Sets the renderer to use in the loading of all resources
@@ -35,9 +37,13 @@ public:
 	bool checkMesh(std::string meshname); 
 
 private:
+	//The attached ModelLoader
 	ModelLoader modelLoader;
-	//The man the myth the legend.
+
+	//The attached Renderer, man the myth the legend.
 	Renderer* DirectXRenderer; 
+
+	//The attached TextureLoader
 	TextureLoader textureLoader;
 };
 

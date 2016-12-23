@@ -3,17 +3,24 @@
 
 #include <d3dx9.h>
 
+//Wrappers are used to make the rest of the engine not dependant on a specific framework, in this case directX.
 
 	class MeshWrapper
 	{
 	public:
+		//Constructor
 		MeshWrapper();
+
+		//Destructor
 		~MeshWrapper();
-		//sets the Mesh that's contained within this class
+
+		//Sets the Mesh that's contained within this class
 		void SetMesh(LPD3DXMESH _mesh);
-		//gets the Mesh that's contained within this class
+
+		//Gets the Mesh that's contained within this class
 		LPD3DXMESH GetMesh();
 	private:
+		//The DirectX mesh itself
 		LPD3DXMESH mesh;
 	};
 

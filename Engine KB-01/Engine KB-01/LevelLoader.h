@@ -11,13 +11,16 @@
 #include <fstream>
 #include <string>
 #include <cstddef>
-#include <d3dx9.h>
 
 class LevelLoader
 {
 public:
+	//Constructor
 	LevelLoader();
+
+	//Destructor
 	~LevelLoader();
+
 	//Reads a .txt file and translates it into an existing scene the engine can use
 	Scene* ReadFromFile(Resource_Manager* resourceManager, Scene* currentScene); 
 };
