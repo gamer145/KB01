@@ -1,5 +1,11 @@
 #include "ShaderLoader.h"
 
+/*
+* Work in progress, doesn't work.
+* Probably never will
+* Ne pas toucher!
+*/
+
 ShaderLoader::ShaderLoader()
 {
 

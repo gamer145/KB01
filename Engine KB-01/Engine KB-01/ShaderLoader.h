@@ -6,6 +6,11 @@
 #include <vector>
 #include "Renderer.h"
 
+/*
+* Work in progress, doesn't work.
+* Probably never will
+* Ne pas toucher!
+*/
 
 class ShaderLoader
 {

@@ -33,39 +33,39 @@ void Window_Manager::createWindow(std::string title, int startX, int startY, int
 * Function:	Window_Manager::getWindow()
 * Description: Provides a window with specified name for whichever function needs it, will create one using default values if needed.
 */
-Window* Window_Manager::getWindow(std::string schermnaam)
+Window* Window_Manager::getWindow(std::string title)
 {
 	for(std::vector<Window*>::iterator i = Windows.begin(); i != Windows.end(); ++i)
 	{
 		Window* currentWindow = *i;
-		if (currentWindow->getWindowName().compare(schermnaam) == 0)
+		if (currentWindow->getWindowName().compare(title) == 0)
 		{
 			return currentWindow; //If a window is found with the name, return this one.
 		}
 	}
 	//Else create a new window, and return this one
 
-	createWindow(schermnaam, 100, 100, 600, 600);
-	return getWindow(schermnaam);
+	createWindow(title, 100, 100, 600, 600);
+	return getWindow(title);
 }
 
 /**
 * Function:	Window_Manager::getWindow()
 * Description: Provides a window with specified name for whichever function needs it, will create one using specified values if needed.
 */
-Window* Window_Manager::getWindow(std::string schermnaam, int startX, int startY, int wWidth, int wHeight)
+Window* Window_Manager::getWindow(std::string title, int startX, int startY, int wWidth, int wHeight)
 {
 	for (std::vector<Window*>::iterator i = Windows.begin(); i != Windows.end(); ++i)
 	{
 		Window* currentWindow = *i;
-		if (currentWindow->getWindowName().compare(schermnaam) == 0)
+		if (currentWindow->getWindowName().compare(title) == 0)
 		{
 			return currentWindow; //If a window is found with the name, return this one.
 		}
 	}
 	//Else create a new window, and return this one
-	createWindow(schermnaam, startX, startY, wWidth, wHeight);
-	return getWindow(schermnaam);
+	createWindow(title, startX, startY, wWidth, wHeight);
+	return getWindow(title);
 }
 
 /**

@@ -18,10 +18,10 @@ public:
 	~Window_Manager();
 
 	//Looks for a window with specified name, if none exists, creates one with specified name and default window values.
-	Window* getWindow(std::string schermnaam);
+	Window* getWindow(std::string title);
 
 	//Looks for a window with specified name, if none exists, creates one with specified name and specified window values.
-	Window* getWindow(std::string schermnaam, int startX, int startY, int wWidth, int wHeight); 
+	Window* getWindow(std::string title, int startX, int startY, int wWidth, int wHeight);
 
 	//Looks for a window with specified HWND
 	Window* getWindow(HWND hwnd); 

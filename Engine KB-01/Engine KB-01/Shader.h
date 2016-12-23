@@ -4,6 +4,13 @@
 #include <string>
 #include <d3dx9.h>
 
+/*
+* Work in progress, doesn't work. 
+* Probably never will
+* Ne pas toucher!
+*/
+
+
 class Shader
 {
 public:
