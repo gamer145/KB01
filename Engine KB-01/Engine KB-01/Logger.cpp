@@ -13,7 +13,11 @@ Logger::~Logger()
 
 }
 
-const std::string currentDateTime() {
+/**
+* Function:	Logger::currentDateTime()
+* Description: Function that creates a datetime and returns it. Used for logging purposes, hence why it's here
+*/
+std::string Logger::currentDateTime() {
     time_t     now = time(0);
     struct tm  tstruct;
     char       buf[80];
@@ -22,6 +26,11 @@ const std::string currentDateTime() {
     return buf;
 }
 
+
+/**
+* Function:	Logger::currentDateTime()
+* Description: Function that creates a datetime and returns it. Used for logging purposes, hence why it's here
+*/
 void Logger::SetFiles()
 {
 	std::string formattedDatetime = EngineTextHandling::ReplaceCharsInString(currentDateTime(), ':', '_');	
@@ -31,6 +40,12 @@ void Logger::SetFiles()
 	warninglogfile = "../Logs/Warning/Log " + formattedDatetime + ".txt";
 }
 
+
+/**
+* Function:	Logger::WriteToFile()
+* Description: Writes a specific message to a logFile and the generic logfile. 
+* Based on the messageType it also writes the message to a specific log file
+*/
 void Logger::WriteToFile(MessageType newType, const std::string& message)
 {
 	std::fstream theLogfile (genericlogfile.c_str(), std::fstream::in | std::fstream::out | std::fstream::app);
@@ -88,6 +103,11 @@ void Logger::WriteToFile(MessageType newType, const std::string& message)
 
 }
 
+
+/**
+* Function:	Logger::ReadFromFile()
+* Description: Reads and displays everything from the generic log file where everything is logged
+*/
 void Logger::ReadFromFile()
 {
 	std::string line;
@@ -102,10 +122,16 @@ void Logger::ReadFromFile()
 	}
 	else
 	{
-		std::cout << "Error: unable to open logfile '" << genericlogfile << "'!" << std::endl; //Veranderen naar messagebox?
+		std::cout << "Error: unable to open logfile '" << genericlogfile << "'!" << std::endl;
 	}
 }
 
+
+/**
+* Function:	Logger::ReadFromFile()
+* Description: Reads from the generic log file where everything is logged, untill it finds the specified string
+* Displays the line where the specified string is found
+*/
 void Logger::ReadFromFile(std::string token)
 {
 	std::string line;
@@ -127,16 +153,29 @@ void Logger::ReadFromFile(std::string token)
 	}
 }
 
+/**
+* Function:	Logger::GetMessageType()
+* Description: Returns the last MessageType processed by the logger
+*/
 MessageType Logger::GetMessageType()
 {
 	return Type;
 }
 
+/**
+* Function:	Logger::RemoveLogFile()
+* Description: Deletes the generic log file
+*/
 void Logger::RemoveLogFile()
 {
 	remove(genericlogfile.c_str());
 }
 
+/**
+* Function:	Logger::GetLogger()
+* Description: Gets the logger, if it doesn't exist. It creates itself.
+* WoW magic
+*/
 Logger* Logger::GetLogger()
 {
 	if (myLogger == NULL)
@@ -146,6 +185,10 @@ Logger* Logger::GetLogger()
 	return myLogger;
 }
 
+/**
+* Function:	Logger::toString()
+* Description: Converts a messageType to string
+*/
 std::string Logger::toString(MessageType type)
 {
 	switch(type)

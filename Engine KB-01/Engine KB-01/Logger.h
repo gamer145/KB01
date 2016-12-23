@@ -50,6 +50,8 @@ public:
 	//Convert the ENUM MessageType to a string
 	std::string toString(MessageType type);
 private:
+	//Function that creates a datetime and returns it.
+	std::string currentDateTime();
 
 	//Sets new log files based on when the session started. The created logfiles will be used for all logging that session.
 	void SetFiles(); 
