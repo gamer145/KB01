@@ -7,7 +7,8 @@
 #include <sstream>
 #include <string>
 
-enum MessageType //Custom set of potential messagetype values.
+//Custom set of potential messagetype values.
+enum MessageType 
 { 
 	Warning, 
 	FatalError, 
