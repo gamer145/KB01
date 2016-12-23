@@ -37,13 +37,22 @@ Camera::~Camera()
 
 }
 
+
+/**
+* Function:	Camera::CalculateAngles()
+* Description: Function used to aid in rotation based on current position in the world and look at point. 
+* However not worked out yet
+*/
 void Camera::CalculateAngles()
 {
 	horizontalAngle = 90;
 	verticalAngle = 90;
 }
 
-
+/**
+* Function:	Camera::Initialize()
+* Description: Initializes the components of the Camera, needs to be called after Eye, LookAt and Up are set
+*/
 void Camera::Initialize()
 {
 	radius = (abs(LookatPoint->GetZ()) + abs(EyePoint->GetZ()));
@@ -52,28 +61,49 @@ void Camera::Initialize()
 	CalculateAngles();
 }
 
+/**
+* Function:	Camera::SetInputHandler()
+* Description: Sets a new inputHandler
+*/
 void Camera::SetInputHandler(InputHandlerInterface* IH)
 {
 	myInputHandler = IH;
 }
 
+
+/**
+* Function:	Camera::SetEyePoint()
+* Description: Sets a new Eyepoint
+*/
 void Camera::SetEyePoint(VectorWrapper* newVector)
 {
 	EyePoint = newVector;
 }
 
+
+/**
+* Function:	Camera::SetLookAtPoint()
+* Description: Sets a new LookAtPoint
+*/
 void Camera::SetLookAtPoint(VectorWrapper* newVector)
 {
 	LookatPoint = newVector;
 }
 
+/**
+* Function:	Camera::SetUpVector()
+* Description: Sets a new UpVector
+*/
 void Camera::SetUpVector(VectorWrapper* newVector)
 {
 	UpVector = newVector;
 }
 
-//Logic for Forward and Backward Movement. The movement is done in a 2DPlane.
-//Logic is based on the position of the camera, and where it's looking at.
+/**
+* Function:	Camera::ModifyCameraForward()
+* Description: Logic for Forward and Backward Movement. The movement is done in a 2DPlane.
+* Logic is based on the position of the camera, and where it's looking at.
+*/
 void Camera::ModifyCameraForward(float modifier)
 {
 	float LPX = LookatPoint->GetX();
@@ -98,14 +128,22 @@ void Camera::ModifyCameraForward(float modifier)
 	LookatPoint->ModZ(ZModifier);
 }
 
+/**
+* Function:	Camera::ModifyCameraHeight()
+* Description: Modifies the height of the Camera and Look At point to make sure the camera doesn't rotate.
+*/
 void Camera::ModifyCameraHeight(float modifier)
 {
 	EyePoint->ModY(modifier);
 	LookatPoint->ModY(modifier);
 }
 
-//Logic for sideways Movement. The movement is done in a 2DPlane. 
-//Logic is based on the position of the camera, and where it's looking at.
+
+/**
+* Function:	Camera::ModifyCameraSide()
+* Description: Logic for sideways Movement. The movement is done in a 2DPlane. 
+* Logic is based on the position of the camera, and where it's looking at.
+*/
 void Camera::ModifyCameraSide(float modifier)
 {
 	float LPX = LookatPoint->GetX();
@@ -132,7 +170,12 @@ void Camera::ModifyCameraSide(float modifier)
 	LookatPoint->ModZ(ZModifier);
 }
 
-
+/**
+* Function:	Camera::ModifyCameraXRotation()
+* Description: Rotates the camera around, using ratio's to keep track of how far it has 
+* rotated and how far along it has to move to ensure returning to its original point.
+* Has guards to prevent dividing by 0, although this means it can ocasionally skip by a very small margin
+*/
 void Camera::ModifyCameraXRotation(float modifier)
 {
 	int angleMod = round((abs(modifier) * 10));
@@ -186,6 +229,14 @@ void Camera::ModifyCameraXRotation(float modifier)
 	}
 } 
 
+
+/**
+* Function:	Camera::ModifyCameraYRotation()
+* Description: Rotates the camera around, using ratio's to keep track of how far it has
+* rotated and how far along it has to move to ensure returning to its original point.
+* Has guards to prevent dividing by 0, although this means it can ocasionally skip by a very small margin
+* Not fully working yet, needs more logic and proper angle calculations to properly rotate
+*/
 void Camera::ModifyCameraYRotation(float modifier)
 {
 	int angleMod = round((abs(modifier) * 10));
@@ -238,16 +289,33 @@ void Camera::ModifyCameraYRotation(float modifier)
 	}
 }
 
+/**
+* Function:	Camera::ModifyCameraZRotation()
+* Description: Rotates the camera around, using ratio's to keep track of how far it has
+* rotated and how far along it has to move to ensure returning to its original point.
+* Not Implemented yet, also sickening to imagine
+*/
 void Camera::ModifyCameraZRotation(float modifier)
 {
 	//ZAngle += modifier;
 }
 
+/**
+* Function:	Camera::getProjectionMatrix()
+* Description: Returns the projectionMatrix used in renderer to get the projection plane set up, 
+* allowing to draw 3D on a 2D screen
+*/
 MatrixWrapper* Camera::getProjectionMatrix()
 {
 	return ProjectionMatrix;
 }
 
+/**
+* Function:	Camera::Update()
+* Description: The main update loop, where it talks to its InputHandler, asking whether it knowns any Action Types. 
+* The inputhandler will in turn ask it's listeners whether they know this action type. 
+* All feedback eventually comes back here in camera and the argument provided will determine to what degree modifications need to be made
+*/
 void Camera::Update(ERUNSTATE& sceneState)
 {
 
@@ -286,6 +354,13 @@ void Camera::Update(ERUNSTATE& sceneState)
 
 }
 
+/**
+* Function:	Camera::UpdateOculus()
+* Description: The main Oculus update loop, where it talks to its InputHandler, asking whether it knowns any Action Types.
+* The inputhandler will in turn ask it's listeners whether they know this action type.
+* All feedback eventually comes back here in camera and the argument provided will determine to what degree modifications need to be made
+* Work in progress, not fully implemented yet. Should do mostly the same as the normal update loop, but needs more
+*/
 void Camera::UpdateOculus(Renderer* renderer, const OVR::Util::Render::StereoEyeParams& params, OVR::Util::Render::StereoConfig SConfig, ERUNSTATE& sceneState)
 {
 	renderer->setViewMatrixOculus(params, SConfig);
@@ -321,6 +396,10 @@ void Camera::UpdateOculus(Renderer* renderer, const OVR::Util::Render::StereoEye
 	UpdateCameraMatrix();
 }
 
+/**
+* Function:	Camera::UpdateCameraMatrix()
+* Description: Combines all modifications and updates the entirety of the camera
+*/
 void Camera::UpdateCameraMatrix()
 {
 	Position->MatrixLookAtLH(EyePoint, LookatPoint, UpVector);
