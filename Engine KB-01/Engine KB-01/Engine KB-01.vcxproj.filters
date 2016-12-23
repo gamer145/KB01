@@ -168,9 +168,6 @@
     <ClCompile Include="Scene_Manager.cpp">
       <Filter>Source Files\GameLogic</Filter>
     </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>Source Files\GameLogic</Filter>
-    </ClCompile>
     <ClCompile Include="VisualObject.cpp">
       <Filter>Source Files\GameLogic</Filter>
     </ClCompile>
@@ -228,9 +225,6 @@
       <Filter>Header Files\GameLogic</Filter>
     </ClInclude>
     <ClInclude Include="VisualObject.h">
-      <Filter>Header Files\GameLogic</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer.h">
       <Filter>Header Files\GameLogic</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">

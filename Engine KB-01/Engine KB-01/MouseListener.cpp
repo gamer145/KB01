@@ -31,11 +31,16 @@ MouseListener::~MouseListener()
 	SaveReleaseDevice(); //Cleanup the mouse
 }
 
+/**
+* Function:	MouseListener::InitMouse()
+* Description: Initializing the mouse, returns true if it succeeds, fails if it doesn't
+*/
 bool MouseListener::InitMouse()
 {
 	HRESULT result = dInput->CreateDevice( GUID_SysMouse, &dDeviceMouse, NULL );
 	if( FAILED( result ) )
 	{
+		loggerM->WriteToFile(Error, "Create Mouse Device Failed");
 		SaveReleaseDevice() ;
 		return false;
 	}
@@ -43,6 +48,7 @@ bool MouseListener::InitMouse()
 	result = dDeviceMouse->SetDataFormat( &c_dfDIMouse );
 	if( FAILED( result ) )
 	{
+		loggerM->WriteToFile(Error, "Set Mouse Data Format Failed");
 		SaveReleaseDevice() ;
 		return false;
 	}
@@ -50,6 +56,7 @@ bool MouseListener::InitMouse()
 	result = dDeviceMouse->SetCooperativeLevel( window->getHWND(), DISCL_EXCLUSIVE | DISCL_FOREGROUND );
 	if( FAILED( result ) )
 	{
+		loggerM->WriteToFile(Error, "Set Mouse CooperativeLevel Failed");
 		SaveReleaseDevice() ;
 		return false;
 	}
@@ -57,6 +64,7 @@ bool MouseListener::InitMouse()
 	result = dDeviceMouse->SetProperty( DIPROP_BUFFERSIZE, &dipdw.diph );
 	if( FAILED( result ) )
 	{
+		loggerM->WriteToFile(Error, "Set Mouse Property Failed");
 		SaveReleaseDevice() ;
 		return false;
 	}
@@ -65,11 +73,20 @@ bool MouseListener::InitMouse()
 	return true;
 }
 
+
+/**
+* Function:	MouseListener::setMouseAcceleration()
+* Description: Changes the mouse Acceleration, how fast the rotation speed is
+*/
 void MouseListener::setMouseAcceleration(float newAcceleration)
 {
 	mouseAcceleration = newAcceleration;
 }
 
+/**
+* Function:	MouseListener::getAction()
+* Description:	Checks whether actions are recognised and if the corresponding input is pressed
+*/
 bool MouseListener::getAction(EACTION action, float& value)
 {
 	GetMouseInput();
@@ -98,13 +115,13 @@ bool MouseListener::getAction(EACTION action, float& value)
 		answer = isButtonDown(2, bufferedMouse);
 		if (answer && !bufferedMouse.buttonlock[2])
 		{
-			bufferedMouse.buttonlock[2] = true; //Locks the button
+			bufferedMouse.buttonlock[2] = true; //Locks the button, this is to prevent multiple presses being registered
 			loggerM->WriteToFile(Success, "TOGGLE TOGGLED");
 			value = -1.0f;
 		}
 		else if (!answer && bufferedMouse.buttonlock[2])
 		{
-			bufferedMouse.buttonlock[2] = false;
+			bufferedMouse.buttonlock[2] = false; //Unlocks the button, this is to prevent multiple presses being registered
 		}
 	}
 
@@ -113,13 +130,21 @@ bool MouseListener::getAction(EACTION action, float& value)
 	return answer;
 }
 
-
+/**
+* Function:	MouseListener::getMousewheel()
+* Description:	Checks the mouseWheel for input, doesn't work like buttons do so can't rely on booleans
+*/
 long MouseListener::getMousewheel()
 {
 	MouseStruct temp = GetMouseInput();
 	return temp.z;
 }
 
+
+/**
+* Function:	MouseListener::isButtonDown()
+* Description:	Checks if a button is down
+*/
 bool MouseListener::isButtonDown(int button, MouseStruct mouse)
 {
 	switch (button)
@@ -293,6 +318,10 @@ MouseStruct MouseListener::GetMouseInput()
 	}
 }
 
+/**
+* Function:	Mouse::SaveReleaseDevice()
+* Description: Properly release a device from monitoring
+*/
 void MouseListener::SaveReleaseDevice() 
 {
 	if( dDeviceMouse ) //If the mouse object exists, let go of it completely and finally nullify just to be safe
@@ -303,7 +332,11 @@ void MouseListener::SaveReleaseDevice()
 	}
 } 
 
-void MouseListener::ResetMouseStruct() //Reset every mouse value
+/**
+* Function:	Mouse::ResetMouseStruct()
+* Description: Resets the mouse values so it can be read again and compared to a new state
+*/
+void MouseListener::ResetMouseStruct()
 {
 	bufferedMouse.positionX = 0;
 	bufferedMouse.positionY = 0;

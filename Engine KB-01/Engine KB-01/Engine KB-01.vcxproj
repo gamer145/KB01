@@ -117,7 +117,6 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Scene_Manager.cpp" />
     <ClCompile Include="TextureLoader.cpp" />
-    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Window_Manager.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
@@ -155,7 +154,6 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Scene_Manager.h" />
     <ClInclude Include="TextureLoader.h" />
-    <ClInclude Include="Timer.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="Window_Manager.h" />
   </ItemGroup>
