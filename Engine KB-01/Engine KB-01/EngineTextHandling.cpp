@@ -5,7 +5,11 @@
 #include <string>
 
 
-
+/**
+* Function:	EngineTextHandling::ReplaceCharsInString()
+* Description: Reads through the provided string, and replaces char A with char B
+* Used to filter out stuff that we don't want when writing to files and such
+*/
 std::string EngineTextHandling::ReplaceCharsInString(std::string strChange, char a, char b)
 {
 	for (int i = 0; i < strChange.length(); ++i)
@@ -17,6 +21,11 @@ std::string EngineTextHandling::ReplaceCharsInString(std::string strChange, char
 	return strChange;
 }
 
+/**
+* Function:	EngineTextHandling::HwndToString()
+* Description: Converts the HWND to a string format
+* Used to log Window Titles
+*/
 std::string EngineTextHandling::HwndToString(HWND hWnd)
 {
 	std::wstring HWNDWideString;	

@@ -1,5 +1,9 @@
 #include "Light.h"
 
+/* Skeleton code, trials were still being done but the skeleton was already set up
+*  Doesn't work, doesn't do much really
+*  Ne pas toucher!
+*/
 
 Light::Light()
 {
