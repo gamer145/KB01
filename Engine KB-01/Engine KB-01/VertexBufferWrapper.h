@@ -9,7 +9,9 @@
 	public:
 		VertexBufferWrapper();
 		~VertexBufferWrapper();
+		//sets the vertexbuffer that's contained within this class
 		void SetVertexBuffer(LPDIRECT3DVERTEXBUFFER9 _VertexBuffer);
+		//gets the vertexbuffer that's contained within this class
 		LPDIRECT3DVERTEXBUFFER9 GetVertexBuffer();
 	private:
 		LPDIRECT3DVERTEXBUFFER9 VertexBuffer;

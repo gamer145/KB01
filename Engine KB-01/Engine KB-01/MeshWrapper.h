@@ -9,7 +9,9 @@
 	public:
 		MeshWrapper();
 		~MeshWrapper();
+		//sets the Mesh that's contained within this class
 		void SetMesh(LPD3DXMESH _mesh);
+		//gets the Mesh that's contained within this class
 		LPD3DXMESH GetMesh();
 	private:
 		LPD3DXMESH mesh;

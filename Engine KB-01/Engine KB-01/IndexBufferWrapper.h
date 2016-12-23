@@ -9,7 +9,9 @@
 	public:
 		IndexBufferWrapper(IDirect3DIndexBuffer9** _IndexBuffer);
 		~IndexBufferWrapper();
+		//sets the indexbuffer that's contained within this class
 		void SetIndexBuffer(IDirect3DIndexBuffer9** _IndexBuffer);
+		//gets the indexbuffer that's contained within this class
 		IDirect3DIndexBuffer9** GetIndexBuffer();
 
 
