@@ -15,7 +15,7 @@ public:
 	//Destructor
 	~VisualObject();
 
-	//Initializes the VisualObject
+	//Parent function, this does not have a specific implementation
 	void Initialize();
 
 	//Gets the model, the meshname
