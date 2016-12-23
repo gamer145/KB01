@@ -22,11 +22,19 @@ Ground::~Ground()
 	}
 }
 
+/**
+* Function:	Ground::SetTexture()
+* Description: Sets the texture to be used further on. Not much to see here
+*/
 void Ground::SetTexture(std::string tex)
 {
 	texture = tex;
 }
 
+/**
+* Function:	Ground::SetupGroundMatrix()
+* Description: Sets up the positional matrix, and how much it needs to be scaled
+*/
 void Ground::SetupGroundMatrix(float x, float y, float z)
 {
 	MatrixWrapper* PositionalMatrix = new MatrixWrapper();
@@ -38,6 +46,16 @@ void Ground::SetupGroundMatrix(float x, float y, float z)
 	Position->SetMatrix(PositionalMatrix->GetMatrix() * ScalingMatrix->GetMatrix());
 }
 
+/**
+* Function:	Ground::CreateGround()
+* Description: Goes through all the components to create the ground.
+* Reserves a vertex buffer and index buffer
+* Loops through the image to get greyscale values for the vertices
+* Links indices
+* Normalizes the vertices for light manipulation
+* Loads it all in into the Renderer
+* Prays nothing goes wrong
+*/
 void Ground::CreateGround(Renderer* render, Resource_Manager* resourcemanager, LPCWSTR argFileName)
 {
 	resourcemanager->loadManualTexture(texture);
@@ -51,6 +69,7 @@ void Ground::CreateGround(Renderer* render, Resource_Manager* resourcemanager, L
 	vertices = new VERTEX[vertexcount];
 	int loopcount = 0;
 
+	//Go through the image and set height values according to greyscale values
 	for(int x = 0; x < heightBMP; ++x)
 	{
 		for(int z = 0; z < widthBMP; ++z)
@@ -67,7 +86,7 @@ void Ground::CreateGround(Renderer* render, Resource_Manager* resourcemanager, L
 	}
 
 
-    // create the indices using an int array
+    //Create the indices using an int array
 	const int amountIndices = (heightBMP -1) * (widthBMP -1) * 6;
 	int indexcount = 0;
 	int ifindexcount =0;
@@ -79,6 +98,7 @@ void Ground::CreateGround(Renderer* render, Resource_Manager* resourcemanager, L
 	VECTOR* sideB;
 	VERTEX* CrossProduct = new VERTEX();
 
+	//Link indices to corresponding Vertices
 	indices = new int[amountIndices];
 	for(int i = 0; i < amountIndices; i+=6)
 	{
@@ -128,12 +148,13 @@ void Ground::CreateGround(Renderer* render, Resource_Manager* resourcemanager, L
 		ifindexcount++;
 	}
 
+	//Let there be light for all Vertices
 	for (int a = vertexcount; a > 0; a--)
 	{
 		EngineMath::Normalize(&vertices[a]);
 	}
 
-	//create an vertex buffer interface called v_buffer
+	//Create an vertex buffer interface called v_buffer
 	if (FAILED(render->CreateVertexBuffer(vertexcount * sizeof(VERTEX),
 		0, ECUSTOMFVF, EPOOL_MANAGED, v_buffer, NULL)))
 	{
@@ -177,6 +198,11 @@ void Ground::CreateGround(Renderer* render, Resource_Manager* resourcemanager, L
 	}
 }
 
+
+/**
+* Function:	Ground::LoadBMP()
+* Description: Loads an image, and reads outs it's greyscale values to be used later on
+*/
 byte* Ground::LoadBMP(LPCWSTR argFileName)
 {
 	//Load image from file
@@ -231,6 +257,10 @@ byte* Ground::LoadBMP(LPCWSTR argFileName)
 	return heightData;
 }
 
+/**
+* Function:	Ground::DrawGround()
+* Description: Goes through the steps necessary to draw the ground each time to the renderer
+*/
 void Ground::DrawGround(Renderer* render)
 {	
 
@@ -260,11 +290,19 @@ void Ground::DrawGround(Renderer* render)
 	}
 }
 
+/**
+* Function:	Ground::GetHeight()
+* Description: Returns the height of the image
+*/
 int Ground::GetHeight()
 {
 	return heightBMP;
 }
 
+/**
+* Function:	Ground::GetWidth()
+* Description: Returns the width of the image
+*/
 int Ground::GetWidth()
 {
 	return widthBMP;
